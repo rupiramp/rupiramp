@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RupiRamp — Web3 • INR • UPI • Beta</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">
+      <div class="logo">₹</div>
+      <div class="name">RupiRamp</div>
+      <div class="tag">Web3 • INR • UPI • Beta</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Instant USDT/USDC → <span class="accent">INR via UPI</span></h1>
+      <p class="sub">Join the beta waitlist. Be first to try fast, simple Web3 payouts in India.</p>
+
+      <form id="waitlist-form" class="form">
+        <input id="email" type="email" placeholder="you@email.com" required />
+        <button type="submit">Join waitlist</button>
+      </form>
+
+      <div id="msg" class="msg" aria-live="polite"></div>
+
+      <ul class="bullets">
+        <li>⚡ Typical payout window: 2–10 minutes (beta)</li>
+        <li>🔒 KYC handled by licensed partners</li>
+        <li>💸 Transparent rates, low fees</li>
+      </ul>
+    </section>
+
+    <section class="features">
+      <div class="card">
+        <h3>Deposit USDT/USDC</h3>
+        <p>Send from Binance, Bybit, Metamask, or Trust Wallet.</p>
+      </div>
+      <div class="card">
+        <h3>Convert to INR</h3>
+        <p>We connect to licensed on/off-ramp partners for INR payouts.</p>
+      </div>
+      <div class="card">
+        <h3>Payout to UPI</h3>
+        <p>Receive straight to your UPI ID: PhonePe, GPay, Paytm, or bank.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>© <span id="year"></span> RupiRamp — Technology interface to licensed partners. We do not custody funds.</small>
+  </footer>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>
