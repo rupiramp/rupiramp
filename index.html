@@ -1,143 +1,120 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
-  <meta name="description" content="Fast, compliant INR payouts for Web3 users in India. Non‑custodial interface to licensed partners." />
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <meta property="og:title" content="RupiRamp — Instant USDT/USDC → INR via UPI"/>
-  <meta property="og:description" content="Fast, compliant INR payouts for Web3 users in India. Non‑custodial interface to licensed partners."/>
-  <meta property="og:image" content="https://www.rupiramp.com/assets/og-image.png"/>
-  <meta property="og:type" content="website"/>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta name="description" content="Cash out crypto to INR via UPI. Fast, compliant payouts routed to licensed partners.">
+  <meta property="og:title" content="RupiRamp — Cash out crypto to INR instantly">
+  <meta property="og:description" content="Fast, compliant INR payouts for Web3 users in India.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="bg"></div>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="/">
-        <img src="/assets/logo-mark.svg" alt="" class="brand-mark" />
-        <span class="brand-text">Rupi<span class="brand-gradient">Ramp</span></span>
-      </a>
-      <nav class="nav">
-        <a href="#how">How it works</a>
-        <a href="#why">Why us</a>
-        <a href="#faq">FAQ</a>
-        <a href="mailto:info@rupiramp.com">Contact</a>
-      </nav>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-    </div>
+  <div class="hero-gradient"></div>
+  <header class="container nav">
+    <a class="brand" href="/">
+      <img src="/assets/logo.svg" alt="RupiRamp logo">
+      <span>Rupi<span class="grad">Ramp</span></span>
+    </a>
+    <input id="nav-toggle" type="checkbox" aria-label="Toggle menu">
+    <label class="hamburger" for="nav-toggle" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </label>
+    <nav class="links">
+      <a href="#how">How it works</a>
+      <a href="#why">Why us</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="hero container">
-      <div class="hero-copy">
-        <h1>Instant USDT/USDC <span class="arrow">→</span> <span class="brand-gradient">INR via UPI</span></h1>
-        <p class="lead">
-          Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.
-        </p>
-        <form name="waitlist" method="post" data-netlify="true" class="waitlist" netlify>
-          <input type="hidden" name="form-name" value="waitlist">
-          <label class="sr-only" for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@email.com" required />
-          <button class="btn btn-primary" type="submit">Join the waitlist</button>
-        </form>
-        <ul class="pills">
-          <li>⚡ <span>2–10 min beta target</span></li>
-          <li>🪪 <span>Licensed partners handle KYC</span></li>
-          <li>🧾 <span>Transparent FX & low fees</span></li>
-          <li>🔐 <span>We don’t hold customer funds</span></li>
-        </ul>
-      </div>
-      <aside class="hero-card">
-        <h3>Demo (read‑only)</h3>
-        <p>Live app is invite‑only during beta. This public site is for partner review. Ask for a sandbox demo at <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>.</p>
-      </aside>
+  <main class="container hero">
+    <section class="copy">
+      <h1>Instant USDT/USDC <span class="arrow">→</span> <span class="grad">INR via UPI</span></h1>
+      <p class="sub">Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
+
+      <form class="waitlist" action="https://formspree.io/f/mwkggqny" method="POST">
+        <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit" class="cta">Join the waitlist</button>
+      </form>
+
+      <ul class="pills">
+        <li>⚡ 2–10 min beta target</li>
+        <li>🧾 Licensed partners handle KYC</li>
+        <li>🧮 Transparent FX &amp; low fees</li>
+        <li>🔐 We don’t hold customer funds</li>
+      </ul>
     </section>
 
-    <section id="how" class="container grid-cards">
-      <article class="card">
-        <h4>Deposit</h4>
-        <p>Users send USDT/USDC from their wallet or exchange.</p>
-      </article>
-      <article class="card">
-        <h4>Convert</h4>
-        <p>We route to licensed off‑ramp partners for INR conversion.</p>
-      </article>
-      <article class="card">
-        <h4>Payout</h4>
-        <p>Funds arrive to the user’s UPI ID or bank.</p>
-      </article>
-    </section>
-
-    <section id="why" class="container features">
-      <div class="feature">
-        <h5>Non‑custodial</h5>
-        <p>Users keep control of crypto until conversion.</p>
+    <aside class="demo-card">
+      <h3>Demo (read‑only)</h3>
+      <p>Live app is invite‑only during beta. This public site is for partner review. Ask for a sandbox demo at <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>.</p>
+      <div class="mini-stats">
+        <div><span class="label">USDT→₹</span><span class="value">₹83.2</span></div>
+        <div><span class="label">Fee</span><span class="value">0.5%</span></div>
       </div>
-      <div class="feature">
-        <h5>Licensed partners</h5>
-        <p>FIU‑registered partners handle KYC/AML.</p>
-      </div>
-      <div class="feature">
-        <h5>Built for speed</h5>
-        <p>Clean pipeline built to minimize friction and settlement time.</p>
-      </div>
-      <div class="feature">
-        <h5>Simple pricing</h5>
-        <p>Clear FX and fees—no surprises.</p>
-      </div>
-    </section>
-
-    <section id="faq" class="container faq">
-      <h3>FAQ</h3>
-      <details>
-        <summary>Is RupiRamp a custodian?</summary>
-        <p>No. Users retain custody until a conversion request is made with a licensed partner.</p>
-      </details>
-      <details>
-        <summary>Which assets are supported?</summary>
-        <p>USDT (TRON / ERC‑20) and USDC. More networks can be added during beta.</p>
-      </details>
-      <details>
-        <summary>How do you handle KYC/AML?</summary>
-        <p>KYC/AML is handled by licensed partners integrated into the payout flow.</p>
-      </details>
-      <details>
-        <summary>How fast are payouts?</summary>
-        <p>Beta target is 2–10 minutes after conversion, depending on partner bank rails.</p>
-      </details>
-    </section>
+    </aside>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="brand small" href="/">
-        <img src="/assets/logo-mark.svg" alt="" class="brand-mark" />
-        <span class="brand-text">Rupi<span class="brand-gradient">Ramp</span></span>
-      </a>
-      <nav class="footer-nav">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>
-      </nav>
-      <p class="legal">© 2025 RupiRamp Ltd. Technology interface to licensed partners. We do not custody funds.</p>
+  <section id="how" class="container steps">
+    <div class="step">
+      <h4>Deposit</h4>
+      <p>Users send USDT/USDC from their wallet or exchange.</p>
+    </div>
+    <div class="step">
+      <h4>Convert</h4>
+      <p>We route to licensed off‑ramp partners for INR conversion.</p>
+    </div>
+    <div class="step">
+      <h4>Payout</h4>
+      <p>Funds arrive to the user’s UPI ID or bank.</p>
+    </div>
+  </section>
+
+  <section id="why" class="container why">
+    <h2>Why RupiRamp</h2>
+    <div class="cards">
+      <article class="card">
+        <h5>Non‑custodial</h5>
+        <p>Users keep control of crypto until conversion is executed.</p>
+      </article>
+      <article class="card">
+        <h5>Licensed partners</h5>
+        <p>FIU‑registered partners handle KYC/AML. RupiRamp is an interface, not a custodian.</p>
+      </article>
+      <article class="card">
+        <h5>Clear pricing</h5>
+        <p>No hidden spreads. FX and fees are shown up front before users proceed.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="faq" class="container faq">
+    <h2>FAQ</h2>
+    <details><summary>Is RupiRamp a custodian?</summary><p>No. We do not hold user funds. Assets flow directly from user wallets through licensed partners that complete conversion and payout.</p></details>
+    <details><summary>What assets are supported?</summary><p>USDT and USDC (TRON / Ethereum). More chains during beta by request.</p></details>
+    <details><summary>Where can funds be sent?</summary><p>UPI ID or bank account in India, subject to partner coverage and compliance.</p></details>
+  </section>
+
+  <footer id="contact" class="container footer">
+    <div class="left">
+      <a class="brand small" href="/"><img src="/assets/logo.svg" alt=""><span>Rupi<span class="grad">Ramp</span></span></a>
+      <p>© <span id="year"></span> RupiRamp Ltd. We are a technology interface to licensed partners. We do not custody funds.</p>
+    </div>
+    <div class="right">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>
     </div>
   </footer>
 
   <script>
-    // mobile nav
-    const toggle = document.querySelector('.nav-toggle');
-    const nav = document.querySelector('.nav');
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', !open);
-      nav.classList.toggle('open');
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
