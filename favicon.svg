@@ -1,12 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<svg width="48" height="48" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="g" x1="0" x2="1">
-      <stop offset="0" stop-color="#6ee7ff"/>
-      <stop offset="1" stop-color="#8b5cf6"/>
+    <linearGradient id="g" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5DE1FA"/><stop offset="1" stop-color="#A06BFF"/>
     </linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.35"/>
+    </filter>
   </defs>
-  <rect width="512" height="512" rx="96" fill="url(#g)"/>
-  <g fill="#0b0f18" transform="translate(135,110) scale(1.1)">
-    <path d="M160 104h-99a8 8 0 0 1 0-16h86c-9-28-35-44-73-44H48a8 8 0 0 0 0 16h26c28 0 48 12 56 28H48a8 8 0 0 0 0 16h90c-5 28-27 44-60 44H77l73 84h28l-57-64c49-3 82-29 89-64h50z"/>
-  </g>
+  <rect width="256" height="256" rx="64" fill="#0F1422"/>
+  <circle cx="128" cy="128" r="88" fill="url(#g)" filter="url(#s)"/>
+  <path d="M154 82h-54a8 8 0 0 0 0 16h48c-2.5 9.5-12.1 16-25 16h-23a8 8 0 0 0 0 16h21l-31 44h26l30.3-43.1c16.7-3.3 28.8-15.6 31.7-32.9H154z" fill="#0A0E17"/>
 </svg>

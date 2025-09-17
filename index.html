@@ -4,117 +4,79 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
-  <meta name="description" content="Cash out crypto to INR via UPI. Fast, compliant payouts routed to licensed partners.">
-  <meta property="og:title" content="RupiRamp — Cash out crypto to INR instantly">
-  <meta property="og:description" content="Fast, compliant INR payouts for Web3 users in India.">
+  <meta name="description" content="Cash out crypto to INR via UPI. Fast, compliant payouts through licensed partners.">
+  <link rel="preload" href="/assets/logo.svg" as="image" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="RupiRamp — Instant USDT/USDC → INR via UPI">
+  <meta property="og:description" content="Cash out crypto to INR via UPI. Fast, compliant payouts through licensed partners.">
   <meta property="og:image" content="/assets/og-image.png">
-  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-  <link rel="apple-touch-icon" href="/assets/icon-192.png">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="hero-gradient"></div>
-  <header class="container nav">
+  <header class="container header">
     <a class="brand" href="/">
-      <img src="/assets/logo.svg" alt="RupiRamp logo">
-      <span>Rupi<span class="grad">Ramp</span></span>
+      <img src="/assets/logo.svg" alt="RupiRamp logo" width="28" height="28">
+      <div class="name">Rupi<span class="ramp">Ramp</span></div>
     </a>
-    <input id="nav-toggle" type="checkbox" aria-label="Toggle menu">
-    <label class="hamburger" for="nav-toggle" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </label>
-    <nav class="links">
+    <nav class="nav">
       <a href="#how">How it works</a>
-      <a href="#why">Why us</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="mailto:info@rupiramp.com">Contact</a>
     </nav>
   </header>
 
-  <main class="container hero">
-    <section class="copy">
-      <h1>Instant USDT/USDC <span class="arrow">→</span> <span class="grad">INR via UPI</span></h1>
-      <p class="sub">Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
-
-      <form class="waitlist" action="https://formspree.io/f/mwkggqny" method="POST">
-        <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
-        <button type="submit" class="cta">Join the waitlist</button>
-      </form>
-
-      <ul class="pills">
-        <li>⚡ 2–10 min beta target</li>
-        <li>🧾 Licensed partners handle KYC</li>
-        <li>🧮 Transparent FX &amp; low fees</li>
-        <li>🔐 We don’t hold customer funds</li>
-      </ul>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Instant USDT/USDC → <span style="background:linear-gradient(90deg,var(--brand1),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent">INR via UPI</span></h1>
+        <p class="sub">Fast INR payouts (beta target: <b>2–10 min</b>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
+        <div class="cta-row">
+          <input class="input" type="email" placeholder="you@email.com" aria-label="Your email">
+          <button class="btn">Join the waitlist</button>
+        </div>
+        <div class="points">
+          <div class="pill">⚡ 2–10 min beta target</div>
+          <div class="pill">🧾 Transparent FX & fees</div>
+          <div class="pill">🔒 Non‑custodial</div>
+        </div>
+      </div>
+      <div class="section small">
+        Seamless off‑ramp for Web3 users in India. Simple, compliant, and fast.
+      </div>
     </section>
 
-    <aside class="demo-card">
-      <h3>Demo (read‑only)</h3>
-      <p>Live app is invite‑only during beta. This public site is for partner review. Ask for a sandbox demo at <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>.</p>
-      <div class="mini-stats">
-        <div><span class="label">USDT→₹</span><span class="value">₹83.2</span></div>
-        <div><span class="label">Fee</span><span class="value">0.5%</span></div>
+    <section id="how" class="section">
+      <div class="grid">
+        <div class="card">
+          <h2>Deposit</h2>
+          <p class="small">Users send USDT/USDC from their wallet or exchange.</p>
+        </div>
+        <div class="card">
+          <h2>Convert</h2>
+          <p class="small">We route to licensed partner off‑ramps for INR conversion.</p>
+        </div>
+        <div class="card">
+          <h2>Payout</h2>
+          <p class="small">Funds arrive to UPI ID or bank. That’s it.</p>
+        </div>
       </div>
-    </aside>
+    </section>
+
+    <section id="faq" class="section">
+      <h2>FAQ</h2>
+      <p class="small"><b>Is RupiRamp a custodian?</b> No. Users keep custody until conversion with a licensed partner.</p>
+      <p class="small"><b>KYC?</b> Handled by partners where required.</p>
+      <p class="small"><b>Who do we support?</b> USDT/USDC deposits with INR payouts.</p>
+    </section>
   </main>
 
-  <section id="how" class="container steps">
-    <div class="step">
-      <h4>Deposit</h4>
-      <p>Users send USDT/USDC from their wallet or exchange.</p>
-    </div>
-    <div class="step">
-      <h4>Convert</h4>
-      <p>We route to licensed off‑ramp partners for INR conversion.</p>
-    </div>
-    <div class="step">
-      <h4>Payout</h4>
-      <p>Funds arrive to the user’s UPI ID or bank.</p>
-    </div>
-  </section>
-
-  <section id="why" class="container why">
-    <h2>Why RupiRamp</h2>
-    <div class="cards">
-      <article class="card">
-        <h5>Non‑custodial</h5>
-        <p>Users keep control of crypto until conversion is executed.</p>
-      </article>
-      <article class="card">
-        <h5>Licensed partners</h5>
-        <p>FIU‑registered partners handle KYC/AML. RupiRamp is an interface, not a custodian.</p>
-      </article>
-      <article class="card">
-        <h5>Clear pricing</h5>
-        <p>No hidden spreads. FX and fees are shown up front before users proceed.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="faq" class="container faq">
-    <h2>FAQ</h2>
-    <details><summary>Is RupiRamp a custodian?</summary><p>No. We do not hold user funds. Assets flow directly from user wallets through licensed partners that complete conversion and payout.</p></details>
-    <details><summary>What assets are supported?</summary><p>USDT and USDC (TRON / Ethereum). More chains during beta by request.</p></details>
-    <details><summary>Where can funds be sent?</summary><p>UPI ID or bank account in India, subject to partner coverage and compliance.</p></details>
-  </section>
-
-  <footer id="contact" class="container footer">
-    <div class="left">
-      <a class="brand small" href="/"><img src="/assets/logo.svg" alt=""><span>Rupi<span class="grad">Ramp</span></span></a>
-      <p>© <span id="year"></span> RupiRamp Ltd. We are a technology interface to licensed partners. We do not custody funds.</p>
-    </div>
-    <div class="right">
-      <a href="/privacy.html">Privacy</a>
+  <footer class="container footer">
+    <div>© 2025 RupiRamp Ltd. All rights reserved.</div>
+    <div>
+      <a href="/privacy.html">Privacy</a> ·
       <a href="/terms.html">Terms</a>
-      <a href="mailto:info@rupiramp.com">info@rupiramp.com</a>
     </div>
   </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
