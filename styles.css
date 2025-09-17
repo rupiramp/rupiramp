@@ -1,30 +1,101 @@
+/* RupiRamp site styles */
+:root{
+  --bg:#0b0e13;
+  --bg-soft:#11141b;
+  --text:#e8ecf2;
+  --muted:#b7c0cb;
+  --card:#151a22;
+  --border:rgba(255,255,255,.08);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --grad:linear-gradient(90deg,#6ee7ff 0%,#7c8cff 30%,#a78bfa 60%,#22d3ee 100%);
+  --accent:#a78bfa;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.12), transparent 50%),
+             radial-gradient(900px 600px at 90% 10%, rgba(167,139,250,.12), transparent 55%),
+             var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
 
-:root{--bg:#0b0b12;--panel:#141726;--ink:#fff;--muted:#a8adbe;--line:rgba(255,255,255,.1);
---grad:linear-gradient(90deg,#6a5cff,#9a52ff,#5ad6ff)}
-body{margin:0;font-family:Inter,Arial;background:var(--bg);color:var(--ink);line-height:1.5}
-.wrap{max-width:1000px;margin:auto;padding:0 5%}
-.site-header{background:rgba(11,11,18,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.site-header .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-.brand{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:700}
-.brand .grad{background:var(--grad);-webkit-background-clip:text;color:transparent}
-.logo{height:28px}.logo-small{height:20px}
-.nav{display:flex;gap:18px}.nav a{color:var(--muted);text-decoration:none}
-.nav a:hover{color:#fff}#mobileMenu{display:none}
-.hero{padding:60px 0;text-align:center}
-.hero h1{font-size:clamp(32px,4.5vw,52px)}.hero .lead{max-width:50ch;margin:0 auto 18px;color:var(--muted)}
-.waitlist{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}
-.waitlist input{padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:#fff}
-.btn{background:var(--grad);border:none;color:#fff;padding:12px 18px;border-radius:8px;font-weight:600}
-.badges{list-style:none;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0}
-.badges li{font-size:.9rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05)}
-.cards{padding:50px 0;background:rgba(255,255,255,.02)}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:var(--panel);padding:20px;border-radius:12px;border:1px solid var(--line);text-align:center}
-.why{padding:50px 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.metrics{display:flex;gap:14px;justify-content:space-around}
-.metrics div{flex:1;text-align:center;background:var(--panel);padding:18px;border-radius:10px;border:1px solid var(--line)}
-.metrics span{font-weight:700;font-size:1.2rem}
-.faq{padding:40px 0}.faq details{background:var(--panel);margin:10px 0;padding:12px 14px;border-radius:8px;border:1px solid var(--line)}
-.site-footer{padding:24px 0;text-align:center;color:var(--muted);border-top:1px solid var(--line)}
-.site-footer .brand{justify-content:center;margin-bottom:10px}
-@media(max-width:700px){.grid2{grid-template-columns:1fr}.metrics{flex-direction:column}}
+.container{width:min(1120px,92vw); margin:0 auto;}
+
+.nav{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(140%) blur(14px);
+  background:linear-gradient(180deg,rgba(13,16,22,.65),rgba(13,16,22,.35));
+  border-bottom:1px solid var(--border);
+  padding:.7rem 0;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{display:flex; align-items:center; gap:.6rem; color:var(--text); text-decoration:none; font-weight:700}
+.logo{width:28px;height:28px}
+.logo.small{width:22px;height:22px}
+.wordmark{letter-spacing:.2px}
+.wordmark .ramp{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+.links a{color:var(--muted); text-decoration:none; margin-left:1.1rem; font-weight:500}
+.links a:hover{color:var(--text)}
+
+.hero{padding:56px 0 24px}
+.hero h1{font-size:clamp(32px,5vw,56px); line-height:1.04; margin:.2rem 0 .6rem}
+.hero .grad{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+.hero .lead{color:var(--muted); max-width:800px}
+
+.waitlist{margin:18px 0 10px; display:flex; gap:.6rem; flex-wrap:wrap}
+.waitlist input{
+  background:#0f141b; border:1px solid var(--border);
+  padding:.8rem .9rem; border-radius:10px; color:var(--text); min-width:260px; outline:none;
+}
+.waitlist button{
+  padding:.8rem 1rem; border-radius:10px; border:1px solid var(--border);
+  background:var(--grad); color:#0b0e13; font-weight:800; letter-spacing:.2px; box-shadow:var(--shadow);
+}
+
+.badges{display:flex; gap:.6rem; flex-wrap:wrap; padding:0; margin:12px 0 0; list-style:none}
+.badges li{
+  font-weight:600; color:#e9f0ff; background:rgba(255,255,255,.04);
+  border:1px solid var(--border); padding:.45rem .7rem; border-radius:999px;
+}
+
+.notice{
+  margin-left:auto; margin-top:12px; background:rgba(255,255,255,.03);
+  border:1px dashed var(--border); padding:14px 16px; border-radius:14px; max-width:420px;
+}
+
+.tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:34px auto 18px}
+.tile{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid var(--border); border-radius:14px; padding:18px 18px 16px;
+  box-shadow:var(--shadow);
+}
+.tile h3{margin:.2rem 0 .3rem}
+.tile p{color:var(--muted); margin:0}
+
+.two-col{display:grid; grid-template-columns: 1.4fr 1fr; gap:22px; margin:8px auto 28px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid var(--border); border-radius:14px; padding:18px 18px 16px;
+}
+.ghost{display:inline-block; margin-right:8px; margin-top:8px; color:var(--text); text-decoration:none; border:1px solid var(--border); padding:.5rem .75rem; border-radius:10px}
+.ghost:hover{border-color:#2a2f39}
+
+.faq details{
+  background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:.8rem 1rem; margin:.6rem 0;
+}
+.faq summary{cursor:pointer; font-weight:600}
+
+.footer{display:flex; align-items:center; justify-content:space-between; padding:26px 0 38px; border-top:1px solid var(--border); margin-top:26px}
+.footer .right a{color:var(--muted); margin-left:1rem; text-decoration:none}
+.footer .right a:hover{color:var(--text)}
+
+@media (max-width: 960px){
+  .tiles{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .notice{max-width:none}
+  .hero{padding:32px 0 16px}
+}

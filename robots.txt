@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://www.rupiramp.com/sitemap.xml
+Sitemap: https://rupiramp.com/sitemap.xml
