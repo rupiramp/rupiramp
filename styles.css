@@ -1,40 +1,71 @@
 
-/* RupiRamp minimal landing styles */
+/* RupiRamp – premium marketing page */
 :root{
-  --bg:#0b1020;
-  --card:#11172a;
-  --muted:#98a2b3;
-  --text:#e6eaf2;
-  --accent1:#7c4dff;
-  --accent2:#22d3ee;
-  --ring: rgba(124,77,255,.35);
+  --bg:#0b0c12;
+  --card:#12131b;
+  --muted:#c8ccd9;
+  --text:#e9ecf7;
+  --glass: rgba(255,255,255,.06);
+  --stroke: rgba(255,255,255,.08);
+  --grad1:#8a5cf6; /* purple */
+  --grad2:#54b5ff; /* blue */
+  --accent:#af93ff;
 }
+
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 70% -200px, rgba(124,77,255,.08), transparent 60%), var(--bg); color:var(--text); font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:24px}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
-.nav .brand{display:flex;gap:12px;align-items:center}
-.nav img{height:32px}
-.nav a.link{opacity:.85;margin-left:22px}
-.nav a.link:hover{opacity:1}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 28px}
-.h1{font-size:48px;line-height:1.05;margin:0 0 12px;font-weight:800}
-.gradient{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--muted);max-width:54ch}
-.cta{margin-top:18px;display:flex;gap:10px}
-.input{flex:1;min-width:260px;background:#0f1629;border:1px solid #1e2a45;color:var(--text);padding:12px 14px;border-radius:10px;outline:none}
-.input:focus{border-color:var(--accent1);box-shadow:0 0 0 6px var(--ring)}
-.btn{padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;color:#0b1020;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0 8px}
-.card{background:var(--card);padding:16px;border:1px solid #1b2340;border-radius:14px}
-.card h4{margin:6px 0 6px}
-.badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-.badge{display:flex;align-items:center;gap:8px;background:#0f1629;border:1px solid #1e2a45;padding:8px 12px;border-radius:999px;color:#cbd5e1;font-size:14px}
-.section{padding:20px 0 56px}
-.footer{border-top:1px solid #1b2340;color:#9aa6b2;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;padding:20px 0 40px}
-.footer a{opacity:.9}
-@media (max-width:920px){
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"}
+a{color:#cfe4ff;text-decoration:none}
+a:hover{opacity:.9}
+
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden}
+.bg-grid{position:absolute;inset:-20% -10%;background-image:radial-gradient(transparent 0 1px, rgba(255,255,255,.05) 1px), linear-gradient(to bottom right, transparent, rgba(84,181,255,.05));background-size:24px 24px, 100% 100%;filter:saturate(140%)}
+.bg-glow{position:absolute;filter:blur(110px);opacity:.55;mix-blend-mode:screen}
+.bg-1{width:60vw;height:60vw;background:radial-gradient(circle at 30% 40%, var(--grad1), transparent 60%)}
+.bg-2{right:-10vw;bottom:-10vw;width:55vw;height:55vw;background:radial-gradient(circle at 70% 60%, var(--grad2), transparent 60%)}
+
+.nav{max-width:1180px;margin:24px auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.brand-logo{width:28px;height:28px}
+.brand-name{font-weight:700;font-size:18px;letter-spacing:.3px}
+.links{display:flex;gap:20px;align-items:center}
+.cta{background:linear-gradient(90deg,var(--grad1),var(--grad2));padding:10px 14px;border-radius:12px;color:#0b0c12;font-weight:700;border:1px solid rgba(255,255,255,.1);box-shadow:0 6px 22px rgba(105,142,255,.25)}
+.cta.ghost{background:transparent;color:var(--text);border:1px solid var(--stroke)}
+
+.hero{max-width:1180px;margin:60px auto;padding:0 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
+h1{font-size:54px;line-height:1.05;margin:0 0 10px}
+.muted{color:var(--muted);font-weight:700}
+.grad{background:linear-gradient(90deg,var(--grad1),var(--grad2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+.sub{color:#cbd2e9;max-width:620px;margin:8px 0 18px}
+
+.waitlist{display:flex;gap:10px;align-items:center}
+.waitlist input{flex:1;min-width:260px;background:var(--glass);border:1px solid var(--stroke);padding:12px 14px;border-radius:12px;color:var(--text);outline:none}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px;padding:0;list-style:none}
+.badges li{background:var(--glass);border:1px solid var(--stroke);padding:8px 10px;border-radius:999px;color:#dbe3ff}
+
+.hero-card{background:var(--glass);border:1px solid var(--stroke);backdrop-filter:saturate(120%) blur(10px);border-radius:16px;padding:18px}
+.card-head{font-weight:800;margin-bottom:6px;color:#cdd5ff}
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mini-stats div{background:rgba(255,255,255,.04);border:1px solid var(--stroke);padding:10px;border-radius:12px;display:flex;align-items:center;justify-content:space-between}
+.mini-stats span{color:#c1c7de}
+.fineprint{font-size:12px;color:#a7afc9;margin-top:10px}
+
+.section{max-width:1180px;margin:70px auto;padding:0 24px}
+h2{font-size:28px;margin:0 0 16px}
+.cards{display:grid;gap:16px}
+.cards.three{grid-template-columns:repeat(3,1fr)}
+.cards.two{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.card-title{font-weight:800;margin-bottom:6px}
+
+.footer{max-width:1180px;margin:80px auto 40px;padding:0 24px;color:#b9c2de}
+.foot-grid{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot-brand{display:flex;gap:12px;align-items:center}
+.foot-logo{width:28px;height:28px}
+.foot-links{display:flex;gap:16px}
+.copyright{opacity:.7;margin-top:12px;font-size:13px}
+
+/* Responsive */
+@media (max-width:900px){
   .hero{grid-template-columns:1fr}
-  .grid{grid-template-columns:1fr}
+  h1{font-size:40px}
 }
