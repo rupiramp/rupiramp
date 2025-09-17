@@ -1,64 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RupiRamp — Web3 • INR • UPI • Beta</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
+  <meta name="description" content="Fast, compliant INR payouts for Web3 users in India. Non-custodial interface to licensed partners.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="nav">
-    <div class="brand">
-      <div class="logo">₹</div>
-      <div class="name">RupiRamp</div>
-      <div class="tag">Web3 • INR • UPI • Beta</div>
-    </div>
-  </header>
+  <main class="rp-wrap">
+    <header class="rp-nav">
+      <div class="rp-brand">
+        <div class="rp-badge"></div>
+        <span>RupiRamp</span>
+      </div>
+      <nav class="rp-navlinks">
+        <a href="#how">How it works</a>
+        <a href="#why">Why us</a>
+        <a href="#faq">FAQ</a>
+        <a class="rp-link" href="mailto:info@rupiramp.com">Contact</a>
+      </nav>
+    </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <h1>Instant USDT/USDC → <span class="accent">INR via UPI</span></h1>
-      <p class="sub">Join the beta waitlist. Be first to try fast, simple Web3 payouts in India.</p>
-
-      <form id="waitlist-form" class="form">
-        <input id="email" type="email" placeholder="you@email.com" required />
-        <button type="submit">Join waitlist</button>
+    <section class="rp-hero">
+      <h1>Instant USDT/USDC → <span class="rp-grad">INR via UPI</span></h1>
+      <p class="rp-sub">Fast, compliant INR payouts for Web3 users in India. Non-custodial interface to licensed partners.</p>
+      <form class="rp-cta" name="waitlist" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="waitlist">
+        <input name="email" required placeholder="you@email.com" aria-label="email"/>
+        <button type="submit">Join the waitlist</button>
       </form>
 
-      <div id="msg" class="msg" aria-live="polite"></div>
-
-      <ul class="bullets">
+      <ul class="rp-trust">
         <li>⚡ Typical payout window: 2–10 minutes (beta)</li>
-        <li>🔒 KYC handled by licensed partners</li>
-        <li>💸 Transparent rates, low fees</li>
+        <li>🛡️ KYC handled by licensed partners</li>
+        <li>💸 Transparent FX &amp; low fees</li>
+        <li>🔐 We do not hold customer funds</li>
       </ul>
     </section>
 
-    <section class="features">
-      <div class="card">
-        <h3>Deposit USDT/USDC</h3>
-        <p>Send from Binance, Bybit, Metamask, or Trust Wallet.</p>
-      </div>
-      <div class="card">
-        <h3>Convert to INR</h3>
-        <p>We connect to licensed on/off-ramp partners for INR payouts.</p>
-      </div>
-      <div class="card">
-        <h3>Payout to UPI</h3>
-        <p>Receive straight to your UPI ID: PhonePe, GPay, Paytm, or bank.</p>
-      </div>
+    <section class="rp-cards" id="how">
+      <div class="rp-card"><h3>Deposit</h3><p>Send USDT/USDC from your wallet or exchange.</p></div>
+      <div class="rp-card"><h3>Convert</h3><p>Licensed partner off-ramps to INR.</p></div>
+      <div class="rp-card"><h3>Payout</h3><p>Receive to your UPI ID or bank.</p></div>
     </section>
+
+    <section class="rp-why" id="why">
+      <h2>Why RupiRamp</h2>
+      <div class="rp-grid">
+        <div><h4>Non-custodial</h4><p>Users keep control of crypto until conversion.</p></div>
+        <div><h4>Licensed partners</h4><p>FIU-registered partners handle KYC/AML.</p></div>
+        <div><h4>Simple pricing</h4><p>Platform fee from 0.5%.</p></div>
+        <div><h4>Developer-friendly</h4><p>Webhooks &amp; receipts (on request).</p></div>
+      </div>
+      <p class="rp-legal">RupiRamp is a technology interface. Crypto conversion, KYC/AML and INR payouts are performed by licensed partners.
+        RupiRamp does not provide custody, securities, or payment services.</p>
+    </section>
+
+    <section class="rp-faq" id="faq">
+      <h2>FAQ</h2>
+      <details>
+        <summary>Do you support UPI?</summary>
+        <p>Yes — payouts to UPI VPA or bank account via partners.</p>
+      </details>
+      <details>
+        <summary>What assets are supported?</summary>
+        <p>USDT (TRON/ETH) and USDC (ETH) during beta.</p>
+      </details>
+      <details>
+        <summary>Is KYC required?</summary>
+        <p>Partner-led KYC is required and handled directly by the licensed provider.</p>
+      </details>
+      <details>
+        <summary>What are the fees?</summary>
+        <p>Partner fee + our platform fee, shown before confirmation.</p>
+      </details>
+    </section>
+
+    <footer class="rp-footer">
+      <div class="rp-footgrid">
+        <div>
+          <div class="rp-brand"><div class="rp-badge"></div><span>RupiRamp</span></div>
+          <p class="rp-footcopy">© 2025 RupiRamp Ltd. All rights reserved. RupiRamp is not a custodian and does not
+            provide regulated financial services. All conversions are performed by licensed partners.</p>
+        </div>
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+          <li><a href="mailto:info@rupiramp.com">Contact</a></li>
+        </ul>
+      </div>
+    </footer>
   </main>
-
-  <footer class="foot">
-    <small>© <span id="year"></span> RupiRamp — Technology interface to licensed partners. We do not custody funds.</small>
-  </footer>
-
-  <!-- Supabase JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
-  <script src="script.js"></script>
 </body>
 </html>
