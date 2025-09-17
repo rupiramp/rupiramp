@@ -1,28 +1,16 @@
-# RupiRamp — Static Marketing Site
+# RupiRamp Marketing Site (static)
 
-This is a lightweight, production‑ready static site meant for Netlify or any static host.
+A polished, responsive marketing site designed to pass partner review.
+
+## How to deploy on Netlify
+1. Open your repo (rupiramp) and replace the root files with this folder's contents.
+2. Commit to `main`. Netlify will auto‑build.
+3. Ensure `Publish directory` is the repo root (no build step).
 
 ## Structure
-```
-/index.html
-/styles.css
-/privacy.html
-/terms.html
-/robots.txt
-/sitemap.xml
-/assets/logo.svg
-/assets/og-image.svg
-```
-
-## Edit
-- Update text in `index.html` (hero, badges, sections).
-- Colors & layout in `styles.css` (keep gradients `--grad1` and `--grad2`).
-- Swap `/assets/logo.svg` with your real logo.
-- If your domain is not `rupiramp.com`, update `sitemap.xml` and `robots.txt`.
-
-## Deploy (Netlify)
-1. Drag‑and‑drop the folder onto the **Deploys** page, or connect this repo to Netlify.
-2. Ensure your domain points at this site (you already use Netlify DNS).
-
----
-© 2025 RupiRamp
+- `/index.html` – Landing page
+- `/styles.css` – Global styles (fluid, mobile‑first)
+- `/privacy.html`, `/terms.html`
+- `/assets/logo-mark.svg` – Logo mark
+- `/assets/favicon.svg`, `/assets/apple-touch-icon.png`
+- `/robots.txt`, `/sitemap.xml`
