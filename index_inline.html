@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
+  <meta name="description" content="Fast, compliant INR payouts for Web3 users in India. Non-custodial interface to licensed partners.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo.png" sizes="32x32">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <meta property="og:title" content="RupiRamp — Cash out crypto to INR instantly">
+  <meta property="og:description" content="Fast INR payouts via UPI. Non-custodial. KYC/AML handled by licensed partners.">
+  <meta property="og:image" content="og-image.png">
+  <meta name="theme-color" content="#0b0f17">
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="RupiRamp home" style="display:flex;align-items:center;gap:.6rem">
+        <!-- Inline SVG logo (no external request) -->
+        <svg width="28" height="28" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:8px">
+          <defs>
+            <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6EE7F9"/>
+              <stop offset="100%" stop-color="#A78BFA"/>
+            </linearGradient>
+          </defs>
+          <rect width="256" height="256" rx="56" fill="url(#g)"/>
+          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
+                font-family="Inter, system-ui, -apple-system, Segoe UI" font-weight="900" font-size="150" fill="#0b0f17">₹</text>
+        </svg>
+        <div class="wordmark">
+          <span class="rupi">Rupi</span><span class="ramp">Ramp</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#why">Why us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="mailto:info@rupiramp.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Instant USDT/USDC <span class="gradient">→ INR</span> via UPI</h1>
+          <p class="lead">Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
+
+          <form class="hero-form" action="https://formsubmit.co/info@rupiramp.com" method="POST">
+            <input type="hidden" name="_subject" value="Waitlist — RupiRamp">
+            <input class="input" type="email" name="email" placeholder="you@email.com" required>
+            <button class="btn" type="submit">Join the waitlist</button>
+          </form>
+
+          <div class="badges">
+            <span class="badge">⚡ 2–10 min beta target</span>
+            <span class="badge">📜 Licensed partners handle KYC</span>
+            <span class="badge">🧾 Transparent FX & fees</span>
+            <span class="badge">🔐 We don’t hold customer funds</span>
+          </div>
+
+          <div class="card-row" id="how" style="margin-top:28px">
+            <article class="card">
+              <h3>Deposit</h3>
+              <p>Users send USDT/USDC from their wallet or exchange.</p>
+            </article>
+            <article class="card">
+              <h3>Convert</h3>
+              <p>We route to licensed off-ramp partners for INR conversion.</p>
+            </article>
+            <article class="card">
+              <h3>Payout</h3>
+              <p>Funds arrive to the user’s UPI ID or bank.</p>
+            </article>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <div class="kicker">Status</div>
+            <h3>Private beta</h3>
+            <p class="lead" style="font-size:15px">We’re onboarding early partners. Request access with the waitlist above.</p>
+          </div>
+          <div class="card" style="margin-top:14px">
+            <div class="kicker">Coverage</div>
+            <p>INR via UPI (beta scope). More corridors coming soon.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="container">
+        <h2 style="margin:0 0 16px">Why RupiRamp</h2>
+        <div class="features">
+          <div class="feature">
+            <div class="kicker">Non-custodial</div>
+            <p>Users retain control of crypto until conversion.</p>
+          </div>
+          <div class="feature">
+            <div class="kicker">Licensed partners</div>
+            <p>FIU-registered partners handle KYC/AML & settlement.</p>
+          </div>
+          <div class="feature">
+            <div class="kicker">Simple integration</div>
+            <p>Start with a hosted flow; upgrade to API when approved.</p>
+          </div>
+        </div>
+        <div class="cta">
+          <a class="btn" href="mailto:info@rupiramp.com">Partner with us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <span>© <span id="y"></span> RupiRamp Ltd.</span>
+      <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+</body>
+</html>
