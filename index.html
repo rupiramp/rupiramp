@@ -3,46 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
-  <meta name="description" content="Fast INR payouts (beta target 2–10 min). Users keep custody until conversion; KYC/AML is handled by licensed partners. We do not hold customer funds." />
+  <title>RupiRamp — USDT/USDC → INR via UPI</title>
+  <meta name="description" content="Fast INR payouts (beta target 2–10 min). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="stylesheet" href="/styles.css" />
-
-  <!-- Transak SDK -->
   <script src="https://cdn.transak.com/js/sdk/v1/widget.js"></script>
-
   <style>
-    /* small guard styles in case classes are missing */
-    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    /* Layout guards + visual polish */
+    :root{--bg:#0b0f17;--card:#0f1523;--line:#253146}
+    body{
+      margin:0;color:#e8edf8;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 520px at 15% -10%,rgba(80,146,255,.22),transparent 60%),
+        radial-gradient(900px 520px at 95% 0,rgba(142,55,255,.22),transparent 60%),
+        linear-gradient(180deg,rgba(17,24,39,.25),transparent 38%),
+        var(--bg);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    .container{max-width:1120px;margin:0 auto;padding:0 20px}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
     .brand img{width:28px;height:28px;border-radius:6px}
-    .wordmark{font-weight:700;font-size:18px;letter-spacing:.2px}
+    .wordmark{font-weight:800;font-size:18px}
     .rupi{color:#e8edf8}
-    .ramp{background:linear-gradient(90deg,#6ee0ff,#876bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .ramp{background:linear-gradient(90deg,#66e0ff,#8b6bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .links a{color:#aeb6c1;margin-left:16px;text-decoration:none}
+    .links a:hover{color:#e8edf8}
     .hero{padding:56px 0}
-    .title{font-size:clamp(28px,6vw,54px);line-height:1.05;margin:0 0 10px}
-    .subtitle{color:#aeb6c1;max-width:780px;margin:0 0 18px}
-    .cta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
-    .cta input{flex:1 1 260px;background:#0f1420;border:1px solid #263247;color:#dfe7f3;border-radius:10px;padding:12px 14px;outline:none}
-    .btn-gradient{flex:0 0 auto;border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,#6ee0ff,#876bff);color:#0b0f17}
-    .pills{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 22px}
+    .title{font-size:clamp(28px,6vw,54px);line-height:1.05;margin:0 0 12px}
+    .subtitle{color:#aeb6c1;max-width:760px;margin:0 0 18px}
+    /* input group */
+    .launcher{display:flex;gap:10px;align-items:center;max-width:720px}
+    .launcher input{
+      flex:1;background:#0f1420;border:1px solid #263247;color:#dfe7f3;border-radius:12px;
+      padding:12px 14px;outline:none
+    }
+    .btn{
+      border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;
+      background:linear-gradient(90deg,#66e0ff,#8b6bff);color:#0b0f17
+    }
+    .pills{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#121a28;border:1px solid #263247;color:#dfe7f3;font-size:14px}
     .cards{display:grid;grid-template-columns:1fr;gap:14px}
-    .card{background:#0f1523;border:1px solid #253146;border-radius:16px;padding:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
     .card h3{margin:0 0 6px}
-    @media(min-width:860px){.cards{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:880px){.cards{grid-template-columns:repeat(3,1fr)}}
     footer{padding:40px 0;color:#94a3b8;font-size:14px}
-    .links a{color:#94a3b8;margin-right:14px}
-    body{background:radial-gradient(1200px 500px at 15% -10%,rgba(59,131,246,.22),transparent 60%),radial-gradient(900px 480px at 95% 0,rgba(142,55,255,.20),transparent 60%),#0b0f17;color:#e8edf8;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    footer a{color:#94a3b8;margin-right:14px}
   </style>
 </head>
 <body>
   <header class="nav container">
     <a class="brand" href="/">
-      <!-- Uses your repo root: /logo.svg with PNG fallback -->
-      <img src="/logo.svg" alt="RupiRamp logo" onerror="this.onerror=null;this.src='/logo.png';" />
+      <img src="/logo.svg" alt="RupiRamp logo" onerror="this.onerror=null;this.src='/logo.png';">
       <div class="wordmark"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></div>
     </a>
     <nav class="links">
@@ -56,15 +70,12 @@
   <main class="container">
     <section class="hero">
       <h1 class="title">Instant USDT/USDC → INR via UPI</h1>
-      <p class="subtitle">
-        Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.
-      </p>
+      <p class="subtitle">Fast INR payouts (beta target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
 
-      <!-- Launcher -->
-      <form id="cashout-form" class="cta" onsubmit="return false;">
+      <div class="launcher">
         <input id="inr-amount" inputmode="numeric" pattern="[0-9]*" placeholder="Optional: INR amount (e.g. 10000)" />
-        <button id="start-cashout" type="button" class="btn-gradient">Start cash out</button>
-      </form>
+        <button id="start-cashout" class="btn">Start cash out</button>
+      </div>
 
       <div class="pills">
         <div class="pill">⚡ 2–10 min beta target</div>
@@ -74,76 +85,65 @@
       </div>
 
       <div class="cards" id="how">
-        <div class="card">
-          <h3>Deposit</h3>
-          <p>Users send USDT/USDC from their wallet or exchange.</p>
-        </div>
-        <div class="card">
-          <h3>Convert</h3>
-          <p>We route to licensed off-ramp partners for INR conversion.</p>
-        </div>
-        <div class="card">
-          <h3>Payout</h3>
-          <p>Funds arrive to the user’s UPI ID or bank.</p>
-        </div>
+        <div class="card"><h3>Deposit</h3><p>Users send USDT/USDC from their wallet or exchange.</p></div>
+        <div class="card"><h3>Convert</h3><p>We route to licensed off-ramp partners for INR conversion.</p></div>
+        <div class="card"><h3>Payout</h3><p>Funds arrive to the user’s UPI ID or bank.</p></div>
       </div>
 
       <div class="cards" id="why" style="margin-top:16px">
-        <div class="card">
-          <h3>Non-custodial</h3>
-          <p>Users keep control of crypto until conversion.</p>
-        </div>
-        <div class="card">
-          <h3>Licensed partners</h3>
-          <p>FIU-registered partners handle KYC/AML.</p>
-        </div>
-        <div class="card">
-          <h3>Simple fees</h3>
-          <p>Our platform fee is shown upfront in the widget.</p>
-        </div>
+        <div class="card"><h3>Non-custodial</h3><p>Users keep control of crypto until conversion.</p></div>
+        <div class="card"><h3>Licensed partners</h3><p>FIU-registered partners handle KYC/AML.</p></div>
+        <div class="card"><h3>Simple fees</h3><p>Our platform fee is shown upfront in the widget.</p></div>
       </div>
     </section>
   </main>
 
   <footer class="container">
-    <div class="links">
-      <a href="/terms.html">Terms</a>
-      <a href="/privacy.html">Privacy</a>
-    </div>
+    <a href="/terms.html">Terms</a> <a href="/privacy.html">Privacy</a>
     <div style="margin-top:10px">© <span id="y"></span> RupiRamp Ltd. We do not custody funds.</div>
   </footer>
 
   <script>
+    // Year stamp
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // 👉 PASTE your STAGING API key between the quotes below:
-    const TRANSAK_API_KEY = 'PASTE_YOUR_STAGING_API_KEY_HERE';
+    // 🔑 PASTE YOUR STAGING API KEY HERE (looks like abcd-1234-....)
+    const TRANSAK_API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
 
+    // Graceful guard so the button tells you what's wrong
     const startBtn = document.getElementById('start-cashout');
     const amountEl = document.getElementById('inr-amount');
 
     startBtn.addEventListener('click', () => {
+      if (!window.TransakSDK) {
+        alert('Transak SDK failed to load. Check network/content blocker.');
+        return;
+      }
+      if (!TRANSAK_API_KEY || TRANSAK_API_KEY.includes('PASTE')) {
+        alert('Add your STAGING API key in index.html first.');
+        return;
+      }
+
       const amt = parseFloat((amountEl.value || '').replace(/[, ]/g, ''));
       const defaultFiatAmount = isNaN(amt) ? undefined : Math.max(1, Math.round(amt));
 
-      // Open Transak widget in STAGING (off-ramp only)
       const transak = new window.TransakSDK({
         apiKey: TRANSAK_API_KEY,
         environment: 'STAGING',             // switch to 'PRODUCTION' after KYB approval
-        productsAvailed: 'SELL',
+        productsAvailed: 'SELL',            // off-ramp
         fiatCurrency: 'INR',
-        defaultFiatAmount,                  // optional if user entered INR
+        defaultFiatAmount,                  // optional; pre-fills INR
         partnerOrderId: 'rr-' + Date.now(),
+        themeColor: '#0b0f17',
         widgetWidth: '100%',
         widgetHeight: '650px',
-        themeColor: '#0b0f17',
         hideMenu: true,
         hostURL: window.location.origin
       });
 
       transak.init();
 
-      // Optional debug logging
+      // Optional logs (helpful during staging)
       transak.on(transak.EVENTS.TRANSAK_ORDER_CREATED,  e => console.log('Order created', e));
       transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL,e => console.log('Order success', e));
       transak.on(transak.EVENTS.TRANSAK_ORDER_FAILED,    e => console.log('Order failed', e));
