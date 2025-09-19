@@ -14,7 +14,7 @@
         environment: 'STAGING',
         productsAvailed: ['SELL'],
         defaultCryptoCurrency: 'USDT',
-        defaultFiatCurrency: 'INR',
+        defaultFiatCurrency: 'GBP',
         defaultPaymentMethod: 'upi',
         walletAddress: '', // not required for SELL
         themeColor: '#7f7bff',
