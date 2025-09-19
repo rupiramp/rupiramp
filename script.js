@@ -2,7 +2,7 @@
 (function(){
   const btn = document.getElementById('startBtn');
   const amountEl = document.getElementById('inrInput');
-  const API_KEY = 'PASTE_YOUR_STAGING_API_KEY_HERE'; // <-- replace and keep quotes
+  const API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8'; // <-- replace and keep quotes
 
   function openWidget(){
     const amount = parseFloat(amountEl.value || '0') || undefined;
