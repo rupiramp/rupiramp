@@ -2,116 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RupiRamp — Instant USDT/USDC → INR via UPI</title>
-  <meta name="description" content="Fast INR payouts via UPI. Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — USDT/USDC ➜ INR via UPI</title>
+  <meta name="description" content="Cash out USDT/USDC to INR via UPI. Non-custodial. KYC/AML handled by licensed partners. Transparent FX & fees." />
+  <meta name="theme-color" content="#0b0c16" />
+  <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://cdn.transak.com" crossorigin>
   <style>
     :root{
-      --bg:#0b0f1a;
-      --card:#151c2b;
-      --text:#e9eef7;
-      --muted:#b8c0d4;
-      --accent1:#6ee7f5;
-      --accent2:#8b5cf6;
-      --accent3:#60a5fa;
-      --ring: rgba(139,92,246,0.3);
+      --bg:#0b0c16;
+      --card:#121428;
+      --ink:#e9eef7;
+      --muted:#aeb6c9;
+      --accent1:#7bd0ff;
+      --accent2:#b38fff;
+      --pill:#1b1f3a;
+      --ring:#2b335f;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    html{background:var(--bg); color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    body{margin:0; line-height:1.5}
+    /* Deep-space gradient with zero banding */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
-        /* anti-banding noise overlay */
-        url("data:image/svg+xml;utf8,\
-          <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>\
-            <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 .015 .03 .04'/></feComponentTransfer></filter>\
-            <rect width='100%%' height='100%%' filter='url(#n)'/>\
-          </svg>") repeat,
-        radial-gradient(1200px 700px at 15% -10%, rgba(110,231,245,.25), rgba(110,231,245,0) 60%),
-        radial-gradient(1200px 700px at 85% 0%, rgba(139,92,246,.28), rgba(139,92,246,0) 55%),
-        linear-gradient(180deg, #0a0e18 0%, #0b0f1a 40%, #0e1322 100%);
-      background-attachment: fixed,fixed,fixed,fixed;
+        radial-gradient(1200px 800px at 12% 6%, rgba(64,157,255,.20), transparent 60%),
+        radial-gradient(1000px 700px at 88% 12%, rgba(171,90,255,.18), transparent 55%),
+        radial-gradient(900px 620px at 70% 100%, rgba(75,0,130,.20), transparent 60%),
+        linear-gradient(180deg, #0b0c16 0%, #0e0f1d 100%);
+      filter:saturate(110%) contrast(105%);
     }
-    header{
-      position:sticky;top:0;z-index:10;
-      backdrop-filter:saturate(140%) blur(10px);
-      background:rgba(11,15,26,.55);
-      border-bottom:1px solid rgba(255,255,255,.05);
+
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:24px}
+    header.nav{position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px); background:rgba(11,12,22,.35); border-bottom:1px solid rgba(255,255,255,.05); z-index:20}
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:10px; padding:6px 8px; border-radius:10px}
+    .brand img{width:28px; height:28px; border-radius:8px; object-fit:cover; display:block}
+    .wordmark{font-weight:700; letter-spacing:.2px}
+    .wordmark .rupi{color:#e9eef7}
+    .wordmark .ramp{background:linear-gradient(90deg, var(--accent1) 0%, var(--accent2) 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+    .nav-links{display:flex; gap:22px; font-weight:500; color:var(--muted)}
+    .nav-links a:hover{color:#fff}
+
+    .hero{padding:48px 0}
+    .hero-card{
+      background:rgba(18,20,40,.65);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+      padding:32px 24px;
     }
-    .container{max-width:1100px;margin:0 auto;padding:18px 20px}
-    .nav{display:flex;align-items:center;gap:14px;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-    .brand img{width:28px;height:28px;border-radius:6px;display:block}
-    .wordmark{font-weight:700;letter-spacing:.2px}
-    .wordmark .rupi{opacity:.95}
-    .wordmark .ramp{
-      background:linear-gradient(90deg,var(--accent3),var(--accent2));
-      -webkit-background-clip:text;background-clip:text;color:transparent
+    h1{font-size:clamp(28px, 5vw, 52px); line-height:1.1; margin:0 0 10px}
+    .lead{color:var(--muted); max-width:760px; margin:0 0 18px; font-size:clamp(14px, 1.8vw, 18px)}
+    .controls{
+      margin:14px auto 10px;
+      max-width:560px;                 /* keeps desktop neat */
+      display:grid; grid-template-columns: 1fr auto; gap:12px;
     }
-    nav a{color:var(--muted);margin-left:18px;text-decoration:none}
-    nav a:hover{color:var(--text)}
-    main{padding:30px 20px}
-    .hero{max-width:1100px;margin:0 auto;padding:28px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}
-    h1{font-size:clamp(28px,6vw,54px);line-height:1.05;margin:0 0 10px}
-    p.lead{color:var(--muted);margin:0 0 18px}
-    .controls{display:flex;gap:10px;align-items:center;margin:18px 0 14px;flex-wrap:wrap}
-    input.amount{
-      flex:1 1 260px;min-width:240px;height:46px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
-      background:#0f1524;color:var(--text);padding:0 14px;outline:none
+    .input{
+      background:rgba(10,12,26,.8); border:1px solid var(--ring);
+      color:#dfe7f7; height:44px; padding:0 14px; border-radius:12px; width:100%;
+      outline:none;
     }
-    input.amount:focus{border-color:var(--ring);box-shadow:0 0 0 6px var(--ring)}
-    button.primary{
-      height:46px;padding:0 16px;border:0;border-radius:12px;color:#0a0e18;font-weight:700;cursor:pointer;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      box-shadow:0 6px 18px rgba(139,92,246,.35)
+    .input::placeholder{color:#7d86a4}
+    .btn{border:0; height:44px; padding:0 16px; border-radius:12px; font-weight:700; cursor:pointer}
+    .btn-primary{
+      background:linear-gradient(90deg, #7bd0ff, #b38fff); color:#0b0c16;
+      box-shadow: 0 6px 22px rgba(123,208,255,.25), inset 0 1px 0 rgba(255,255,255,.5);
+      white-space:nowrap;
     }
-    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 8px}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:.92rem}
-    .grid{display:grid;gap:16px;margin-top:22px;grid-template-columns:repeat(3,1fr)}
-    .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px}
-    .card h3{margin:0 0 8px;font-size:1.02rem}
-    footer{max-width:1100px;margin:40px auto 30px;color:var(--muted);padding:0 20px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .pills{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 6px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
+      background:var(--pill); border:1px solid rgba(255,255,255,.06); color:#d7def0;
+      border-radius:999px; font-size:14px;
+    }
+
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:18px}
+    .card{
+      background:rgba(18,20,40,.72); border:1px solid rgba(255,255,255,.06);
+      border-radius:16px; padding:18px;
+    }
+    .card h3{margin:0 0 6px; font-size:18px}
+    .card p{margin:0; color:var(--muted)}
+
+    footer{color:var(--muted); font-size:14px; padding:40px 0}
+    footer a{color:var(--muted); text-decoration:underline}
+    .foot-inner{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a href="/" class="brand">
-        <img src="/logo.png" alt="RupiRamp logo"
-             onerror="this.onerror=null; this.src='/logo.svg';" />
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">
+        <!-- Use your ₹ mark (logo.png). Keep this file at repo root or adjust the path. -->
+        <img src="/logo.png" alt="RupiRamp logo" />
         <div class="wordmark"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></div>
       </a>
-      <nav>
+      <nav class="nav-links">
         <a href="#how">How it works</a>
         <a href="/faq.html">FAQ</a>
         <a href="/privacy.html">Privacy</a>
-        <a href="mailto:info@rupiramp.com">Contact</a>
+        <a href="/contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>Instant USDT/USDC → INR via UPI</h1>
+  <main class="container hero">
+    <section class="hero-card">
+      <h1>Instant USDT/USDC ➜ INR via UPI</h1>
       <p class="lead">
-        Fast INR payouts (beta target: <b>2–10 min</b>). Users keep custody until conversion; KYC/AML handled by licensed partners.
-        We don’t hold customer funds.
+        Fast INR payouts (beta target: <strong>2–10&nbsp;min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.
       </p>
 
       <div class="controls">
-        <input id="inr" class="amount" inputmode="numeric" placeholder="Optional: INR amount (e.g. 10000)" />
-        <button id="start" class="primary">Start cash out</button>
+        <input id="inrAmount" class="input" inputmode="numeric" pattern="[0-9]*" placeholder="Optional: INR amount (e.g. 10000)">
+        <button id="startBtn" class="btn btn-primary">Start cash out</button>
       </div>
 
-      <div class="badges">
-        <span class="badge">⚡ 2–10 min beta target</span>
-        <span class="badge">📑 Licensed partners handle KYC</span>
-        <span class="badge">🔍 Transparent FX &amp; fees</span>
-        <span class="badge">🔐 We don’t hold customer funds</span>
+      <div class="pills">
+        <span class="pill">⚡ 2–10 min beta target</span>
+        <span class="pill">🧾 Licensed partners handle KYC</span>
+        <span class="pill">🔍 Transparent FX & fees</span>
+        <span class="pill">🔒 We don’t hold customer funds</span>
       </div>
 
       <div class="grid" id="how">
@@ -126,55 +148,85 @@
   </main>
 
   <footer>
-    <div>© 2025 RupiRamp Ltd. We do not custody funds. | <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a></div>
+    <div class="container foot-inner">
+      <div>© 2025 RupiRamp Ltd. We do not custody funds.</div>
+      <div><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></div>
+    </div>
   </footer>
 
-  <!-- Transak SDK (load resiliently) -->
+  <!-- Transak SDK (best-effort). If blocked, we fall back to hosted page. -->
+  <script src="https://cdn.transak.com/js/sdk/v1.1.2/transak.js" async></script>
   <script>
-    (function loadTransak(){
-      const s = document.createElement('script');
-      s.src = 'https://cdn.transak.com/js/sdk/v1.1/widget.js';
-      s.async = true;
-      s.onload = init;
-      s.onerror = function(){
-        alert('Transak SDK failed to load. If you use an ad/content blocker, please allow cdn.transak.com and reload.');
-      };
-      document.head.appendChild(s);
+    // 🔑 Paste your STAGING API key between the quotes:
+    const TRANSAK_API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
 
-      function init(){
-        const btn = document.getElementById('start');
-        btn.addEventListener('click', () => {
-          const amount = parseFloat(document.getElementById('inr').value || '0');
-          // IMPORTANT: staging key + environment must match
-          const transak = new TransakSDK({
-            apiKey: '6e9f90f3-1202-4fca-a6ba-dd69391878f8',   // ← paste your STAGING key inside these quotes
-            environment: 'STAGING',
-            productsAvailed: 'SELL',
-            cryptoCurrencyCode: 'USDT',            // or 'USDC'
-            defaultFiatAmount: isFinite(amount) && amount>0 ? amount : undefined,
-            fiatCurrency: 'INR',
-            themeColor: '0b0f1a',
-            isFeeCalculationHidden: false,
-            partnerOrderId: 'rupi-' + Date.now(),
-            redirectURL: window.location.origin + '/?success=1',
-            widgetHeight: '650px',
-            widgetWidth: '480px'
-          });
-          transak.init();
+    const button = document.getElementById('startBtn');
+    const amountInput = document.getElementById('inrAmount');
 
-          transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, () => transak.close());
-          transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (order) => {
-            console.log('Order successful', order);
-            alert('Order submitted. You can monitor it in the Transak dashboard (staging).');
-            transak.close();
-          });
-          transak.on(transak.EVENTS.TRANSAK_ORDER_FAILED, (err) => {
-            console.error(err);
-            alert('Order failed. Check console or Transak dashboard for details.');
-          });
+    function openHostedFallback() {
+      const amt = (amountInput.value || '').replace(/[^0-9.]/g,'');
+      const params = new URLSearchParams({
+        apiKey: TRANSAK_API_KEY,
+        productsAvailed: 'SELL',
+        fiatCurrency: 'INR',
+        defaultFiatAmount: amt || '10000',
+        defaultCryptoCurrency: 'USDT',      // you can change to USDC
+        isFeeCalculationHidden: 'false',
+        themeColor: '0b0c16',
+        hideMenu: 'true'
+      });
+      const url = 'https://global-stg.transak.com/?' + params.toString();
+      window.open(url, 'transak', 'width=420,height=720');
+    }
+
+    function openTransakSDK() {
+      try {
+        if (!window.transakSDK || !TRANSAK_API_KEY) { openHostedFallback(); return; }
+        const amt = (amountInput.value || '').replace(/[^0-9.]/g,'');
+        const transakConfig = {
+          apiKey: TRANSAK_API_KEY,
+          environment: 'STAGING',           // Use 'PRODUCTION' after KYB approval + prod key
+          productsAvailed: 'SELL',
+          fiatCurrency: 'INR',
+          defaultFiatAmount: amt || '10000',
+          defaultCryptoCurrency: 'USDT',
+          exchangeScreenTitle: 'Cash out to INR',
+          widgetHeight: '680px',
+          widgetWidth:  '420px',
+          hideMenu: true,
+          isFeeCalculationHidden: false
+        };
+        const transak = new window.transakSDK(transakConfig);
+        transak.init();
+
+        transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (orderData) => {
+          console.log('Order successful', orderData);
+          transak.close();
         });
+        transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, () => {
+          console.log('Widget closed');
+          transak.close();
+        });
+      } catch (e) {
+        console.warn('Transak SDK failed, falling back.', e);
+        openHostedFallback();
       }
-    })();
+    }
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!TRANSAK_API_KEY || TRANSAK_API_KEY.includes('YOUR_')) {
+        alert('Add your Transak STAGING API key in index.html and redeploy.');
+        return;
+      }
+      // If the SDK script is blocked by a content blocker, fallback will open
+      if (!window.transakSDK) {
+        // Give the script tag a moment in case it’s still loading
+        setTimeout(() => { if (!window.transakSDK) openHostedFallback(); else openTransakSDK(); }, 250);
+      } else {
+        openTransakSDK();
+      }
+    });
   </script>
 </body>
 </html>
