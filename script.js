@@ -1,94 +1,82 @@
-// RupiRamp — resilient Transak launcher (staging-safe)
+// ---------- RupiRamp x Transak (staging-safe) ----------
 (() => {
   const input = document.getElementById('inrInput');
   const btn   = document.getElementById('startBtn');
 
-  // --------- Toggle when you go live ----------
-  const IS_PROD = false;                // set true when KYB is approved + live key
-  const API_KEY_STAGING = 'YOUR_STAGING_API_KEY';
-  const API_KEY_PROD    = 'YOUR_PRODUCTION_API_KEY';
+  // Flip this to true when you switch to the live key.
+  const IS_PROD = false;
+
+  // Put your own keys here (or keep how you already set them).
+  const API_KEY_STAGING   = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
+  const API_KEY_PROD      = 'YOUR_PRODUCTION_API_KEY';
+
   const API_KEY = IS_PROD ? API_KEY_PROD : API_KEY_STAGING;
 
-  // Staging usually doesn't support INR; use a safe fiat there.
-  const FIAT_STAGING = 'GBP';
-  const FIAT_PROD    = 'INR';
-  const ENV  = IS_PROD ? 'PRODUCTION' : 'STAGING';
-  const HOST = IS_PROD ? 'https://global.transak.com' : 'https://global-stg.transak.com';
+  // Staging usually doesn't have INR — use a safe fallback (GBP).
+  const STAGING_FIAT = 'GBP';
+  const PROD_FIAT    = 'INR';
 
-  // --------- 1) SDK loader with timeout ----------
-  function loadScript(src, timeoutMs = 4000) {
-    return new Promise((resolve, reject) => {
-      // Already present?
-      if (window.Transak) return resolve();
-      const s = document.createElement('script');
-      s.src = src;
-      s.async = true;
-      s.onload = () => resolve();
-      s.onerror = () => reject(new Error('script error'));
-      document.head.appendChild(s);
-      setTimeout(() => {
-        if (!window.Transak) reject(new Error('timeout'));
-      }, timeoutMs);
-    });
-  }
+  function openTransak() {
+    // amount (optional)
+    const amount = Number(input && input.value) || undefined;
 
-  // Build a full config object shared by SDK + hosted fallback
-  function buildConfig() {
-    const amount = Number(input?.value) || undefined;
-    const cfg = {
+    if (!window.Transak) {
+      alert('Transak SDK failed to load. Please disable any content blocker and try again.');
+      return;
+    }
+
+    // Base config (SELL only)
+    const config = {
       apiKey: API_KEY,
-      environment: ENV,
+      environment: IS_PROD ? 'PRODUCTION' : 'STAGING',
       productsAvailed: 'SELL',
+      partnerOrderId: undefined,
       defaultCryptoCurrency: 'USDT,USDC',
-      fiatCurrency: IS_PROD ? FIAT_PROD : FIAT_STAGING,
-      hideMenu: true,
+      walletAddress: '',                 // user chooses in widget
       themeColor: '#0b0a16',
+      widgetHeight: '680px',
+      widgetWidth:  '100%',
+      hideMenu: true,
+      // hostURL is used for security; helps some blockers
       hostURL: window.location.origin
     };
+
+    // Prefill amount if provided
     if (amount) {
-      cfg.isAmountInFiat = true;
-      cfg.fiatAmount = amount;
+      config.isAmountInFiat = true;
+      config.fiatAmount = amount;
     }
+
+    // Currency handling
     if (IS_PROD) {
-      cfg.defaultCountry = 'IN';
-      cfg.defaultPaymentMethod = 'upi';
+      // Live: INR
+      config.fiatCurrency = PROD_FIAT;
+      config.defaultPaymentMethod = 'upi';
+      config.defaultCountry = 'IN';
+    } else {
+      // Staging: DO NOT set INR. Use a supported fiat (GBP).
+      config.fiatCurrency = STAGING_FIAT;
+      // If you see “Something went wrong”, try removing defaultCountry entirely.
     }
-    return cfg;
-  }
 
-  // Convert config to query-string for hosted-page fallback
-  function configToQuery(cfg) {
-    const q = new URLSearchParams();
-    Object.entries(cfg).forEach(([k, v]) => {
-      if (v !== undefined && v !== null) q.set(k, String(v));
-    });
-    return q.toString();
-  }
-
-  async function launch() {
-    const cfg = buildConfig();
-
-    // Try to load SDK first
     try {
-      await loadScript(`${HOST}/sdk/v1.1/widget.js`);
-      if (!window.Transak) throw new Error('not defined after load');
+      const transak = new Transak(config);
 
-      const transak = new Transak(cfg);
-      transak.on('ALL_EVENTS', e => console.log('[Transak]', e));
-      transak.on('TRANSAK_ORDER_SUCCESS', () => transak.close());
+      // Helpful logs during testing
+      transak.on('ALL_EVENTS', (e) => console.log('[Transak]', e));
+      transak.on('TRANSAK_ORDER_SUCCESS', (e) => {
+        console.log('Order Success:', e);
+        transak.close();
+      });
       transak.on('TRANSAK_ORDER_CANCELLED', () => transak.close());
-      transak.on('TRANSAK_WIDGET_CLOSE', () => transak.close());
-      transak.init();
-      return;
-    } catch (err) {
-      console.warn('Transak SDK load failed:', err?.message || err);
+      transak.on('TRANSAK_WIDGET_CLOSE',    () => transak.close());
 
-      // --------- 2) Hosted page fallback ----------
-      // Opens a new tab/window with your params. Works even when SDK is blocked.
-      const url = `${HOST}/?${configToQuery(buildConfig())}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
+      transak.init();
+    } catch (err) {
+      console.error('Transak init error', err);
+      alert('Could not start the cash-out widget. If you use Safari, try turning off “Hide IP Address” for this site or any content blockers, then reload.');
     }
   }
 
-  btn?.addEventListener('click', launch);
+  if (btn) btn.addEventListener('click', openTransak);
 })();
