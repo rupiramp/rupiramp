@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>RupiRamp — Sell USDT/USDC → INR (UPI)</title>
-  <meta name="description" content="Cash out USDT/USDC to INR via UPI. Non-custodial." />
+  <meta name="description" content="Sell USDT/USDC to INR via UPI. Non-custodial. Fast INR payout through licensed partners." />
+  <meta property="og:image" content="og-image.svg" />
+
   <link rel="icon" href="logo.svg" />
   <link rel="stylesheet" href="styles.css" />
-  <meta property="og:image" content="og-image.svg" />
+
+  <!-- ✅ Staging API key lives here -->
+  <script>
+    window.TRANSAK_API_KEY = "6e9f90f3-1202-4fca-a6ba-dd69391878f8";
+  </script>
 </head>
 <body>
-  <div class="app"><!-- flex column layout → footer sticks to bottom -->
+  <div class="app">
 
     <!-- Top Nav -->
     <header class="nav glass">
@@ -35,7 +38,7 @@
         <h1>Sell crypto → INR via UPI</h1>
         <p class="sub">Fast INR payout. Non-custodial. KYC/AML by licensed partners.</p>
 
-        <!-- Minimal trade card -->
+        <!-- Trade card -->
         <div class="trade glass">
           <div class="tabs">
             <button class="tab active" aria-selected="true">Sell</button>
@@ -55,7 +58,7 @@
       </section>
     </main>
 
-    <!-- Footer pinned bottom-right -->
+    <!-- Footer -->
     <footer class="foot">
       <div class="left">© 2025 RupiRamp Ltd.</div>
       <div class="links">
@@ -63,11 +66,9 @@
         <a href="privacy.html">Privacy</a>
       </div>
     </footer>
-
   </div>
 
-  <!-- Transak SDK (staging) -->
-  <script src="https://global-stg.transak.com/sdk/v1.1/widget.js"></script>
+  <!-- ✅ Load script.js (logic lives here) -->
   <script src="script.js"></script>
 </body>
 </html>
