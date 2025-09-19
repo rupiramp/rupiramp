@@ -1,82 +1,91 @@
-// ---------- RupiRamp x Transak (staging-safe) ----------
+// RupiRamp — Transak launcher (staging only, popup-safe)
 (() => {
   const input = document.getElementById('inrInput');
   const btn   = document.getElementById('startBtn');
 
-  // Flip this to true when you switch to the live key.
-  const IS_PROD = false;
+  // ====== CONFIG: staging only ======
+  const API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
+  const HOST    = 'https://global-stg.transak.com';
+  const FIAT    = 'GBP'; // staging usually doesn’t support INR
+  // ==================================
 
-  // Put your own keys here (or keep how you already set them).
-  const API_KEY_STAGING   = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
-  const API_KEY_PROD      = 'YOUR_PRODUCTION_API_KEY';
-
-  const API_KEY = IS_PROD ? API_KEY_PROD : API_KEY_STAGING;
-
-  // Staging usually doesn't have INR — use a safe fallback (GBP).
-  const STAGING_FIAT = 'GBP';
-  const PROD_FIAT    = 'INR';
-
-  function openTransak() {
-    // amount (optional)
-    const amount = Number(input && input.value) || undefined;
-
-    if (!window.Transak) {
-      alert('Transak SDK failed to load. Please disable any content blocker and try again.');
-      return;
-    }
-
-    // Base config (SELL only)
-    const config = {
+  function buildConfig() {
+    const amount = Number(input?.value) || undefined;
+    const cfg = {
       apiKey: API_KEY,
-      environment: IS_PROD ? 'PRODUCTION' : 'STAGING',
+      environment: 'STAGING',
       productsAvailed: 'SELL',
-      partnerOrderId: undefined,
       defaultCryptoCurrency: 'USDT,USDC',
-      walletAddress: '',                 // user chooses in widget
+      fiatCurrency: FIAT,
       themeColor: '#0b0a16',
-      widgetHeight: '680px',
-      widgetWidth:  '100%',
       hideMenu: true,
-      // hostURL is used for security; helps some blockers
       hostURL: window.location.origin
     };
-
-    // Prefill amount if provided
     if (amount) {
-      config.isAmountInFiat = true;
-      config.fiatAmount = amount;
+      cfg.isAmountInFiat = true;
+      cfg.fiatAmount = amount;
     }
+    return cfg;
+  }
 
-    // Currency handling
-    if (IS_PROD) {
-      // Live: INR
-      config.fiatCurrency = PROD_FIAT;
-      config.defaultPaymentMethod = 'upi';
-      config.defaultCountry = 'IN';
-    } else {
-      // Staging: DO NOT set INR. Use a supported fiat (GBP).
-      config.fiatCurrency = STAGING_FIAT;
-      // If you see “Something went wrong”, try removing defaultCountry entirely.
+  function configToQuery(cfg) {
+    const q = new URLSearchParams();
+    Object.entries(cfg).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== '') q.set(k, String(v));
+    });
+    return q.toString();
+  }
+
+  function loadSdkWithTimeout(src, ms = 4000) {
+    return new Promise((resolve, reject) => {
+      if (window.transakSDK || window.Transak) return resolve();
+      const s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload  = () => resolve();
+      s.onerror = () => reject(new Error('script error'));
+      document.head.appendChild(s);
+      setTimeout(() => {
+        if (!window.transakSDK && !window.Transak) reject(new Error('timeout'));
+      }, ms);
+    });
+  }
+
+  async function launch() {
+    // 1) Pre-open a blank tab (avoids popup blocking)
+    let popup = window.open('', '_blank', 'noopener,noreferrer');
+    if (!popup) {
+      alert('Please allow pop-ups for this site to start the cash out.');
+      return;
     }
-
     try {
-      const transak = new Transak(config);
+      popup.document.write('<!doctype html><title>Loading…</title><style>body{background:#0b0a16;color:#e8eef6;font:16px system-ui;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}</style><div>Opening secure widget…</div>');
+    } catch {}
 
-      // Helpful logs during testing
-      transak.on('ALL_EVENTS', (e) => console.log('[Transak]', e));
-      transak.on('TRANSAK_ORDER_SUCCESS', (e) => {
-        console.log('Order Success:', e);
-        transak.close();
-      });
+    const cfg = buildConfig();
+
+    // 2) Try loading SDK
+    try {
+      await loadSdkWithTimeout(`${HOST}/sdk/v1.1/widget.js`, 4000);
+      const SDKCtor =
+        (window.transakSDK && window.transakSDK.default) ||
+        (window.Transak && window.Transak);
+      if (!SDKCtor) throw new Error('SDK global missing');
+
+      // close pre-opened tab, use modal
+      try { popup.close(); } catch {}
+
+      const transak = new SDKCtor(cfg);
+      transak.on('TRANSAK_ORDER_SUCCESS', () => transak.close());
       transak.on('TRANSAK_ORDER_CANCELLED', () => transak.close());
-      transak.on('TRANSAK_WIDGET_CLOSE',    () => transak.close());
-
+      transak.on('TRANSAK_WIDGET_CLOSE', () => transak.close());
       transak.init();
+      return;
     } catch (err) {
-      console.error('Transak init error', err);
-      alert('Could not start the cash-out widget. If you use Safari, try turning off “Hide IP Address” for this site or any content blockers, then reload.');
+      console.warn('SDK load failed, fallback to hosted page:', err?.message || err);
+      const url = `${HOST}/?${configToQuery(cfg)}`;
+      try { popup.location.replace(url); } catch { window.location.href = url; }
     }
   }
 
-  if (btn) btn.addEventListener('click', openTransak);
+  btn?.addEventListener('click', launch);
 })();
