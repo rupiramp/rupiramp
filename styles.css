@@ -42,14 +42,16 @@ body{
 
 /* ---- Nav ---- */
 .nav{
-  position:sticky; top:0; z-index:50;
-  width:100%;
-  padding:12px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  background: linear-gradient(180deg, rgba(15,15,35,0.85), rgba(15,15,35,0.6));
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border-bottom: 1px solid var(--border);
+  position:sticky; top:16px; z-index:50;
+  margin:16px auto; max-width:1100px; padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--fg)}
+.wordmark{font-weight:800; font-size:1.25rem}
+.mark{border-radius:10px}
+.wordmark .accent{
+  background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand3));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .menu a{color:var(--fg); text-decoration:none; opacity:.9; margin-left:18px}
 .menu a:hover{opacity:1}
@@ -68,19 +70,19 @@ body{
   background:rgba(255,255,255,.05);
   color:var(--fg); padding:8px 14px; border-radius:12px; font-weight:700;
 }
-.tab{
-  border:none;
-  background:rgba(255,255,255,.08);
-  color:var(--fg);
-  padding:10px 20px;
-  border-radius:12px;
-  font-weight:700;
-  transition: all .25s ease;
-}
 .tab.active{
-  background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand3));
-  color:#0b0a16;
-  box-shadow: 0 6px 14px rgba(127,123,255,.35);
+  background:linear-gradient(90deg,var(--brand2),var(--brand3));
+  color:#0b0a16; border-color:transparent;
+}
+.tab[disabled]{opacity:.4}
+
+.row{display:flex; flex-direction:column; gap:8px; margin:8px 0 14px; text-align:left}
+.row label{font-size:.9rem; color:var(--muted)}
+.field{position:relative}
+.field input{
+  width:100%; padding:14px 72px 14px 14px; border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(10,10,25,.55); color:var(--fg); outline:none;
 }
 .field .unit{position:absolute; right:10px; top:50%; transform:translateY(-50%); opacity:.8}
 
