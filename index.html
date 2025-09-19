@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RupiRamp — USDT/USDC → INR via UPI</title>
+  <meta name="description" content="Fast, compliant INR payouts for Web3 users in India. Non‑custodial interface to licensed partners.">
+  <link rel="icon" href="logo.svg">
+  <link rel="apple-touch-icon" href="logo.svg">
+  <meta property="og:title" content="RupiRamp — Instant USDT/USDC → INR via UPI">
+  <meta property="og:description" content="Fast INR payouts. Non‑custodial. KYC/AML by licensed partners.">
+  <meta property="og:image" content="og-image.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav glass">
+    <a class="brand" href="/">
+      <img src="logo.svg" alt="RupiRamp" width="28" height="28">
+      <span class="wordmark">Rupi<span class="accent">Ramp</span></span>
+    </a>
+    <nav class="menu">
+      <a href="#how">How it works</a>
+      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero glass">
+      <h1>Instant USDT/USDC <span class="arrow">→</span> INR via UPI</h1>
+      <p class="sub">Fast INR payouts (target: <strong>2–10 min</strong>). Users keep custody until conversion; KYC/AML handled by licensed partners. We don’t hold customer funds.</p>
+
+      <div class="action-row">
+        <input id="inrInput" type="number" inputmode="numeric" min="0" step="100" placeholder="Optional: INR amount (e.g. 10000)" />
+        <button id="startBtn" class="cta">Start cash out</button>
+      </div>
+
+      <div class="pills">
+        <span>⚡ 2–10 min target</span>
+        <span>🧾 Licensed partners handle KYC</span>
+        <span>🔎 Transparent FX & fees</span>
+        <span>🔒 We don’t hold customer funds</span>
+      </div>
+    </section>
+
+    <section id="how" class="how glass">
+      <div class="step"><h3>Deposit</h3><p>Send USDT/USDC from your wallet or exchange.</p></div>
+      <div class="step"><h3>Convert</h3><p>We route to licensed off‑ramp partners for INR conversion.</p></div>
+      <div class="step"><h3>Payout</h3><p>Funds land to your UPI ID or bank.</p></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div id="contact">© 2025 RupiRamp Ltd. We do not custody funds.</div>
+  </footer>
+
+  <!-- Transak SDK (staging) -->
+  <script src="https://global-stg.transak.com/sdk/v1.1/widget.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
