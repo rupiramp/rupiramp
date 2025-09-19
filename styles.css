@@ -1,109 +1,120 @@
-/* System fonts for crisp rendering */
 :root{
-  --bg1: #0b0e1a;
-  --bg2: #121631;
-  --accent1:#8bd3ff;
-  --accent2:#9a6bff;
-  --glass: rgba(255,255,255,.06);
-  --glass-border: rgba(255,255,255,.14);
-  --text: #e9eef7;
-  --muted:#b6c0d6;
-  --shadow: 0 10px 40px rgba(0,0,0,.35);
+  --bg:#0b0f1a;
+  --ink:#e8ecf8;
+  --ink-dim:#b7c1d9;
+  --brand-a:#8a7dff;      /* keep your gradient vibe */
+  --brand-b:#59d6ff;
+  --glass:rgba(255,255,255,.06);
+  --stroke:rgba(255,255,255,.14);
+  --ring:rgba(137,126,255,.35);
+  --blur:18px;
+  --radius:18px;
 }
 
-/* Smooth gradient “liquid glass” background */
-html,body{margin:0;padding:0;background: radial-gradient(1200px 800px at 20% 10%,#1b2247 0%,transparent 50%),
-                                   radial-gradient(1000px 700px at 90% 20%,#351b6b 0%,transparent 55%),
-                                   linear-gradient(180deg,var(--bg1),var(--bg2));
-color:var(--text);
-font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
--webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+*{box-sizing:border-box}
+html,body{height:100%}
+html,body{
+  margin:0;
+  color:var(--ink);
+  background:var(--bg);
+  font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-.bg{position:fixed; inset:0; pointer-events:none; filter:saturate(110%) blur(0.2px);}
+a{color:var(--ink); text-decoration:none; opacity:.9}
+a:hover{opacity:1}
 
-.container{max-width:1100px; padding:24px; margin:100px auto 48px;}
+.bg{
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background:
+    radial-gradient(1200px 800px at 15% 10%, rgba(138,125,255,.35) 0%, rgba(138,125,255,0) 60%),
+    radial-gradient(900px 700px at 85% 20%, rgba(89,214,255,.28) 0%, rgba(89,214,255,0) 60%),
+    radial-gradient(900px 700px at 50% 100%, rgba(138,125,255,.25) 0%, rgba(138,125,255,0) 60%),
+    linear-gradient(180deg, #0b0f1a 0%, #0b0f1a 100%);
+  filter:saturate(110%) contrast(105%);
+}
 
+/* NAV */
 .nav{
-  position:sticky; top:0;
-  display:flex; justify-content:space-between; align-items:center;
-  margin:16px auto; max-width:1100px; padding:12px 16px;
-  border-radius:18px; backdrop-filter: blur(18px) saturate(120%);
-  background: var(--glass);
-  border:1px solid var(--glass-border);
-  box-shadow: var(--shadow);
-  z-index:10;
+  position:sticky; top:0; z-index:10;
+  padding:calc(10px + var(--safe-top)) 20px 12px;
+  display:flex; gap:16px; align-items:center; justify-content:space-between;
+  backdrop-filter:saturate(150%) blur(14px);
+  background:linear-gradient(180deg, rgba(10,12,20,.75), rgba(10,12,20,.55));
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-
-.brand{display:flex; gap:10px; align-items:center; text-decoration:none; color:var(--text);}
+.brand{display:flex; align-items:center; gap:12px}
+.logo{display:block; width:28px; height:28px; border-radius:8px}
 .wordmark{font-weight:700; letter-spacing:.2px}
-.wordmark .ramp{background: linear-gradient(90deg,var(--accent1),var(--accent2));
-                -webkit-background-clip:text; background-clip:text; color:transparent}
+.grad{background:linear-gradient(90deg,var(--brand-a),var(--brand-b));
+  -webkit-background-clip:text; background-clip:text; color:transparent}
 
-.links a{color:var(--text); text-decoration:none; opacity:.85; margin-left:18px}
-.links a:hover{opacity:1}
+.nav nav{display:flex; gap:22px; align-items:center; font-weight:500}
+.nav nav a{opacity:.85}
+.nav nav a:hover{opacity:1}
 
+/* WRAP */
+.wrap{max-width:1000px; margin:32px auto; padding:0 16px}
+
+/* GLASS cards */
 .glass{
-  background: var(--glass);
-  border:1px solid var(--glass-border);
-  border-radius:24px;
-  backdrop-filter: blur(18px) saturate(120%);
-  box-shadow: var(--shadow);
+  background:var(--glass);
+  backdrop-filter:blur(var(--blur)) saturate(140%);
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow: 0 6px 30px rgba(0,0,0,.35),
+              inset 0 1px 0 rgba(255,255,255,.10);
 }
 
-.hero{padding:28px}
-h1{font-size:clamp(28px,4vw,48px); margin:0 0 12px}
-.accent{background: linear-gradient(90deg,#b3f0ff,#a78bfa); -webkit-background-clip:text; color:transparent}
-.tagline{color:var(--muted); margin:0 0 18px; line-height:1.5}
+/* HERO */
+.hero{padding:28px 24px 26px}
+.hero h1{margin:6px 2px 12px; font-size:clamp(28px,3.6vw,48px); line-height:1.05}
+.hero .sub{margin:0 2px 18px; color:var(--ink-dim)}
 
-.amount-row{display:flex; gap:12px; align-items:center; margin:10px 0 14px}
-.amount-row input{
-  flex:1; height:44px; border-radius:14px; padding:0 14px;
-  background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
-  color:var(--text); outline:none;
+.start{display:flex; gap:12px; align-items:center; margin:8px 0 10px}
+.start input{
+  flex:1; height:46px; padding:0 14px; border-radius:14px;
+  background:rgba(0,0,0,.25); color:var(--ink);
+  border:1px solid rgba(255,255,255,.10);
+  outline:none;
 }
-.amount-row input::placeholder{color:#9fb0d6}
-
+.start input::placeholder{color:#9fb0c9}
 .cta{
-  height:44px; padding:0 18px; border-radius:14px; border:0; cursor:pointer;
-  color:#0b0e1a; font-weight:700;
-  background: linear-gradient(90deg,var(--accent1),var(--accent2));
-  box-shadow: 0 6px 20px rgba(124,108,255,.35);
+  height:46px; padding:0 18px; border-radius:14px; border:0; cursor:pointer;
+  color:#0a0d16; font-weight:700;
+  background:linear-gradient(135deg, var(--brand-a), var(--brand-b));
+  box-shadow:0 8px 28px rgba(137,126,255,.35), inset 0 1px 0 rgba(255,255,255,.35);
 }
-.cta:active{transform: translateY(1px)}
+.cta:hover{filter:saturate(105%) brightness(1.04)}
 
-.chips{display:flex; gap:10px; flex-wrap:wrap; padding:0; margin:12px 0 6px; list-style:none}
-.chips li{
-  font-size:.92rem; padding:8px 12px; border-radius:999px;
-  background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+.chip{
+  padding:8px 12px; border-radius:999px; font-weight:600; font-size:14px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap:14px; margin-top:18px;
+/* TILES */
+.tiles{
+  margin:18px 0 10px;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
 }
-.card{padding:18px}
-.card h3{margin:0 0 6px}
-.card p{margin:0; color:var(--muted)}
+.tile{padding:16px}
+.tile h3{margin:2px 0 6px}
+.tile p{margin:0; color:var(--ink-dim)}
 
-.footer{
-  max-width:1100px; margin:24px auto 40px; padding:14px 18px;
-  display:flex; justify-content:space-between; align-items:center; font-size:.95rem;
-}
-.footer a{color:var(--text); opacity:.8; text-decoration:none; margin-left:14px}
-.footer a:hover{opacity:1}
+/* FOOTER */
+.foot{padding:18px 16px calc(20px + var(--safe-bottom)); color:var(--ink-dim)}
+.foot-inner{max-width:1000px; margin:0 auto 6px; display:flex; justify-content:space-between; gap:14px; align-items:center}
+.foot a{color:var(--ink-dim)}
+.dot{opacity:.6; margin:0 6px}
 
-/* iOS safe-area padding to hide white bars in Safari UI */
-@supports (padding: max(0px)) {
-  body { padding-bottom: env(safe-area-inset-bottom); }
-  .nav { margin-top: calc(env(safe-area-inset-top) + 12px); }
-}
+/* Accessibility */
+.sr{position:absolute; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px)}
 
 /* Responsive */
-@media (max-width: 840px){
-  .links{display:none}
-  .container{margin-top:72px}
-  .grid{grid-template-columns:1fr}
+@media (max-width:900px){
+  .tiles{grid-template-columns:1fr; gap:12px}
+  .start{flex-direction:column; align-items:stretch}
   .cta{width:100%}
 }
