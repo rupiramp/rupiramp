@@ -2,35 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- Full-bleed on iOS (removes white bars) -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0b14" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
   <title>RupiRamp — USDT/USDC → INR via UPI</title>
   <meta name="description" content="Cash out crypto to INR via UPI. Non-custodial interface to licensed partners. Fast payouts, transparent fees." />
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Icons (your repo root) -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <style>
     :root{
-      --bg-0:#0b0b14;      /* deep space */
+      --bg-0:#0b0b14;
       --bg-1:#0f1220;
-      --card:#121525cc;   /* liquid glass */
+      --card:#121525cc;
       --text:#e9edf3;
       --muted:#a7b0c0;
-      --a1:#5fd3ff;       /* brand gradient */
-      --a2:#7c4dff;
-      --a3:#986aff;
+      --a1:#5fd3ff; --a2:#7c4dff; --a3:#986aff;
       --ring:#1b1f33;
     }
-
-    /* Base + iOS safe-area */
     *{box-sizing:border-box}
     html,body{height:100%}
     html{background:var(--bg-0)}
@@ -42,7 +34,7 @@
         radial-gradient(900px 600px at -15% 10%, #00b7ff14, transparent 55%),
         radial-gradient(700px 500px at 50% 120%, #8a2cff18, transparent 60%),
         linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      min-height:100dvh;                    /* dynamic viewport */
+      min-height:100dvh;
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
       -webkit-tap-highlight-color:transparent; overscroll-behavior:none;
@@ -53,6 +45,7 @@
     /* Nav */
     header.nav{
       display:flex; align-items:center; justify-content:space-between;
+      gap:14px; flex-wrap:wrap; /* allows wrap on small screens */
       padding:10px 12px; border-radius:14px;
       background:linear-gradient(180deg,#151826cc,#0f1220cc);
       border:1px solid var(--ring); backdrop-filter:blur(12px) saturate(140%);
@@ -62,10 +55,15 @@
     .brand .wm{font-weight:800; letter-spacing:.2px; font-size:18px}
     .brand .wm .rupi{color:#fff}
     .brand .wm .ramp{background:linear-gradient(90deg,var(--a1),var(--a3)); -webkit-background-clip:text; background-clip:text; color:transparent}
-    nav a{color:var(--muted); text-decoration:none; font-weight:600; margin-left:22px}
-    nav a:hover{color:#fff}
 
-    /* Hero layout */
+    .menu{display:flex; gap:18px; flex-wrap:wrap}
+    .menu a{
+      color:var(--muted); text-decoration:none; font-weight:600;
+      padding:6px 0;
+    }
+    .menu a:hover{color:#fff}
+
+    /* Hero */
     .hero{ margin-top:26px; }
     .hero-grid{
       display:grid; gap:22px;
@@ -73,47 +71,55 @@
       align-items:start;
     }
     h1{font-size:clamp(28px, 4.5vw, 58px); line-height:1.06; margin:0 0 10px}
-    .lede{color:var(--muted); max-width:760px; margin:0 0 16px}
+    .lede{color:var(--muted); max-width:760px; margin:0 0 16px; font-size:clamp(14px,1.9vw,18px)}
 
     .row-actions{display:flex; gap:12px; flex-wrap:wrap; margin:14px 0}
     .btn{
-      border:0; height:42px; padding:0 16px; border-radius:12px; cursor:pointer; font-weight:800;
-      color:#0b0b14; background:linear-gradient(90deg,var(--a1),var(--a2) 70%); box-shadow:0 8px 24px #5b79ff55;
+      border:0; height:42px; padding:0 18px; border-radius:12px; cursor:pointer; font-weight:800;
+      color:#0b0b14; background:linear-gradient(90deg,var(--a1),var(--a2) 70%);
+      box-shadow:0 8px 24px #5b79ff55;
     }
-    .btn.secondary{background:#1a2036; color:#d7def0; border:1px solid #232a46; box-shadow:none}
+    .btn.secondary{
+      background:#1a2036; color:#d7def0; border:1px solid #232a46; box-shadow:none; text-decoration:none;
+    }
 
-    /* Trade card (right) */
+    /* Card */
     .card{
       background:var(--card); border:1px solid var(--ring); border-radius:16px; padding:18px;
-      backdrop-filter:blur(12px) saturate(140%);
-      box-shadow:0 10px 40px #0008;
+      backdrop-filter:blur(12px) saturate(140%); box-shadow:0 10px 40px #0008;
     }
     .tabs{display:flex; gap:8px; margin-bottom:12px}
     .tab{border:1px solid #232844; background:#12172a; color:#cfd7ea; padding:8px 12px; border-radius:999px; font-weight:700}
     .tab.active{background:linear-gradient(90deg,var(--a1),var(--a3)); color:#0b0b14; border-color:transparent}
     .tab[disabled]{opacity:.45}
 
-    .field{margin-top:8px}
+    .label{
+      display:block; margin:4px 0 6px; color:var(--muted);
+      font-weight:600; letter-spacing:.2px; font-size:14px;
+    }
+    .field{position:relative}
     .field input{
-      width:100%; height:44px; border-radius:12px; padding:0 14px 0 14px;
+      width:100%; height:44px; border-radius:12px; padding:0 56px 0 14px;
       background:#0e1120; color:#cfe2ff; border:1px solid #242a44; outline:none;
+      font-weight:600;
     }
-    .unit{
-      position:absolute; right:12px; top:50%; transform:translateY(-50%); opacity:.85
-    }
+    .unit{position:absolute; right:12px; top:50%; transform:translateY(-50%); opacity:.85; font-weight:700}
+
+    /* CTA proportions: desktop = fit-content; mobile = limited width, centered */
     .cta{
-      width:100%; margin-top:12px; height:44px; border-radius:12px; border:0; cursor:pointer; font-weight:800; color:#0b0b14;
+      height:44px; border-radius:12px; border:0; cursor:pointer; font-weight:800; color:#0b0b14;
       background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3)); box-shadow:0 10px 26px rgba(127,123,255,.35);
+      padding:0 22px; width:fit-content; /* desktop default */
     }
 
-    /* Info tiles */
+    /* Tiles */
     .tiles{display:grid; gap:16px; margin-top:24px; grid-template-columns:repeat(3,1fr)}
     .tile{background:var(--card); border:1px solid var(--ring); border-radius:14px; padding:18px}
     .tile h3{margin:0 0 4px; font-size:18px}
     .tile p{margin:0; color:var(--muted)}
 
     /* Footer */
-    footer{margin-top:36px; display:flex; justify-content:space-between; color:#8a94a8}
+    footer{margin-top:36px; display:flex; justify-content:space-between; gap:12px; color:#8a94a8; flex-wrap:wrap}
     footer a{color:#a9b5cc; text-decoration:none}
     footer a:hover{color:#fff}
 
@@ -122,7 +128,12 @@
       .container{padding: max(16px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom))}
       header.nav{top: max(10px, env(safe-area-inset-top));}
       .hero-grid{grid-template-columns: 1fr; gap:18px}
-      .row-actions{justify-content:flex-start}
+      .menu{gap:14px}
+      .btn{height:44px}
+      .cta{
+        width:100%; max-width:320px; /* not overly wide on phones */
+        margin-top:12px; align-self:center; justify-self:center;
+      }
       .tiles{grid-template-columns:1fr}
     }
   </style>
@@ -137,7 +148,7 @@
              onerror="this.onerror=null;this.src='/logo.png'">
         <div class="wm"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></div>
       </a>
-      <nav>
+      <nav class="menu">
         <a href="/faq.html">FAQ</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
@@ -154,7 +165,7 @@
           <p class="lede">Cash out to INR with a clean, non-custodial interface. Payouts handled by licensed partners. Transparent fees.</p>
           <div class="row-actions">
             <button class="btn" id="startBtnTop">Start cash out</button>
-            <a class="btn secondary" href="/faq.html">Learn more</a>
+            <a class="btn secondary" href="/faq.html" aria-label="Learn more about how RupiRamp works">Learn more</a>
           </div>
         </div>
 
@@ -165,8 +176,8 @@
             <button class="tab" disabled>Buy</button>
           </div>
 
-          <label for="inrInput">Optional: enter amount</label>
-          <div class="field" style="position:relative">
+          <label class="label" for="inrInput">Amount (optional)</label>
+          <div class="field">
             <input id="inrInput" inputmode="numeric" pattern="[0-9]*" placeholder="INR e.g. 10000" />
             <span class="unit">INR</span>
           </div>
@@ -176,7 +187,6 @@
 
       </div>
 
-      <!-- Minimal tiles (kept because you liked the desktop look) -->
       <div class="tiles">
         <div class="tile"><h3>Minutes</h3><p>Target payout window in beta.</p></div>
         <div class="tile"><h3>Non-custodial</h3><p>You keep control until conversion.</p></div>
@@ -191,15 +201,14 @@
 
   </div>
 
-  <!-- Toast (for helpful messages) -->
-  <div class="toast" id="toast" style="
+  <!-- Toast -->
+  <div id="toast" style="
     position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
     background:#14192b;color:#e9edf3;padding:12px 14px;border:1px solid #2a2f4a;border-radius:12px;
     opacity:0;pointer-events:none;transition:all .25s ease;box-shadow:0 10px 30px #0008;z-index:9999">
     Transak will open in a new tab.
   </div>
 
-  <!-- Keep the working Transak launch exactly the same -->
   <script>
     const TRANSAK_API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
 
@@ -240,8 +249,6 @@
 
     document.getElementById('startBtn').addEventListener('click', openTransak);
     document.getElementById('startBtnTop').addEventListener('click', openTransak);
-
-    // tiny touchmove listener helps iOS avoid overscroll flashes
     document.addEventListener('touchmove', ()=>{}, {passive:true});
   </script>
 </body>
