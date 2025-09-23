@@ -341,37 +341,49 @@ function showToast(msg){
   showToast.tid = setTimeout(()=>toast.classList.remove('on'), 2400);
 }
 
-/* ===================== TRANSAK OPEN (STAGING) ===================== */
-/* Keep exactly like your working flow. */
-const TRANSAK_API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8'; // <- replace
-function openTransak(){
-  if (!TRANSAK_API_KEY || TRANSAK_API_KEY.includes('6e9f90f3-1202-4fca-a6ba-dd69391878f8')) {
-    showToast('Add your Transak staging API key first.'); return;
-  }
-  const base = 'https://global-stg.transak.com';
-  const params = new URLSearchParams({
-    apiKey: TRANSAK_API_KEY,
-    environment: 'STAGING',
-    productsAvailed: 'SELL',
-    // defaultFiatAmount: left blank on purpose (staging INR availability varies)
-    networks: 'polygon,arbitrum,ethereum,tron,base',
-    isFeeCalculationHidden: 'false',
-    defaultPaymentMethod: 'upi',
-    disablePaymentMethods: 'card,banktransfer',
-    hideMenu: 'true',
-    isAutoFillUserData: 'false'
-  });
-  try{
-    const win = window.open(`${base}/?${params.toString()}`, '_blank', 'noopener');
-    if (!win) showToast('Popup blocked. Allow popups for rupiramp.com.');
-    else showToast('Transak will open in a new tab.');
-  }catch(e){ showToast('Could not open Transak. Check blockers.'); }
-}
-['ctaTop','ctaCard','ctaBottom'].forEach(id=>{
-  const el = document.getElementById(id);
-  el && el.addEventListener('click', openTransak);
-});
+<!-- ===================== TRANSAK OPEN (STAGING) ===================== -->
+<script>
+  // Put your STAGING key here (straight quotes, no spaces)
+  const TRANSAK_API_KEY = '6e9f90f3-1202-4fca-a6ba-dd69391878f8';
 
+  function openTransak(){
+    const key = (TRANSAK_API_KEY || '').trim();
+    // Only block obvious placeholders
+    if (!key || key === 'YOUR_STAGING_KEY' || key.startsWith('PASTE_')) {
+      showToast('Add your Transak staging API key first.');
+      return;
+    }
+
+    const base = 'https://global-stg.transak.com';
+    const params = new URLSearchParams({
+      apiKey: key,
+      environment: 'STAGING',
+      productsAvailed: 'SELL',
+      // defaultFiatAmount intentionally blank in staging (INR availability varies)
+      networks: 'polygon,arbitrum,ethereum,tron,base',
+      isFeeCalculationHidden: 'false',
+      defaultPaymentMethod: 'upi',
+      disablePaymentMethods: 'card,banktransfer',
+      hideMenu: 'true',
+      isAutoFillUserData: 'false'
+    });
+
+    const url = `${base}/?${params.toString()}`;
+    let win;
+    try { win = window.open(url, '_blank', 'noopener'); } catch (e) {}
+    if (!win) {
+      showToast('Popup blocked. Allow popups for rupiramp.com.');
+    } else {
+      showToast('Transak will open in a new tab.');
+    }
+  }
+
+  // Wire up all CTAs
+  ['ctaTop','ctaCard','ctaBottom'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', openTransak);
+  });
+</script>
 /* ===================== UX POLISH ===================== */
 // Learn more scroll
 document.getElementById('learn')?.addEventListener('click', ()=>{
