@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="48" fill="url(#grad)" stroke="#fff" stroke-width="2"/>
+<text x="50%" y="55%" text-anchor="middle" font-size="40" fill="#fff" font-family="Arial" dy=".3em">₹</text>
+<defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#5fd3ff;stop-opacity:1"/>
+<stop offset="100%" style="stop-color:#7c4dff;stop-opacity:1"/>
+</linearGradient></defs></svg>

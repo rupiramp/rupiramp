@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — Swap crypto</title>
+  <meta name="description" content="Simple, liquid-glass swap. Non-custodial. Polygon • Base • Arbitrum." />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0b0a16" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <canvas id="bgfx" aria-hidden="true"></canvas>
+
+  <header class="nav glass">
+    <a class="brand" href="/">
+      <img class="mark" src="/assets/logo.svg" width="28" height="28" alt="RupiRamp">
+      <span class="wm">Rupi<span class="grad">Ramp</span></span>
+    </a>
+    <nav class="menu">
+      <a href="/faq.html">FAQ</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="mailto:info@rupiramp.com">Contact</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <h1>Swap crypto — fast</h1>
+      <p class="sub">Non-custodial. Transparent quotes. Your wallet, your keys.</p>
+      <div class="cta-row">
+        <button id="connectBtn" class="btn">Connect wallet</button>
+      </div>
+    </section>
+
+    <section class="swap glass" id="swapCard">
+      <div class="row">
+        <label>Network</label>
+        <select id="chainSelect">
+          <option value="137">Polygon</option>
+          <option value="8453">Base</option>
+          <option value="42161">Arbitrum</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>From</label>
+        <input id="fromAmount" type="number" placeholder="0.0" />
+        <span id="fromToken">USDT</span>
+      </div>
+
+      <div class="row">
+        <label>To</label>
+        <input id="toAmount" type="text" placeholder="0.0" readonly />
+        <span id="toToken">USDC</span>
+      </div>
+
+      <button id="swapBtn" class="btn">Swap</button>
+    </section>
+  </main>
+
+  <footer>
+    <small>© 2025 RupiRamp Ltd.</small>
+    <small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
