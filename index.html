@@ -1,181 +1,479 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>RupiRamp — Swap crypto with liquid glass</title>
-  <meta name="description" content="Non‑custodial crypto swap with a liquid‑glass UI. Transparent quotes. Your wallet, your keys." />
-  <meta name="theme-color" content="#0b0a16" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="icon" href="assets/logo.svg" />
-  <link rel="preload" as="image" href="assets/noise.png">
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>RupiRamp — Swap crypto → fast</title>
+<meta name="description" content="Liquid-glass swapping. Chrome accents. Smooth motion. Non-custodial. Transparent quotes." />
+<meta name="theme-color" content="#0b0b14" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<style>
+/* =========================================================
+   THEME
+   ========================================================= */
+:root{
+  --bg0:#0a0b16; --bg1:#0f1324;
+  --fg:#eef3fa;  --muted:#a8b2c8;
+  --glass:#151a30cc;
+  --ring:#1e2445; --ring2:#2a325e;
+  --chip:#12172c; --chip-br:#222a4a;
+  --a1:#6fe0ff;  --a2:#7f7bff;  --a3:#b16bff;
+  --glow:#7f7bff55;
+  --chrome1:#f7f7f7; --chrome2:#dadce6; --chrome3:#9ca3b3; --chrome4:#ffffff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth;background:#0a0b16}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--fg);
+  background:
+    radial-gradient(1400px 900px at 110% -10%, #7f7bff26, transparent 60%),
+    radial-gradient(1000px 700px at -10% 25%, #69d9ff22, transparent 58%),
+    radial-gradient(900px 600px at 50% 120%, #b16bff1c, transparent 60%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:transparent;
+  overflow-x:hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* =========================================================
+   WRAP / NAV (not sticky)
+   ========================================================= */
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+.nav{
+  margin:16px auto 0;
+  border:1px solid var(--ring);
+  border-radius:20px;
+  background:linear-gradient(180deg,#161a31cc,#0f1327cc);
+  box-shadow:
+    0 10px 30px #0008,
+    inset 0 1px 0 #ffffff12,
+    inset 0 -1px 0 #00000066;
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--fg)}
+.brand img{width:30px;height:30px;border-radius:8px}
+.word{font-weight:900;letter-spacing:.2px}
+.word .rupi{color:#fff}
+.word .ramp{
+  background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+
+.menu a{
+  color:#c9d2e7;text-decoration:none;font-weight:700;
+  margin-left:24px;white-space:nowrap;opacity:.9
+}
+.menu a:hover{opacity:1;color:#fff}
+
+@media (max-width:860px){
+  .nav-in{flex-direction:column;align-items:flex-start;gap:10px}
+  .menu{display:flex;flex-wrap:wrap;gap:14px 18px;margin-left:42px}
+}
+
+/* =========================================================
+   HERO GRID
+   ========================================================= */
+.hero{padding:62px 0 30px}
+.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+@media (max-width:1020px){.hgrid{grid-template-columns:1fr;gap:22px}}
+
+h1{
+  font-size: clamp(34px, 6.2vw, 72px);
+  line-height:1.05;margin:0 0 10px;letter-spacing:.2px
+}
+.lede{margin:0 0 22px;color:var(--muted);max-width:760px;font-size:clamp(16px,1.6vw,18.5px)}
+
+/* CTA row */
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{height:48px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;letter-spacing:.12px;cursor:pointer;border:0}
+.btn.primary{
+  padding:0 20px;color:#0c0f18;
+  background:linear-gradient(90deg,var(--a1),var(--a2) 70%);
+  box-shadow:0 14px 30px var(--glow), inset 0 -2px 0 #0003;
+}
+
+/* CHROME button — Connect wallet */
+.btn.chrome{
+  position:relative; padding:0 18px; color:#1a2032;
+  background: linear-gradient(180deg,var(--chrome4),var(--chrome2) 28%, var(--chrome1) 52%, var(--chrome3) 80%);
+  border:1px solid #b9bfd1;
+  box-shadow:
+    inset 0 1px 0 #ffffffcc,
+    inset 0 -2px 0 #8e93a6,
+    0 10px 32px #0008;
+  overflow:hidden;
+}
+.btn.chrome:before{
+  /* reflective sweep */
+  content:""; position:absolute; inset:-40% -60% auto auto; width:120%; height:220%;
+  transform:rotate(25deg) translate3d(0,0,0);
+  background:linear-gradient(90deg, transparent, #ffffff99 28%, #ffffff 35%, #ffffff99 42%, transparent 55%);
+  mix-blend-mode:soft-light; filter:blur(8px);
+  animation:shine 4.2s ease-in-out infinite;
+}
+@keyframes shine{
+  0%{transform:rotate(25deg) translateX(-120%)}
+  55%{transform:rotate(25deg) translateX(40%)}
+  100%{transform:rotate(25deg) translateX(140%)}
+}
+
+.btn:active{transform:translateY(1px)}
+.btn.primary:hover{filter:saturate(110%) brightness(1.03)}
+.btn.chrome:hover{filter:brightness(1.03)}
+
+/* chips */
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 2px}
+.chip{
+  display:inline-flex;align-items:center;background:var(--chip);
+  color:#d7def5;border:1px solid var(--chip-br);
+  padding:9px 12px;border-radius:999px;font-weight:700
+}
+@media (max-width:820px){.chips{display:none}}
+
+/* =========================================================
+   SWAP CARD (liquid glass)
+   ========================================================= */
+.card-wrap{position:relative}
+.card{
+  position:relative;
+  max-width: 620px; /* larger on desktop */
+  width:100%;
+  margin-left:auto;
+  border-radius:22px;
+  background:
+    radial-gradient(120% 140% at 100% -10%, #b16bff10, transparent 50%),
+    radial-gradient(120% 140% at 0% 110%, #6fe0ff10, transparent 50%),
+    var(--glass);
+  border:1px solid var(--ring);
+  box-shadow:
+    0 18px 60px #0008,
+    inset 0 1px 0 #ffffff10,
+    inset 0 -1px 0 #00000055;
+  padding:18px;
+  transform:translateY(18px) scale(.985);
+  opacity:0;
+  transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s;
+  will-change:transform,opacity,box-shadow;
+}
+.card.on{transform:none;opacity:1}
+.card:hover{box-shadow:0 22px 80px #000a, inset 0 1px 0 #ffffff12, inset 0 -1px 0 #00000066}
+
+/* decorative aura */
+.card::before{
+  content:""; position:absolute; inset:-60px -40px; z-index:-1;
+  background:
+    radial-gradient(420px 280px at 20% 30%, #63a0ff22, transparent 60%),
+    radial-gradient(320px 210px at 85% 60%, #b16bff22, transparent 60%);
+  filter:blur(6px);
+}
+
+/* form bits */
+.row{display:flex;gap:10px;align-items:center;margin:12px 0}
+.label{font-size:.9rem;color:#a6b4d8;margin-bottom:6px}
+.field{
+  position:relative; flex:1; border-radius:14px;
+  background:#0c1227; border:1px solid #262d4d;
+  box-shadow:inset 0 0 0 1px transparent;
+  transition:border-color .2s, box-shadow .2s;
+}
+.field:focus-within{border-color:#3a58ff; box-shadow:inset 0 0 0 1px #3a58ff55}
+.input{display:flex; align-items:center; gap:10px; padding:14px 14px}
+.input input{
+  all:unset; flex:1; min-width:0; font-size:18px; color:#e7f0ff; letter-spacing:.2px
+}
+.unit{opacity:.9;color:#9eb0cf;font-weight:800}
+.select{
+  display:flex; align-items:center; gap:8px;
+  background:#0e142b; border:1px solid #242b4a;
+  color:#dfe6fb; border-radius:10px; padding:8px 10px; font-weight:800
+}
+.swapIcon{
+  width:48px;height:48px;border-radius:50%;border:1px solid var(--ring);
+  background:linear-gradient(180deg,#171c35,#12172c);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 26px #0008; margin:6px 0;
+}
+.swapIcon svg{width:20px;height:20px;fill:#f7c56a}
+
+/* card CTA full width */
+.card .cta{
+  display:flex;align-items:center;justify-content:center;height:50px;border-radius:14px;border:0;cursor:pointer;
+  color:#0c0f18;font-weight:900;background:linear-gradient(90deg,var(--a1),var(--a2) 70%);
+  box-shadow:0 14px 30px var(--glow), inset 0 -2px 0 #0003; width:100%; margin-top:12px
+}
+
+/* =========================================================
+   FEATURE STRIP + FOOTER
+   ========================================================= */
+.strip{
+  margin-top:24px; border:1px solid var(--ring); background:#12162acc;
+  border-radius:16px; padding:12px; display:flex; gap:12px; overflow:auto
+}
+.pill{white-space:nowrap; border:1px solid var(--ring2); background:#141a2d; color:#cfd7ea; padding:10px 12px; border-radius:999px; font-weight:800}
+
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:26px 0 10px}
+.panel{border:1px solid var(--ring); background:#12162acc; border-radius:16px; padding:18px}
+.panel h3{margin:0 0 6px}
+.panel p{margin:0; color:var(--muted)}
+
+footer{
+  padding:28px 0 36px; display:flex; justify-content:space-between; color:#8a94a8
+}
+footer a{color:#a9b5cc; text-decoration:none}
+footer a:hover{color:#fff}
+
+@media (max-width:960px){ .grid3{grid-template-columns:1fr} }
+
+/* =========================================================
+   PARALLAX PARTICLES & LIGHT RAYS CANVAS
+   ========================================================= */
+canvas#fx{position:fixed; inset:0; z-index:-2; opacity:.55}
+.lightRays{pointer-events:none; position:absolute; inset:0; mix-blend-mode:screen; opacity:.22}
+
+/* =========================================================
+   REVEAL UTILS
+   ========================================================= */
+.reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+.reveal.on{opacity:1; transform:none}
+</style>
 </head>
 <body>
-  <canvas id="bg" aria-hidden="true"></canvas>
-  <svg width="0" height="0" style="position:absolute">
-    <!-- Chrome text gradient -->
-    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"  stop-color="#ffffff"/>
-      <stop offset="18%" stop-color="#c9c9c9"/>
-      <stop offset="34%" stop-color="#f7f7f7"/>
-      <stop offset="52%" stop-color="#9aa3ad"/>
-      <stop offset="68%" stop-color="#eaeaea"/>
-      <stop offset="100%" stop-color="#acb8c9"/>
-    </linearGradient>
-    <!-- Glow filter for pills -->
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <!-- Gooey filter for bubbles -->
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0
-                0 1 0 0 0
-                0 0 1 0 0
-                0 0 0 18 -8" result="goo" />
-      <feBlend in="SourceGraphic" in2="goo" />
-    </filter>
-  </svg>
+<canvas id="fx"></canvas>
 
-  <div class="app">
-    <header class="nav glass">
-      <a class="brand" href="#">
-        <img class="mark" src="assets/logo.svg" alt="RupiRamp logo" width="34" height="34"/>
-        <span class="wordmark">Rupi<span class="accent">Ramp</span></span>
+<div class="wrap">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-in">
+      <a class="brand" href="/">
+        <!-- keep logo at repo root -->
+        <img src="/logo.svg" alt="RupiRamp" onerror="this.onerror=null;this.src='/logo.png'">
+        <span class="word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></span>
       </a>
       <nav class="menu">
-        <a href="faq.html">FAQ</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
         <a href="mailto:info@rupiramp.com">Contact</a>
       </nav>
-      <button id="navToggle" class="hamburger" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </header>
-
-    <div class="sheet" id="mobileMenu">
-      <a href="faq.html">FAQ</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:info@rupiramp.com">Contact</a>
     </div>
+  </header>
 
-    <main class="shell">
-      <section class="hero">
-        <div class="left">
-          <h1 class="headline">
-            <span>Swap crypto</span>
-            <span class="arrow">→</span>
-            <span>fast</span>
-          </h1>
-          <p class="sub">Liquid‑glass aesthetics, chrome accents, and buttery‑smooth motion. Non‑custodial. Transparent quotes.</p>
-          <div class="cta-row">
-            <button class="btn glow" id="connect">
-              <span class="chromeText">Connect wallet</span>
-            </button>
-            <button class="btn ghost" id="learnMore">Learn more</button>
-          </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hgrid">
+      <div>
+        <h1 class="reveal">Swap crypto → fast</h1>
+        <p class="lede reveal" style="transition-delay:.05s">
+          Liquid-glass aesthetics, chrome accents, and buttery-smooth motion. Non-custodial. Transparent quotes.
+        </p>
 
-          <div class="badges" aria-hidden="true">
-            <span class="pill">Non‑custodial</span>
-            <span class="pill">Transparent rates</span>
-            <span class="pill">Multi‑chain</span>
-            <span class="pill">Gas‑aware</span>
-          </div>
+        <div class="ctas reveal" style="transition-delay:.1s">
+          <button class="btn chrome" id="connectBtn" title="Connect wallet">Connect wallet</button>
+          <button class="btn primary" id="learnBtn">Learn more</button>
         </div>
 
-        <div class="right tilt">
-          <div class="swap glass" id="swapCard">
-            <div class="swap-h">
-              <div class="network">
-                <label>Network</label>
-                <select id="chain">
-                  <option value="ethereum">Ethereum</option>
-                  <option value="polygon" selected>Polygon</option>
-                  <option value="arbitrum">Arbitrum</option>
-                  <option value="base">Base</option>
-                </select>
-              </div>
-              <div class="mini">
-                <button class="mini-btn" id="settings" title="Settings">⚙︎</button>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="field">
-                <label>From</label>
-                <div class="input">
-                  <input id="fromAmount" inputmode="decimal" placeholder="0.0"/>
-                  <button class="token" id="fromToken">USDT</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="swap-arrow" id="flip" title="Flip">
-              <svg viewBox="0 0 24 24"><path d="M7 7h10v2H7v3L3 8l4-4v3zm10 10H7v-2h10v-3l4 4-4 4v-3z"/></svg>
-            </div>
-
-            <div class="row">
-              <div class="field">
-                <label>To</label>
-                <div class="input">
-                  <input id="toAmount" placeholder="0.0" readonly/>
-                  <button class="token" id="toToken">USDC</button>
-                </div>
-              </div>
-            </div>
-
-            <button id="swap" class="btn primary glow big">Swap</button>
-
-            <div class="quote" id="quote">
-              <span>—</span>
-            </div>
-          </div>
+        <div class="chips reveal" style="transition-delay:.16s">
+          <span class="chip">Non-custodial</span>
+          <span class="chip">Transparent rates</span>
+          <span class="chip">Multi-chain</span>
+          <span class="chip">Gas-aware</span>
         </div>
-      </section>
-
-      <section id="showcase">
-        <div class="glass marquee">
-          <div class="ribbon" id="ribbon">
-            <span>Liquid Glass UI</span><span>Chrome Typography</span><span>GPU Particles</span>
-            <span>Parallax Layers</span><span>Gooey Bubbles</span><span>Haptic‑like Motion</span>
-          </div>
-        </div>
-
-        <div class="grid">
-          <article class="card reveal">
-            <h3>Visual polish</h3>
-            <p>Custom shaders, soft bloom, and layered gradients create a luxury, tactile feel that still loads instantly.</p>
-          </article>
-          <article class="card reveal">
-            <h3>Precision motion</h3>
-            <p>Motion physics with spring curves — each interaction feels alive without slowing you down.</p>
-          </article>
-          <article class="card reveal">
-            <h3>Built for wallets</h3>
-            <p>Connect with MetaMask or WalletConnect (coming). Quotes from top aggregators, gas‑optimized routes.</p>
-          </article>
-        </div>
-      </section>
-    </main>
-
-    <footer class="foot">
-      <div>© 2025 RupiRamp Ltd.</div>
-      <div class="links">
-        <a href="terms.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
       </div>
-    </footer>
+
+      <div class="card-wrap">
+        <!-- light rays overlay (subtle) -->
+        <svg class="lightRays" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="ray" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#9cb9ff" stop-opacity="0.12"/>
+              <stop offset="1" stop-color="#b18bff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g transform="translate(-120,-60) rotate(-8)">
+            <rect x="0" y="0" width="800" height="10" fill="url(#ray)"/>
+            <rect x="0" y="80" width="800" height="10" fill="url(#ray)"/>
+            <rect x="0" y="160" width="800" height="10" fill="url(#ray)"/>
+          </g>
+        </svg>
+
+        <!-- SWAP CARD -->
+        <div class="card reveal" id="swapCard">
+          <div class="row">
+            <div class="select" role="button" aria-label="Network">
+              <span>Network</span>
+              <span style="opacity:.9; font-weight:900; padding-left:6px">Polygon</span>
+              <svg viewBox="0 0 20 20" width="14" height="14" style="opacity:.7"><path fill="currentColor" d="M5 7l5 5 5-5z"/></svg>
+            </div>
+            <div style="margin-left:auto; opacity:.5; font-weight:800">preview</div>
+          </div>
+
+          <div class="label">From</div>
+          <div class="row">
+            <div class="field" style="flex:1">
+              <div class="input">
+                <input id="fromAmt" inputmode="decimal" placeholder="0.0" aria-label="From amount">
+                <div class="unit">USDT</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:center">
+            <div class="swapIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 5l4 4-1.4 1.4L13 9.8V16h-2V9.8L9.4 10.4 8 9l4-4zm0 14l-4-4 1.4-1.4L11 14.2V8h2v6.2l1.6-1.6L16 15l-4 4z"/></svg>
+            </div>
+          </div>
+
+          <div class="label">To</div>
+          <div class="row">
+            <div class="field" style="flex:1">
+              <div class="input">
+                <input id="toAmt" placeholder="0.0" aria-label="To amount" readonly style="opacity:.75">
+                <div class="unit">USDC</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="cta" id="swapBtn">Swap</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip reveal">
+    <div class="pill">GPU Particles</div>
+    <div class="pill">Parallax Layers</div>
+    <div class="pill">Gooey Bubbles</div>
+    <div class="pill">Haptic-like Motion</div>
   </div>
 
-  <div id="toast" class="toast">Welcome to RupiRamp</div>
-  <script src="script.js"></script>
+  <!-- FEATURES -->
+  <section class="grid3">
+    <div class="panel reveal"><h3>Visual polish</h3><p>Custom shaders, soft bloom, and layered gradients create a luxury, tactile feel that still loads instantly.</p></div>
+    <div class="panel reveal" style="transition-delay:.06s"><h3>Precision motion</h3><p>Spring curves + micro-gestures — each interaction feels alive without slowing you down.</p></div>
+    <div class="panel reveal" style="transition-delay:.12s"><h3>Built for wallets</h3><p>Connect with MetaMask or WalletConnect (coming). Quotes from top aggregators, gas-optimized routes.</p></div>
+  </section>
+
+  <footer>
+    <small>© 2025 RupiRamp Ltd.</small>
+    <small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small>
+  </footer>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#14192b;color:#e9edf3;padding:12px 14px;border:1px solid #2a2f4a;border-radius:12px;opacity:0;pointer-events:none;transition:all .25s ease;box-shadow:0 10px 30px #0008;z-index:9999">Coming soon.</div>
+
+<script>
+/* =========================================================
+   PARALLAX PARTICLES (cheap & pretty)
+   ========================================================= */
+(() => {
+  const c = document.getElementById('fx');
+  const ctx = c.getContext('2d');
+  let W, H, DPR;
+  function size(){
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = c.width = innerWidth * DPR; H = c.height = innerHeight * DPR;
+    c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  size(); addEventListener('resize', size, {passive:true});
+
+  const N = Math.min(120, Math.round(innerWidth*innerHeight/24000));
+  const dots = Array.from({length:N}, () => ({
+    x: Math.random()*innerWidth,
+    y: Math.random()*innerHeight,
+    r: Math.random()*1.8 + .6,
+    a: Math.random()*Math.PI*2,
+    s: Math.random()*0.35 + 0.08,
+    hue: Math.random()>.5 ? 208 : 262
+  }));
+
+  function tick(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for(const d of dots){
+      d.x += Math.cos(d.a)*d.s; d.y += Math.sin(d.a)*d.s; d.a += (Math.random()-.5)*0.03;
+      if(d.x<-50) d.x=innerWidth+50; if(d.x>innerWidth+50) d.x=-50;
+      if(d.y<-50) d.y=innerHeight+50; if(d.y>innerHeight+50) d.y=-50;
+      const g = ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*12);
+      g.addColorStop(0, `hsla(${d.hue}, 100%, 75%, .12)`); g.addColorStop(1,'transparent');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(d.x,d.y,d.r*12,0,Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* =========================================================
+   REVEAL (swap card pop + section fades)
+   ========================================================= */
+(() => {
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('on');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.18});
+  document.querySelectorAll('.reveal, .card').forEach(el => io.observe(el));
+})();
+
+/* =========================================================
+   TOAST helper
+   ========================================================= */
+const toast = document.getElementById('toast');
+function showToast(msg){
+  toast.textContent = msg;
+  toast.style.opacity = 1;
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(showToast.tid);
+  showToast.tid = setTimeout(()=>{
+    toast.style.opacity = 0;
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2200);
+}
+
+/* =========================================================
+   CONNECT WALLET (placeholder, keep chrome button)
+   ========================================================= */
+document.getElementById('connectBtn').addEventListener('click', ()=> {
+  showToast('Wallet connect coming soon.');
+});
+
+/* =========================================================
+   SWAP (placeholder wiring — no aggregator yet)
+   Keeps layout identical; you can wire 0x later.
+   ========================================================= */
+const fromAmt = document.getElementById('fromAmt');
+const toAmt   = document.getElementById('toAmt');
+function fmt(n){ return Number(n).toLocaleString('en-US',{maximumFractionDigits:6}) }
+fromAmt.addEventListener('input', ()=>{
+  const v = (fromAmt.value || '').replace(/[^\d.]/g,'');
+  toAmt.value = v ? fmt(Number(v)) : '';
+});
+document.getElementById('swapBtn').addEventListener('click', ()=>{
+  showToast('Quote + route coming soon.');
+});
+
+/* =========================================================
+   “Learn more” smooth scroll to feature grid
+   ========================================================= */
+document.getElementById('learnBtn').addEventListener('click', ()=>{
+  document.querySelector('.grid3').scrollIntoView({behavior:'smooth', block:'start'});
+});
+</script>
 </body>
 </html>
