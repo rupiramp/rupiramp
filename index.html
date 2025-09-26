@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — Swap crypto with liquid glass</title>
+  <meta name="description" content="Non‑custodial crypto swap with a liquid‑glass UI. Transparent quotes. Your wallet, your keys." />
+  <meta name="theme-color" content="#0b0a16" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preload" as="image" href="assets/noise.png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <svg width="0" height="0" style="position:absolute">
+    <!-- Chrome text gradient -->
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="18%" stop-color="#c9c9c9"/>
+      <stop offset="34%" stop-color="#f7f7f7"/>
+      <stop offset="52%" stop-color="#9aa3ad"/>
+      <stop offset="68%" stop-color="#eaeaea"/>
+      <stop offset="100%" stop-color="#acb8c9"/>
+    </linearGradient>
+    <!-- Glow filter for pills -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Gooey filter for bubbles -->
+    <filter id="goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 18 -8" result="goo" />
+      <feBlend in="SourceGraphic" in2="goo" />
+    </filter>
+  </svg>
+
+  <div class="app">
+    <header class="nav glass">
+      <a class="brand" href="#">
+        <img class="mark" src="assets/logo.svg" alt="RupiRamp logo" width="34" height="34"/>
+        <span class="wordmark">Rupi<span class="accent">Ramp</span></span>
+      </a>
+      <nav class="menu">
+        <a href="faq.html">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:info@rupiramp.com">Contact</a>
+      </nav>
+      <button id="navToggle" class="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="sheet" id="mobileMenu">
+      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:info@rupiramp.com">Contact</a>
+    </div>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="left">
+          <h1 class="headline">
+            <span>Swap crypto</span>
+            <span class="arrow">→</span>
+            <span>fast</span>
+          </h1>
+          <p class="sub">Liquid‑glass aesthetics, chrome accents, and buttery‑smooth motion. Non‑custodial. Transparent quotes.</p>
+          <div class="cta-row">
+            <button class="btn glow" id="connect">
+              <span class="chromeText">Connect wallet</span>
+            </button>
+            <button class="btn ghost" id="learnMore">Learn more</button>
+          </div>
+
+          <div class="badges" aria-hidden="true">
+            <span class="pill">Non‑custodial</span>
+            <span class="pill">Transparent rates</span>
+            <span class="pill">Multi‑chain</span>
+            <span class="pill">Gas‑aware</span>
+          </div>
+        </div>
+
+        <div class="right tilt">
+          <div class="swap glass" id="swapCard">
+            <div class="swap-h">
+              <div class="network">
+                <label>Network</label>
+                <select id="chain">
+                  <option value="ethereum">Ethereum</option>
+                  <option value="polygon" selected>Polygon</option>
+                  <option value="arbitrum">Arbitrum</option>
+                  <option value="base">Base</option>
+                </select>
+              </div>
+              <div class="mini">
+                <button class="mini-btn" id="settings" title="Settings">⚙︎</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label>From</label>
+                <div class="input">
+                  <input id="fromAmount" inputmode="decimal" placeholder="0.0"/>
+                  <button class="token" id="fromToken">USDT</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="swap-arrow" id="flip" title="Flip">
+              <svg viewBox="0 0 24 24"><path d="M7 7h10v2H7v3L3 8l4-4v3zm10 10H7v-2h10v-3l4 4-4 4v-3z"/></svg>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label>To</label>
+                <div class="input">
+                  <input id="toAmount" placeholder="0.0" readonly/>
+                  <button class="token" id="toToken">USDC</button>
+                </div>
+              </div>
+            </div>
+
+            <button id="swap" class="btn primary glow big">Swap</button>
+
+            <div class="quote" id="quote">
+              <span>—</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="showcase">
+        <div class="glass marquee">
+          <div class="ribbon" id="ribbon">
+            <span>Liquid Glass UI</span><span>Chrome Typography</span><span>GPU Particles</span>
+            <span>Parallax Layers</span><span>Gooey Bubbles</span><span>Haptic‑like Motion</span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal">
+            <h3>Visual polish</h3>
+            <p>Custom shaders, soft bloom, and layered gradients create a luxury, tactile feel that still loads instantly.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Precision motion</h3>
+            <p>Motion physics with spring curves — each interaction feels alive without slowing you down.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Built for wallets</h3>
+            <p>Connect with MetaMask or WalletConnect (coming). Quotes from top aggregators, gas‑optimized routes.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div>© 2025 RupiRamp Ltd.</div>
+      <div class="links">
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">Welcome to RupiRamp</div>
+  <script src="script.js"></script>
+</body>
+</html>
