@@ -1,0 +1,68 @@
+/* Theme */
+:root {
+  --bg: #0b0a16;
+  --fg: #E8EEF6;
+  --muted: #B7C1D6;
+  --brand1: #6fe0ff;
+  --brand2: #7f7bff;
+  --brand3: #b16bff;
+  --glass: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: radial-gradient(1500px 800px at 50% -10%, rgba(127,123,255,.2), transparent 60%),
+              radial-gradient(1000px 600px at -10% 20%, rgba(111,224,255,.15), transparent 60%),
+              linear-gradient(#0b0a16, #0f1220);
+  color: var(--fg);
+  font-family: Inter, sans-serif;
+}
+
+.stars {
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  position: fixed; inset: 0; z-index: -1; opacity: 0.4;
+}
+
+.wrap { max-width: 1200px; margin: auto; padding: 20px; }
+
+/* Nav */
+.nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 20px; background: var(--glass); border: 1px solid var(--border);
+  border-radius: 16px; backdrop-filter: blur(12px);
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
+.brand img { width: 28px; height: 28px; }
+.wordmark { font-weight: 800; font-size: 1.2rem; }
+.wordmark .accent { background: linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand3)); -webkit-background-clip:text; color: transparent; }
+nav a { margin-left: 18px; color: var(--fg); opacity: 0.9; text-decoration: none; }
+nav a:hover { opacity: 1; }
+
+/* Hero */
+.hero { text-align: center; margin: 60px 0; }
+.hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
+.hero .sub { color: var(--muted); margin-bottom: 20px; }
+
+/* Swap */
+.swap { max-width: 500px; margin: 30px auto; padding: 20px; border-radius: 16px;
+  background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(18px);
+}
+.row { margin-bottom: 16px; text-align: left; }
+label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--muted); }
+select, input {
+  width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px;
+  background: rgba(255,255,255,.05); color: var(--fg); font-size: 1rem;
+}
+.cta {
+  margin-top: 10px; padding: 14px 24px; border: 0; border-radius: 12px; cursor: pointer;
+  font-weight: 700; color: #fff; background: linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand3));
+  box-shadow: 0 6px 20px rgba(127,123,255,.35); width: 100%;
+}
+.cta:hover { filter: brightness(1.1); }
+
+/* Footer */
+.foot { margin-top: 60px; display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+.foot a { color: var(--muted); text-decoration: none; margin-left: 10px; }
+.foot a:hover { color: var(--fg); }
