@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — Swap crypto, beautifully</title>
+  <meta name="description" content="Non-custodial swaps on Polygon with a deep-space, liquid-glass UI. Connect your wallet and trade with 0x routing." />
+  <meta name="theme-color" content="#0a0716" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <header class="nav glass">
+    <a class="brand" href="/">
+      <img src="logo.svg" alt="RupiRamp">
+      <span class="wm">Rupi<span class="accent">Ramp</span></span>
+    </a>
+    <nav class="menu">
+      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:info@rupiramp.com">Contact</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Swap crypto → fast</h1>
+      <p class="lede">Deep-purple “dark-matter” space, crisp stars, and liquid-glass surfaces. Non-custodial. Transparent quotes.</p>
+      <div class="cta-row">
+        <button id="connectBtn" class="chrome">Connect wallet</button>
+        <button id="learnBtn" class="ghost">Learn more</button>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Non-custodial</span>
+        <span class="pill">Transparent rates</span>
+        <span class="pill">Polygon</span>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="col left"></div>
+      <div class="col">
+        <div class="swap-card glass" id="swapCard">
+          <div class="swap-head">
+            <span class="badge">Swap</span>
+            <span class="net">Polygon</span>
+            <span class="prev">preview</span>
+          </div>
+          <div class="row">
+            <label>You pay</label>
+            <div class="input-wrap">
+              <input id="fromAmount" placeholder="0.0" inputmode="decimal">
+              <button class="asset" id="fromTokenBtn">
+                <span id="fromTokenSym" data-addr="0x3813e82e6f7098b9583FC0F33a962D02018B6803">USDT</span>
+              </button>
+            </div>
+          </div>
+          <div class="swap-mid" id="flipBtn" title="Flip"></div>
+          <div class="row">
+            <label>You get (est.)</label>
+            <div class="input-wrap">
+              <input id="toAmount" placeholder="0.0" inputmode="decimal" readonly>
+              <button class="asset" id="toTokenBtn">
+                <span id="toTokenSym" data-addr="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">USDC</span>
+              </button>
+            </div>
+          </div>
+          <div class="row small">
+            <div class="kv"><span>Route</span><strong id="routeName">0x</strong></div>
+            <div class="kv"><span>Slippage</span><strong>1%</strong></div>
+            <div class="kv"><span>Fee</span><strong>0.30%</strong></div>
+          </div>
+          <button class="cta" id="swapBtn" disabled>Connect wallet</button>
+          <p class="footnote">Approval required on first use. We never custody your funds.</p>
+        </div>
+      </div>
+    </section>
+    <section id="learn" class="learn glass">
+      <h2>Ready to swap?</h2>
+      <p>Connect your wallet and start in seconds.</p>
+      <button class="chrome mini" id="startNowBtn">Start now</button>
+    </section>
+  </main>
+  <footer class="foot">
+    <small>© 2025 RupiRamp Ltd.</small>
+    <div><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></div>
+  </footer>
+  <dialog id="tokenDialog" class="token-dialog glass">
+    <form method="dialog" class="token-pane">
+      <header>
+        <strong>Select token</strong>
+        <button class="x" value="close" aria-label="Close">×</button>
+      </header>
+      <input id="tokenSearch" class="t-search" placeholder="Search symbol or paste address">
+      <div id="tokenList" class="t-list"></div>
+    </form>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
