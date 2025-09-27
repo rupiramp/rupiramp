@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — Swap USDT ⇄ USDC (Polygon)</title>
+  <meta name="description" content="Crypto-to-crypto swaps with a liquid glass UI. Non-custodial, fee-on-swap via 0x." />
+  <meta name="theme-color" content="#0a0b16" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- GPU-ish background layers -->
+  <canvas id="field"></canvas>
+  <div id="parallax">
+    <div class="layer l1"></div>
+    <div class="layer l2"></div>
+    <div class="layer l3"></div>
+  </div>
+  <!-- Gooey filter for bubbles -->
+  <svg class="filters" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 20 -10" result="goo"/>
+        <feBlend in="SourceGraphic" in2="goo"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <!-- NAV -->
+    <header class="nav glass" aria-label="Top navigation">
+      <a class="brand" href="/">
+        <img class="mark" src="/logo.svg" alt="RupiRamp" width="32" height="32"
+             onerror="this.onerror=null;this.src='/logo.png'">
+        <span class="wordmark">Rupi<span class="accent">Ramp</span></span>
+      </a>
+      <nav class="menu">
+        <a href="/faq.html">FAQ</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="mailto:info@rupiramp.com">Contact</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <main class="hero shell">
+      <div class="hero-grid">
+        <div class="hcopy">
+          <h1 class="reveal">USDT ⇄ USDC on Polygon</h1>
+          <p class="lede reveal">Non‑custodial swaps with liquid‑glass UI. 0x routing. Your wallet, your keys.</p>
+          <div class="cta-row reveal">
+            <button id="connectBtn" class="btn chrome">Connect Wallet</button>
+            <button id="learnBtn" class="btn ghost">Learn more</button>
+          </div>
+          <div class="badges reveal" aria-hidden="true">
+            <span class="chip">Non‑custodial</span>
+            <span class="chip">Fee on swap</span>
+            <span class="chip">Polygon low fees</span>
+          </div>
+        </div>
+
+        <!-- SWAP CARD -->
+        <section class="card glass tilt reveal" id="swapCard">
+          <div class="tabs" role="tablist">
+            <button class="tab active" role="tab" aria-selected="true">Swap</button>
+            <button class="tab" role="tab" aria-selected="false" disabled>Buy (soon)</button>
+          </div>
+
+          <div class="row">
+            <div class="cell">
+              <div class="label">You pay</div>
+              <div class="input">
+                <input id="amount" inputmode="decimal" placeholder="0.00" aria-label="Amount to swap">
+                <div class="unit">USDT</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swap" title="to" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 4l4 4-4 4V9H4V7h8V4zm0 16l-4-4 4-4v3h8v2h-8v3z"/></svg>
+          </div>
+
+          <div class="row">
+            <div class="cell">
+              <div class="label">You get (est.)</div>
+              <div class="input">
+                <input id="estOut" placeholder="0.00" aria-label="Estimated output" readonly>
+                <div class="unit">USDC</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini">
+            <div class="mini-row"><span>Route</span><span id="route">0x</span></div>
+            <div class="mini-row"><span>Slippage</span><span>1%</span></div>
+            <div class="mini-row"><span>Fee</span><span id="fee">0.30%</span></div>
+          </div>
+
+          <button id="swapBtn" class="btn fill">Swap</button>
+
+          <div class="hints">
+            <small>Approval required on first use. We never custody your funds.</small>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- SCROLL SECTION -->
+    <section class="section shell" id="learn">
+      <div class="panels">
+        <article class="panel glass reveal">
+          <h3>Liquid‑glass UX</h3>
+          <p>Blur, bloom, and chrome accents — without compromising performance.</p>
+        </article>
+        <article class="panel glass reveal">
+          <h3>0x routing</h3>
+          <p>Deep liquidity across DEXs. You keep your keys; we take a small fee on fill.</p>
+        </article>
+        <article class="panel glass reveal">
+          <h3>Polygon focus</h3>
+          <p>Fast, cheap transactions. Perfect for frequent, low‑friction swaps.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final shell">
+      <div class="panel glass reveal center">
+        <h2>Ready to swap?</h2>
+        <p>Connect your wallet and start in seconds.</p>
+        <button class="btn chrome" id="swapBottom">Start now</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot shell">
+      <small>© 2025 RupiRamp Ltd.</small>
+      <small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small>
+    </footer>
+  </div>
+
+  <!-- Gooey bubbles container -->
+  <div id="bubbles" style="filter:url(#goo)"></div>
+
+  <!-- Toast -->
+  <div id="toast">Toast</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
