@@ -3,472 +3,465 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>RupiRamp — Swap crypto with a dark-matter vibe</title>
-<meta name="description" content="Non-custodial swaps with liquid-glass UI and live routing. Your wallet, your keys." />
-<meta name="theme-color" content="#0a0614" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>RupiRamp — Instant crypto swaps</title>
+<meta name="description" content="Instant, non-custodial crypto swaps on your wallet. Low fees, transparent quotes, glass-smooth UI." />
+<meta name="theme-color" content="#0b0820" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <style>
-/* =============== THEME =============== */
+/* ===== THEME ===== */
 :root{
-  --page-bg-0:#080412;           /* deep space */
-  --page-bg-1:#100728;
-  --page-bg-2:#1a0c3a;
-  --ink:#eef3fb;
-  --ink-2:#c6cde0;
-  --muted:#9da7c1;
-  --chip:#151329;
-  --chip-br:#27224c;
-  --glass:#14132bcc;
-  --ring:#241e46;
-  --a1:#7b4dff;                  /* brand gradient */
-  --a2:#5ad8ff;
-  --a3:#9c6bff;
-  --ok:#72ffa8;
-  --glow:#5c7cff55;
-  --shadow:0 12px 40px rgba(0,0,0,.45);
+  /* deep purple night */
+  --bg0:#0b0820;        /* page floor */
+  --bg1:#120b33;        /* page ceiling */
+  --ink:#edf2ff;        /* main text */
+  --muted:#aab3ce;      /* muted text */
+  --ring:#262a55;       /* borders */
+  --ring-2:#303672;     /* stronger border */
+  --glass:#121530cc;    /* base glass */
+  --chip:#11142b;       /* chip bg */
+  --chip-br:#232a52;    /* chip border */
+  --a1:#6fd2ff; --a2:#8a5bff; --a3:#b084ff;    /* gradient brand */
+  --chrome:#f7f9ff;     /* chrome highlight */
+  --shadow:#000a;       /* outer shadow */
+  --glow:#6aa8ff55;     /* CTA glow */
 }
-
-/* Base */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   color:var(--ink);
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  background: radial-gradient(1200px 800px at 70% -20%, #7a3cff10, transparent 60%),
-              linear-gradient(180deg,var(--page-bg-0),var(--page-bg-1) 40%, var(--page-bg-2));
+  background:
+    radial-gradient(1600px 1200px at 120% -20%, #7a3bff22, transparent 60%),
+    radial-gradient(1400px 1000px at -20% 10%, #00b7ff18, transparent 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%);
   min-height:100dvh;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:transparent;
   overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
-/* Layout shell */
-.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
-
-/* =============== NAV =============== */
+/* ===== NAV (non-sticky; glass) ===== */
 .header{
-  margin:16px auto 0;
-  position:relative;
+  margin:14px auto 0;
+  border:1px solid color-mix(in oklab, var(--ring) 70%, #fff 0%);
+  border-radius:20px;
+  background:
+    linear-gradient(180deg, #151936cc, #0f1230cc);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow:
+    0 12px 40px var(--shadow),
+    inset 0 1px 0 #ffffff0d,
+    inset 0 0 0 1px #ffffff08;
 }
-.nav{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;
-  padding:10px 12px;
-  border-radius:18px;
-  border:1px solid var(--ring);
-  background:linear-gradient(180deg,#13122ac0,#0f0e20c0);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  box-shadow:0 8px 30px #0006, inset 0 1px 0 rgba(255,255,255,.04);
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--ink)}
+.brand-ico{
+  width:30px;height:30px;border-radius:50%;
+  background:radial-gradient(80% 80% at 25% 20%, #8bd0ff 0 30%, #7f58ff 60%, #4b2bd6 100%);
+  box-shadow: inset 0 1px 2px #fff9, 0 0 0 1px #ffffff22, 0 6px 16px #0007;
 }
-.brand{
-  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);
-}
-.brand img{width:28px;height:28px}
-.word{font-weight:800}
-.word .rupi{color:#fff}
-.word .ramp{background:linear-gradient(90deg,var(--a2),var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-word{font-weight:800;letter-spacing:.2px}
+.brand-word .rupi{color:#fff}
+.brand-word .ramp{background:linear-gradient(90deg,var(--a1),var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* nav links → keep one line; fall back to mini menu if too tight */
-.links{
-  display:flex;align-items:center;gap:18px;white-space:nowrap;overflow:auto;
-  scrollbar-width:none;
+.links{display:flex;gap:22px;align-items:center}
+.links a{
+  color:#d3dbf3;text-decoration:none;font-weight:700;opacity:.92
 }
-.links::-webkit-scrollbar{display:none}
-.links a{color:#c9cff0;text-decoration:none;font-weight:700;opacity:.9}
 .links a:hover{opacity:1;color:#fff}
 
-/* Compact burger for very narrow devices */
-.burger{display:none; border:1px solid var(--ring); background:#121028; color:#dfe3ff; border-radius:10px; padding:8px}
-.menu{display:none; position:absolute; right:10px; top:60px; background:#0f0e20f0; border:1px solid var(--ring); border-radius:14px; backdrop-filter:blur(12px)}
-.menu a{display:block;padding:10px 14px;color:#e8ecff;text-decoration:none;border-bottom:1px solid #231f44}
-.menu a:last-child{border-bottom:0}
-
-@media (max-width: 520px){
+/* mobile burger */
+.burger{
+  display:none; width:38px;height:38px;border-radius:12px;border:1px solid var(--ring);
+  background:linear-gradient(180deg,#181d46,#121633);
+  display:flex;align-items:center;justify-content:center; color:#c9d1ed;
+  box-shadow:0 8px 18px #0008, inset 0 1px 0 #ffffff0f;
+}
+.burger span{width:18px;height:2px;background:#cfd6ff;border-radius:2px;box-shadow:0 6px 0 #cfd6ff, 0 -6px 0 #cfd6ff}
+@media (max-width:860px){
   .links{display:none}
-  .burger{display:block}
+  .burger{display:flex}
 }
 
-/* =============== COSMIC BACKGROUND (canvas sits behind) =============== */
-#cosmos{position:fixed; inset:0; z-index:-2;}
+/* drawer */
+.drawer{
+  position:fixed; right:16px; top:64px; width:min(280px,calc(100% - 32px));
+  background:linear-gradient(180deg,#171b42f0,#0f1233f0);
+  border:1px solid var(--ring-2); border-radius:16px; backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 18px 50px #000e, inset 0 1px 0 #ffffff12;
+  transform:translateY(-8px); opacity:0; pointer-events:none; transition:all .22s ease;
+  padding:12px;
+}
+.drawer.on{transform:none;opacity:1;pointer-events:auto}
+.drawer a{
+  display:block;padding:12px 10px;border-radius:10px;
+  color:#d8e1ff;text-decoration:none;font-weight:700;
+}
+.drawer a:hover{background:#1a1f4a;border:1px solid #2c3370}
 
-/* =============== HERO =============== */
-.hero{padding:56px 0 28px}
-.grid{
-  display:grid; gap:28px; align-items:center;
-  grid-template-columns:1.1fr .9fr;
-}
-@media (max-width:980px){ .grid{grid-template-columns:1fr} }
+/* ===== HERO ===== */
+.hero{padding:64px 0 30px}
+.grid{display:grid;grid-template-columns:1.12fr .88fr; gap:32px; align-items:center}
+@media (max-width:980px){ .grid{grid-template-columns:1fr; gap:18px} }
 
-h1{
-  font-size: clamp(34px, 6vw, 72px);
-  line-height:1.03; margin:0 0 10px; letter-spacing:.3px;
-  text-shadow:0 2px 20px rgba(160,120,255,.12);
-}
-.lede{color:var(--ink-2);margin:0 0 20px;max-width:720px}
+h1{margin:0 0 12px; font-size:clamp(34px,6.4vw,76px); line-height:1.04; letter-spacing:.2px}
+.lede{margin:0 0 20px;color:var(--muted);font-size:clamp(16px,1.7vw,18px);max-width:720px}
 
-.actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn, .btn-ghost{
-  height:46px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center;
-  font-weight:800; letter-spacing:.1px; cursor:pointer; user-select:none
+/* CTA buttons */
+.btn{height:48px;border:0;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;padding:0 18px;font-weight:800;cursor:pointer;letter-spacing:.1px}
+.btn.grad{
+  color:#0d1022;background:linear-gradient(90deg,var(--a1),var(--a2) 70%); box-shadow:0 14px 30px var(--glow), inset 0 -2px 0 #0003;
 }
-.btn{
-  border:0; padding:0 18px; color:#0b0c14;
-  background:linear-gradient(90deg,var(--a2),var(--a1) 70%);
-  box-shadow:0 10px 26px var(--glow), inset 0 -2px 0 rgba(0,0,0,.25);
-}
-.btn-ghost{
-  padding:0 16px; border:1px solid var(--ring); background:#121028; color:#e0e6ff;
-}
+.btn.ghost{border:1px solid var(--ring);background:linear-gradient(180deg,#13163a,#0f1230);color:#d1dbff}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
 
 /* chips */
-.chips{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 6px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 8px}
 .chip{
-  display:inline-flex;align-items:center; padding:9px 12px; border-radius:999px;
-  background:var(--chip); border:1px solid var(--chip-br); color:#d9def6; font-weight:700
+  background:var(--chip); border:1px solid var(--chip-br); color:#d7def5; border-radius:999px; padding:9px 12px; font-weight:700;
+  box-shadow: inset 0 1px 0 #ffffff08, 0 4px 14px #0006;
 }
 
-/* =============== SWAP CARD =============== */
-.card{
-  border:1px solid var(--ring);
-  border-radius:18px;
-  background:radial-gradient(60% 120% at 50% 0%, #3a2a6a40, transparent 70%) , #161332e6;
-  box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.04);
-  padding:14px; position:relative; overflow:hidden;
+/* ===== GLASS CARD SYSTEM (iOS) ===== */
+.glass{
+  position:relative;
+  background:linear-gradient(180deg,#15183af2,#0e1130f2);
+  border:1px solid color-mix(in oklab, var(--ring) 84%, #fff 0%);
+  border-radius:22px;
+  box-shadow:
+    0 20px 50px #000d,
+    inset 0 1px 0 #ffffff12,
+    inset 0 0 0 1px #ffffff08;
+  overflow:hidden;
 }
-.badge{display:inline-flex; gap:8px; align-items:center; font-weight:800; color:#e1d9ff; background:#241d46; border:1px solid #3a2c7a; border-radius:999px; padding:8px 12px; margin-bottom:8px}
-.row{display:flex;flex-direction:column;gap:8px;margin:8px 0 12px}
-.input{
-  display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;
-  background:#0f0e20; border:1px solid #262153; color:#e6ebff;
-}
-.token{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#141233;border:1px solid #2b2560}
-.unit{margin-left:auto; color:#8790b4; font-weight:800}
-.centerDot{
-  width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background: radial-gradient(100% 100% at 30% 30%, #ffc973, #f59e0b);
-  color:#1a102e; font-weight:900; margin:8px auto;
-  box-shadow:0 10px 40px rgba(245,158,11,.35);
-}
-.slider{
-  height:46px;border-radius:12px;border:1px solid #2a2356;background:linear-gradient(90deg,#70deff22,#8a5bff22);
-  display:flex;align-items:center;justify-content:center;color:#f0f4ff;font-weight:800
-}
-.meta{display:grid;grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
-.meta .box{background:#0f0e20;border:1px solid #262153;border-radius:12px;padding:10px}
-.cta{
-  display:flex;align-items:center;justify-content:center;height:48px;border-radius:12px;border:0;cursor:pointer;
-  color:#0c0f18;font-weight:800;background:linear-gradient(90deg,var(--a2),var(--a1) 70%);box-shadow:0 12px 28px var(--glow),inset 0 -2px 0 rgba(0,0,0,.25);
-  margin-top:10px; width:100%;
+.glass::after{ /* inner chrome rim */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:
+    radial-gradient(80% 80% at 10% 10%, #ffffff18, transparent 40%),
+    radial-gradient(90% 80% at 90% 0%, #ffffff10, transparent 40%),
+    linear-gradient(180deg, #ffffff08, #ffffff00 30% 70%, #ffffff08);
+  mix-blend-mode:screen;
 }
 
-/* =============== FEATURE STRIP + FINAL CTA =============== */
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
-.feature{background:var(--glass); border:1px solid var(--ring); border-radius:16px; padding:16px; box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.feature h3{margin:0 0 6px}
-.feature p{margin:0;color:var(--muted)}
-@media (max-width:900px){ .features{grid-template-columns:1fr} }
+/* ===== SWAP WIDGET ===== */
+.swap{padding:12px}
+.swap .tabs{display:flex;gap:8px;margin:4px 0 10px}
+.tag{padding:8px 12px;border-radius:999px;border:1px solid var(--ring);background:#12163c;color:#dfe6ff;font-weight:800}
+.tag.on{background:linear-gradient(90deg,var(--a1),var(--a2)); color:#0b0e22; border-color:transparent; box-shadow:0 8px 20px #7b7dff66}
 
-.final{
-  margin:34px 0 40px;
-  display:flex; justify-content:center;
+.row{margin:10px 0; display:flex; gap:10px}
+.cell{
+  flex:1; position:relative; border-radius:14px; border:1px solid #262b66; background:#0c1030;
+  padding:12px 14px; display:flex; align-items:center; gap:10px; min-height:54px;
+  box-shadow:inset 0 1px 0 #ffffff0c;
 }
-.final .panel{
-  max-width:820px; width:100%;
-  border:1px solid var(--ring); border-radius:16px; padding:20px;
-  background:linear-gradient(180deg,#17143aee,#141235ee);
-  text-align:center; box-shadow: var(--shadow);
+.badge{display:inline-flex;gap:8px; align-items:center; padding:6px 10px; border-radius:12px; border:1px solid #2b3170; background:#12163c}
+.badge .dot{width:16px;height:16px;border-radius:50%; background:radial-gradient(75% 75% at 30% 25%, #8bd0ff, #7c56ff)}
+.val{flex:1; min-width:0; color:#eaf1ff; letter-spacing:.2px; font-weight:600}
+.unit{color:#98a4cc; font-weight:800}
+.swap-mid{
+  width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid #2b2f66;
+  background:radial-gradient(60% 60% at 50% 35%, #ffdd6a, #f1aa32);
+  box-shadow:0 14px 30px #000a, inset 0 1px 0 #ffffff2a;
 }
 
-/* =============== TOAST =============== */
-.toast{
-  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
-  background:#121028; color:#e9edff; padding:10px 12px; border:1px solid #2b2460; border-radius:10px;
-  opacity:0; pointer-events:none; transition:all .25s ease; box-shadow:0 10px 30px rgba(0,0,0,.4); z-index:30
+.info{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px}
+.stat{
+  height:46px; border-radius:14px; border:1px solid #2d316b; background:#10143a; color:#cbd6ff; display:flex;align-items:center; justify-content:center; gap:8px; font-weight:800
 }
-.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 
-/* =============== REVEAL =============== */
-.reveal{opacity:0; transform:translateY(12px); transition:all .6s cubic-bezier(.2,.8,.2,1)}
-.reveal.on{opacity:1; transform:none}
+.cta-wrap{padding:10px 0 2px; display:flex; justify-content:center}
+.cta-swap{
+  height:48px; min-width:220px; padding:0 20px; border-radius:14px; border:1px solid #3a3fff;
+  background:
+    linear-gradient(180deg,#cfd7ff,#aeb9ff 35%, #8aa2ff 50%, #7a8cff 70%, #6373ff 100%),
+    linear-gradient(90deg, #79d8ff, #855cff);
+  color:#0b0e22; font-weight:900; letter-spacing:.2px; cursor:pointer;
+  box-shadow: 0 20px 40px #6070ff55, inset 0 -2px 0 #0005, inset 0 1px 0 #ffffff8c;
+  transition: transform .06s ease, filter .2s ease;
+}
+.cta-swap:hover{filter:saturate(110%) brightness(1.02)}
+.cta-swap:active{transform:translateY(1px)}
+.note{margin:6px 0 2px; color:#a8b3d6; font-size:.9rem}
 
-/* Small polish */
-.btn:hover,.cta:hover{filter:saturate(110%) brightness(1.02)}
-.btn:active,.cta:active{transform:translateY(1px)}
-a,button{outline:none}
+/* ===== VALUE CARDS & FINAL CTA ===== */
+.panel-row{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px}
+@media (max-width:960px){ .panel-row{grid-template-columns:1fr} }
+.panel{padding:16px 18px}
+.panel h3{margin:0 0 6px}
+.panel p{margin:0;color:var(--muted)}
 
-/* Footer */
-footer{padding:24px 0 36px; display:flex; justify-content:space-between; color:#94a0c0}
-footer a{color:#b8c3e6;text-decoration:none}
+.final{margin:40px 0 24px}
+.final .glass{padding:22px;text-align:center}
+.final .btn{min-width:160px}
+
+/* ===== FOOTER ===== */
+footer{padding:28px 0 36px; display:flex; justify-content:space-between; color:#8f98b8}
+footer a{color:#a8b2d3;text-decoration:none}
 footer a:hover{color:#fff}
 
-/* Reduce heavy effects on low power devices for smoothness */
-@media (max-width:480px), (prefers-reduced-motion: reduce){
-  .nav{backdrop-filter:none}
-  .feature, .card, .final .panel{box-shadow:none}
-}
+/* ===== BACKGROUND FX CANVASES ===== */
+canvas#stars, canvas#galaxy{position:fixed; inset:0; z-index:-3}
+canvas#galaxy{z-index:-2; opacity:.42}
+
+/* ===== UTIL ===== */
+.hidden{display:none}
+
+/* Smoother scrolling feel */
+html{scroll-behavior:smooth}
 </style>
 </head>
 <body>
-<canvas id="cosmos"></canvas>
+<canvas id="stars"></canvas>
+<canvas id="galaxy"></canvas>
 
 <div class="wrap">
-  <!-- HEADER -->
+  <!-- NAV -->
   <header class="header">
     <div class="nav">
       <a class="brand" href="/">
-        <img src="/logo.svg" alt="RupiRamp" onerror="this.onerror=null;this.src='/logo.png'">
-        <div class="word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></div>
+        <div class="brand-ico" aria-hidden="true"></div>
+        <div class="brand-word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></div>
       </a>
-
-      <nav class="links" aria-label="Site">
-        <a href="/faq.html">FAQ</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="mailto:info@rupiramp.com">Contact</a>
-      </nav>
-
-      <button class="burger" id="burger" aria-label="Open menu">☰</button>
-      <div class="menu" id="menu">
+      <div class="links">
         <a href="/faq.html">FAQ</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
         <a href="mailto:info@rupiramp.com">Contact</a>
       </div>
+      <button class="burger" id="burger" aria-label="Open menu"><span></span></button>
     </div>
   </header>
+  <nav class="drawer" id="drawer" aria-label="Mobile menu">
+    <a href="/faq.html">FAQ</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="mailto:info@rupiramp.com">Contact</a>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
     <div class="grid">
       <div>
-        <h1 class="reveal">Swap crypto with a dark-matter vibe</h1>
-        <p class="lede reveal" style="transition-delay:.05s">Liquid-glass UI. Live pricing via 0x routing. You keep custody—connect your wallet and swap in seconds.</p>
-        <div class="actions reveal" style="transition-delay:.1s">
-          <button class="btn" id="connectBtn">Connect wallet</button>
-          <button class="btn-ghost" id="learnBtn">Learn more</button>
+        <h1>Instant crypto swaps. Secure. Simple. Low fees.</h1>
+        <p class="lede">Non-custodial swaps with live pricing via 0x. You keep custody—connect your wallet and swap in seconds.</p>
+        <div class="btn-row">
+          <button class="btn grad" id="btnConnect">Connect wallet</button>
+          <button class="btn ghost" id="btnLearn">Learn more</button>
         </div>
-        <div class="chips reveal" style="transition-delay:.15s">
-          <span class="chip">Non-custodial</span>
-          <span class="chip">Live quotes</span>
-          <span class="chip">Transparent fees</span>
-          <span class="chip">Polygon first</span>
+        <div class="chips" aria-hidden="true">
+          <div class="chip">Non-custodial</div>
+          <div class="chip">Live quotes</div>
+          <div class="chip">Transparent fees</div>
+          <div class="chip">Polygon first</div>
         </div>
       </div>
 
-      <!-- Swap card -->
-      <div class="card reveal" style="transition-delay:.12s">
-        <div class="badge">Swap <span style="opacity:.6">(Buy soon)</span></div>
+      <!-- SWAP WIDGET -->
+      <div class="glass swap" id="swapCard">
+        <div class="tabs">
+          <div class="tag on">Swap</div>
+          <div class="tag" title="Coming soon" style="opacity:.5;cursor:not-allowed">Buy (soon)</div>
+        </div>
 
         <div class="row">
-          <div class="input">
-            <span class="token"><img src="/logo.svg" alt="" width="18" height="18">USDT</span>
-            <input id="payAmt" inputmode="decimal" placeholder="0.00" aria-label="You pay"
-                   style="all:unset;flex:1;min-width:0;font-size:18px;color:#f3f6ff">
-            <span class="unit">USDT</span>
+          <div class="cell">
+            <div class="badge"><div class="dot"></div><strong>USDT</strong></div>
+            <div class="val" id="payVal" contenteditable="true" spellcheck="false" inputmode="decimal">0.00</div>
+            <div class="unit">USDT</div>
           </div>
         </div>
 
-        <div class="centerDot">⇄</div>
-
-        <div class="row">
-          <div class="input">
-            <span class="token"><img src="/logo.svg" alt="" width="18" height="18">USDC</span>
-            <input id="getAmt" placeholder="0.00" aria-label="You receive" readonly
-                   style="all:unset;flex:1;min-width:0;font-size:18px;color:#cdd6ff;opacity:.75">
-            <span class="unit">USDC</span>
+        <div class="row" style="justify-content:center">
+          <div class="swap-mid" title="Reverse" id="reverseBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 8h9l-1.5-1.5 1.06-1.06L18.12 7.0a1 1 0 010 1.41l-3.56 3.56-1.06-1.06L15 9H6V8zm12 8H9l1.5 1.5-1.06 1.06L5.88 17a1 1 0 010-1.41l3.56-3.56 1.06 1.06L9 15h9v1z" fill="#2b1b06"/></svg>
           </div>
         </div>
 
-        <div class="slider" id="quoteBtn">Get live quote</div>
-
-        <div class="meta">
-          <div class="box"><strong>Route</strong><div id="routeOut" style="opacity:.8">0x</div></div>
-          <div class="box"><strong>Slippage</strong><div style="opacity:.8">1%</div></div>
+        <div class="row">
+          <div class="cell">
+            <div class="badge"><div class="dot"></div><strong>USDC</strong></div>
+            <div class="val" id="recvVal" aria-readonly="true">0.00</div>
+            <div class="unit">USDC</div>
+          </div>
         </div>
 
-        <button class="cta" id="swapBtn" disabled>Swap</button>
-        <div style="font-size:12px;color:#9ea6c5;margin-top:8px">Approval required on first use. We never custody your funds.</div>
+        <div class="cta-wrap">
+          <button class="cta-swap" id="btnQuote">Get live quote</button>
+        </div>
+
+        <div class="info">
+          <div class="stat">Route <span style="opacity:.7;margin-left:6px">0x</span></div>
+          <div class="stat">Slippage <span style="opacity:.7;margin-left:6px">1%</span></div>
+        </div>
+
+        <p class="note">Approval required on first use. We never custody your funds.</p>
       </div>
     </div>
   </section>
 
-  <!-- FEATURE STRIP -->
-  <section class="features">
-    <div class="feature reveal">
-      <h3>Secure & non-custodial</h3>
-      <p>Your wallet stays in your control—always.</p>
-    </div>
-    <div class="feature reveal" style="transition-delay:.05s">
-      <h3>Optimized routing</h3>
-      <p>Powered by 0x aggregated liquidity for competitive prices.</p>
-    </div>
-    <div class="feature reveal" style="transition-delay:.1s">
-      <h3>Transparent</h3>
-      <p>Quotes show what you’ll get before you confirm.</p>
+  <!-- VALUE CARDS -->
+  <section>
+    <div class="panel-row">
+      <div class="glass panel">
+        <h3>Secure & non-custodial</h3>
+        <p>Your wallet stays in your control—always.</p>
+      </div>
+      <div class="glass panel">
+        <h3>Optimized routing</h3>
+        <p>Powered by 0x aggregated liquidity for competitive prices.</p>
+      </div>
+      <div class="glass panel">
+        <h3>Transparent</h3>
+        <p>Quotes show what you’ll get before you confirm.</p>
+      </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
   <section class="final" id="learnTarget">
-    <div class="panel reveal">
+    <div class="glass" style="max-width:820px;margin:0 auto">
       <h2 style="margin:0 0 8px">Ready to swap?</h2>
-      <p style="margin:0 0 12px;color:var(--ink-2)">Connect your wallet and start in seconds.</p>
-      <button class="btn" id="startBtn">Start now</button>
+      <p style="margin:0 0 14px;color:var(--muted)">Connect your wallet and start in seconds.</p>
+      <button class="btn grad" id="btnStart">Start now</button>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <small>© 2025 RupiRamp Ltd.</small>
     <small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small>
   </footer>
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">Heads up</div>
-
 <script>
-/* ======================= MOBILE MENU ======================= */
+/* ===== MOBILE DRAWER ===== */
 const burger = document.getElementById('burger');
-const menu = document.getElementById('menu');
-burger?.addEventListener('click', ()=>{
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+const drawer = document.getElementById('drawer');
+burger?.addEventListener('click', ()=> drawer.classList.toggle('on'));
+
+/* ===== LEARN MORE SCROLL ===== */
+document.getElementById('btnLearn')?.addEventListener('click', ()=>{
+  document.getElementById('learnTarget').scrollIntoView({behavior:'smooth', block:'start'});
 });
-document.addEventListener('click', (e)=>{
-  if(menu.style.display==='block' && !menu.contains(e.target) && e.target!==burger){ menu.style.display='none'; }
-});
 
-/* ======================= TOAST ======================= */
-const toast = document.getElementById('toast');
-function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(showToast._t); showToast._t=setTimeout(()=>toast.classList.remove('show'), 2200); }
+/* ===== FX: STARS (slow twinkle) ===== */
+(() => {
+  const c = document.getElementById('stars'), ctx = c.getContext('2d');
+  let W=innerWidth, H=innerHeight, DPR = Math.min(2, devicePixelRatio||1);
+  function size(){ W=innerWidth; H=innerHeight; c.width=W*DPR; c.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0) }
+  size(); addEventListener('resize', size, {passive:true});
 
-/* ======================= REVEAL ======================= */
-const io = new IntersectionObserver((es)=> es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} }), {threshold:.14});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const COUNT = Math.min(220, Math.round(W*H/14000));
+  const stars = Array.from({length:COUNT}, () => ({
+    x: Math.random()*W,
+    y: Math.random()*H,
+    r: Math.random()*1.1 + .3,
+    p: Math.random()*Math.PI*2,
+    s: Math.random()*0.0009 + 0.00035   // **very slow twinkle**
+  }));
 
-/* ======================= LEARN MORE SCROLL ======================= */
-document.getElementById('learnBtn')?.addEventListener('click', ()=> document.getElementById('learnTarget').scrollIntoView({behavior:'smooth'}));
-document.getElementById('startBtn')?.addEventListener('click', ()=> showToast('Connect your wallet to begin'));
-
-/* ======================= COSMIC BACKGROUND (High-FPS, mobile-safe) ======================= */
-/* Bright twinkling stars + subtle spiral clouds. Carefully capped DPR + low overdraw for smoother scrolling. */
-(()=>{
-  const c = document.getElementById('cosmos');
-  const ctx = c.getContext('2d');
-  let W,H,DPR,stars=[],sparkle=0;
-  const MAX_DPR = 1.75;
-
-  function resize(){
-    DPR = Math.min(MAX_DPR, window.devicePixelRatio || 1);
-    W = c.width = Math.floor(innerWidth * DPR);
-    H = c.height = Math.floor(innerHeight * DPR);
-    c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0); // draw in CSS pixels
-    makeStars();
-  }
-
-  function makeStars(){
-    const count = Math.min(260, Math.round(innerWidth * innerHeight / 4800));
-    stars = Array.from({length:count}, ()=>({
-      x: Math.random()*innerWidth,
-      y: Math.random()*innerHeight,
-      r: Math.random()*1.2 + 0.3,
-      a: Math.random()*1,
-      tw: Math.random()*0.02 + 0.005
-    }));
-  }
-
-  function galaxy(x,y,r,rot,alpha){
-    const grd = ctx.createRadialGradient(x,y,0,x,y,r);
-    grd.addColorStop(0, `rgba(180,120,255,${0.12*alpha})`);
-    grd.addColorStop(0.5, `rgba(110,60,230,${0.08*alpha})`);
-    grd.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grd;
-    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-
-    // simple spiral arms
-    ctx.save();
-    ctx.translate(x,y); ctx.rotate(rot);
-    for(let i=0;i<2;i++){
-      ctx.rotate(Math.PI);
-      for(let t=0;t<120;t++){
-        const p = t/120, rad = r * (p);
-        const px = Math.cos(p*6) * rad * 0.25;
-        const py = -p * r * 0.9;
-        ctx.globalAlpha = (1-p) * 0.05 * alpha;
-        ctx.fillStyle = '#a98bff';
-        ctx.fillRect(px,py,1.5,1.5);
-      }
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    for (const s of stars){
+      s.p += s.s;
+      const a = (Math.sin(s.p)*0.4 + 0.6) * 0.8; // subdued brightness
+      ctx.globalAlpha = a;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
     }
-    ctx.restore();
-    ctx.globalAlpha = 1;
+    requestAnimationFrame(tick);
   }
-
-  function draw(){
-    ctx.clearRect(0,0,innerWidth,innerHeight);
-
-    // deep vignette
-    const g = ctx.createLinearGradient(0,0,0,innerHeight);
-    g.addColorStop(0,'rgba(10,6,20,0.0)');
-    g.addColorStop(1,'rgba(10,6,20,0.35)');
-    ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
-
-    // galaxies (very subtle)
-    galaxy(innerWidth*0.85, innerHeight*0.20, 260, sparkle*0.02, 1);
-    galaxy(innerWidth*0.20, innerHeight*0.85, 220, -sparkle*0.018, 0.8);
-
-    // stars
-    sparkle += 1;
-    ctx.fillStyle = '#ffffff';
-    for(const s of stars){
-      s.a += s.tw;
-      const tw = (Math.sin(s.a)+1)/2; // 0..1
-      const r = s.r * (0.6 + tw*0.8);
-      ctx.globalAlpha = 0.6 + tw*0.4;
-      ctx.fillRect(s.x, s.y, r, r);
-      // occasional bright sparkle
-      if(tw>0.97){ ctx.globalAlpha = 0.8; ctx.fillRect(s.x-0.5, s.y-0.5, r+1, r+1); }
-    }
-    ctx.globalAlpha = 1;
-
-    requestAnimationFrame(draw);
-  }
-  resize(); draw();
-  addEventListener('resize', resize, {passive:true});
+  tick();
 })();
 
-/* ======================= WALLET (placeholder) ======================= */
-document.getElementById('connectBtn')?.addEventListener('click', ()=>{
-  if(!(window.ethereum)){ showToast('Install MetaMask to connect'); return; }
-  window.ethereum.request({method:'eth_requestAccounts'}).then(()=>showToast('Wallet connected')).catch(()=>showToast('Connection cancelled'));
+/* ===== FX: SOFT SPIRAL GALAXY (very subtle) ===== */
+(() => {
+  const c = document.getElementById('galaxy'), g = c.getContext('2d');
+  let W=innerWidth, H=innerHeight, DPR=Math.min(2, devicePixelRatio||1);
+  function size(){ W=innerWidth; H=innerHeight; c.width=W*DPR; c.height=H*DPR; g.setTransform(DPR,0,0,DPR,0,0) }
+  size(); addEventListener('resize', size, {passive:true});
+
+  let t=0;
+  function draw(){
+    g.clearRect(0,0,W,H);
+    const cx = W*0.82, cy = H*0.18; // off to the top-right
+    const arms = 4, rings = 140;
+    for(let i=0;i<rings;i++){
+      const r = i*1.6;
+      for(let a=0;a<arms;a++){
+        const ang = (i*0.18 + a*(Math.PI*2/arms) + t*0.05);
+        const x = cx + Math.cos(ang)*r;
+        const y = cy + Math.sin(ang)*r;
+        const fade = Math.max(0, 1 - i/rings);
+        g.fillStyle = `hsla(${265+i*0.2}, 100%, ${40+i*0.05}%, ${0.045*fade})`;
+        g.beginPath(); g.arc(x,y, 1.5+fade*0.8, 0, Math.PI*2); g.fill();
+      }
+    }
+    // core glow
+    const grad = g.createRadialGradient(cx,cy,0,cx,cy,80);
+    grad.addColorStop(0,'rgba(255,200,90,.18)');
+    grad.addColorStop(1,'transparent');
+    g.fillStyle = grad; g.beginPath(); g.arc(cx,cy,80,0,Math.PI*2); g.fill();
+
+    t += 0.006;            // **slow rotation**
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ===== SWAP: UI HOOKS (0x integration stubs – keep your logic) ===== */
+const payVal = document.getElementById('payVal');
+const recvVal = document.getElementById('recvVal');
+const btnQuote = document.getElementById('btnQuote');
+const reverseBtn = document.getElementById('reverseBtn');
+let paySym = 'USDT', recvSym = 'USDC';
+
+reverseBtn?.addEventListener('click', ()=>{
+  [paySym, recvSym] = [recvSym, paySym];
+  // (Optional) flip badges visually:
+  // left as is for your current fixed symbols
 });
 
-/* ======================= QUOTE UX (local demo) ======================= */
-const pay = document.getElementById('payAmt');
-const get = document.getElementById('getAmt');
-const quoteBtn = document.getElementById('quoteBtn');
-const swapBtn = document.getElementById('swapBtn');
-
-function fmt(n){ try{ return Number(n).toLocaleString('en-IN',{maximumFractionDigits:6}); }catch{ return n; } }
-
-quoteBtn?.addEventListener('click', ()=>{
-  const v = (pay.value || '').replace(/[^\d.]/g,'');
-  if(!v){ showToast('Enter an amount'); return; }
-  // placeholder: 1 USDT ≈ 0.999 USDC visual
-  const est = Math.max(0, (parseFloat(v)||0) * 0.999);
-  get.value = fmt(est);
-  swapBtn.disabled = false;
-  showToast('Quote ready (demo)');
+/* 0x HOOKS – plug your existing quote/fill here */
+btnQuote?.addEventListener('click', async ()=>{
+  const amt = parseFloat((payVal.textContent || '0').replace(/[^\d.]/g,'')) || 0;
+  if (!amt){ pulse(payVal); return; }
+  // Example stub: pretend 1:1
+  recvVal.textContent = amt.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  // TODO: call your 0x price API and set recvVal, route, fee, slippage, etc.
 });
 
-swapBtn?.addEventListener('click', ()=>{
-  if(swapBtn.disabled){ return; }
-  showToast('Connect wallet to swap');
+/* Nice little pulse when a field is invalid */
+function pulse(el){
+  el.style.transition='transform .08s ease'; el.style.transform='scale(1.02)';
+  setTimeout(()=>{el.style.transform='none'},120);
+}
+
+/* ===== CONNECT WALLET (placeholder to your existing connector) ===== */
+document.getElementById('btnConnect')?.addEventListener('click', ()=>{
+  // keep your MetaMask / WalletConnect flow here; for now give helpful message
+  alert('Please install MetaMask (or open in a wallet browser) to connect.');
 });
+document.getElementById('btnStart')?.addEventListener('click', ()=>{
+  document.getElementById('swapCard').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* ===== PERFORMANCE GUARDS ===== */
+/* Disable pointer events on canvases (no hit-testing), improves scroll fluidity on iOS/Safari. */
+document.getElementById('stars').style.pointerEvents='none';
+document.getElementById('galaxy').style.pointerEvents='none';
 </script>
 </body>
 </html>
