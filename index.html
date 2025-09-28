@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RupiRamp — Crypto ↔ Crypto (0x routing)</title>
+  <meta name="description" content="Swap crypto with a premium liquid-glass UI. Live pricing via 0x routing.">
+  <meta name="theme-color" content="#090915" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <canvas id="galaxy"></canvas>
+
+  <div class="wrap">
+    <header class="nav" aria-label="Top navigation">
+      <div class="nav-in">
+        <a class="brand" href="/"><img src="/logo.svg" alt="RupiRamp"><span class="word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></span></a>
+        <nav class="menu"><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="mailto:info@rupiramp.com">Contact</a></nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hgrid">
+        <div class="left">
+          <h1>Swap crypto with a dark‑matter vibe</h1>
+          <p class="lede">Liquid‑glass UI. Live pricing via 0x. You keep custody—connect your wallet and swap in seconds.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn" id="connectBtn">Connect wallet</button>
+            <button class="btn-ghost" id="learnBtn">Learn more</button>
+          </div>
+          <div class="info-strap"><span class="badge">Non‑custodial</span><span class="badge">Live quotes</span><span class="badge">Transparent fees</span><span class="badge">Polygon first</span></div>
+        </div>
+
+        <div class="card" id="swapCard">
+          <div class="tabs"><button class="tab active" aria-selected="true">Swap</button></div>
+          <div class="row">
+            <div class="cell">
+              <div class="label">You pay</div>
+              <div class="input">
+                <div class="token" id="fromToken"><img id="fromIcon" src="" alt=""><span id="fromSym">USDT</span></div>
+                <input id="fromAmount" inputmode="decimal" placeholder="0.00">
+                <div class="unit" id="fromUnit">USDT</div>
+              </div>
+              <div class="token-list" id="fromList"></div>
+            </div>
+          </div>
+
+          <div class="center"><div class="swap" id="swapBtn" title="Flip"><svg viewBox="0 0 24 24"><path d="M12 4l4 4-4 4V9H4V7h8V4zm0 16l-4-4 4-4v3h8v2h-8v3z"/></svg></div></div>
+
+          <div class="row">
+            <div class="cell">
+              <div class="label">You receive (est.)</div>
+              <div class="input">
+                <div class="token" id="toToken"><img id="toIcon" src="" alt=""><span id="toSym">USDC</span></div>
+                <input id="toAmount" placeholder="0.00" readonly style="opacity:.8">
+                <div class="unit" id="toUnit">USDC</div>
+              </div>
+              <div class="token-list" id="toList"></div>
+            </div>
+          </div>
+
+          <button class="cta" id="quoteBtn">Get live quote</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="learn">
+      <div class="kgrid">
+        <div class="k"><div class="big">Non‑custodial</div><div class="sub">Your wallet stays in your control—always.</div></div>
+        <div class="k"><div class="big">Optimized routing</div><div class="sub">Powered by 0x aggregated liquidity.</div></div>
+        <div class="k"><div class="big">Transparent</div><div class="sub">Quotes show what you’ll get before you accept.</div></div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="panel"><h2>Ready to swap?</h2><p>Connect your wallet and get a live quote.</p><button class="btn" id="quoteBtn2">Get live quote</button></div>
+    </section>
+
+    <footer><small>© 2025 RupiRamp Ltd.</small><small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small></footer>
+  </div>
+
+  <div id="toast" class="hide"></div>
+  <script src="/script.js"></script>
+</body>
+</html>
