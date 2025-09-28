@@ -1,90 +1,467 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>RupiRamp — Crypto ↔ Crypto (0x routing)</title>
-  <meta name="description" content="Swap crypto with a premium liquid-glass UI. Live pricing via 0x routing.">
-  <meta name="theme-color" content="#090915" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" href="/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/styles.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>RupiRamp — Swap crypto with a dark-matter vibe</title>
+<meta name="description" content="Non-custodial swaps with a dark-matter aesthetic: liquid-glass UI, chrome accents, and space-smooth motion. Connect wallet and swap in seconds." />
+<meta name="theme-color" content="#0a0616" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="/logo.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===================== Theme ===================== */
+:root{
+  --bg0:#070412;               /* deep space */
+  --bg1:#0c0720;               /* deeper */
+  --galaxy:#1b1042;            /* nebula tint */
+  --fg:#eef3fa;                /* primary text */
+  --muted:#a8b2c9;             /* secondary text */
+  --glass:#14172acc;           /* glass panels */
+  --ring:#23284d;              /* borders */
+  --chip:#151a31;              /* chips */
+  --chip-br:#283058;
+  --accent1:#81d7ff;           /* gradient 1 */
+  --accent2:#8f6bff;           /* gradient 2 */
+  --accent3:#d882ff;           /* gradient 3 hint */
+  --chromeHi:#f3f5ff;          /* chrome highlight */
+  --chromeLo:#9aa5c7;          /* chrome shadow */
+  --glow:#6aa8ff44;            /* outer glow */
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--fg);
+  font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background: radial-gradient(1000px 800px at 120% -10%, #5b2bf012 0%, transparent 60%),
+              radial-gradient(900px 700px at -30% 20%, #0aa3ff14 0%, transparent 55%),
+              linear-gradient(180deg,var(--bg0),var(--bg1));
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; -webkit-tap-highlight-color:transparent;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ===================== Layout ===================== */
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+header.nav{
+  margin:14px auto 0;
+  border:1px solid var(--ring);
+  border-radius:18px;
+  background:linear-gradient(180deg,#15182ecc,#0e132acc);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--fg);text-decoration:none}
+.brand img{width:28px;height:28px;border-radius:50%}
+.word{font-weight:800;letter-spacing:.2px}
+.word .rupi{color:#fff}
+.word .ramp{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.menu{display:flex;flex-wrap:wrap;gap:18px}
+.menu a{color:#cbd4ea;text-decoration:none;font-weight:700;opacity:.9}
+.menu a:hover{opacity:1;color:#fff}
+
+@media (max-width:860px){
+  .nav-in{flex-direction:column;align-items:flex-start}
+  .menu{padding-left:40px}
+}
+
+/* ===================== Hero ===================== */
+.hero{position:relative; padding:64px 0 30px}
+.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+@media (max-width:980px){ .hgrid{grid-template-columns:1fr;gap:20px} }
+
+h1{margin:0 0 10px;font-size:clamp(34px,6.5vw,72px);line-height:1.03;letter-spacing:.2px}
+.lede{margin:0 0 20px;color:var(--muted);max-width:760px}
+
+/* Buttons */
+.btn, .btn-ghost{
+  height:46px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center;
+  font-weight:800; letter-spacing:.1px; cursor:pointer; user-select:none;
+}
+.btn{
+  border:0; padding:0 18px; color:#0c0f18;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2) 70%);
+  box-shadow:0 12px 28px var(--glow), inset 0 -2px 0 #0003;
+}
+.btn-ghost{
+  padding:0 14px; color:#d7def5; background:#121733; border:1px solid var(--ring);
+}
+.btn:active,.btn-ghost:active{transform:translateY(1px)}
+
+/* Chips */
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px}
+.chip{display:inline-flex;align-items:center;background:var(--chip);color:#d7def5;border:1px solid var(--chip-br);padding:9px 12px;border-radius:999px;font-weight:700}
+
+/* ===================== Swap card ===================== */
+.card{
+  position:relative;
+  background:linear-gradient(180deg,#161a33cc,#10142bcc);
+  border:1px solid var(--ring);
+  border-radius:20px; padding:16px; box-shadow:0 14px 48px #0009, inset 0 1px 0 #ffffff10;
+}
+.card::before{
+  content:""; position:absolute; inset:-60px -40px; z-index:-1;
+  background:
+    radial-gradient(360px 240px at 20% 30%, #7c5bff26, transparent 60%),
+    radial-gradient(280px 200px at 80% 60%, #5fb8ff20, transparent 60%);
+  filter:blur(4px);
+}
+.tabs{display:flex;gap:8px;margin-bottom:8px}
+.tab{border:1px solid var(--ring);background:#121733;color:#dfe6fb;padding:9px 14px;border-radius:999px;font-weight:800}
+.tab.active{background:#7a58ff;color:#0b0b14;border-color:transparent;box-shadow:0 8px 18px #7a58ff48}
+
+.row{display:flex;gap:10px;align-items:center;margin:10px 0}
+.cell{position:relative;flex:1;background:#0b1125;border:1px solid #242a47;border-radius:14px;padding:14px 14px 12px 14px}
+.label{position:absolute;top:8px;left:14px;font-size:.8rem;color:#8ea1c7}
+.input{display:flex;align-items:center;gap:10px;margin-top:6px}
+.input input{all:unset;flex:1;min-width:0;font-size:18px;color:#e7f0ff}
+.unit{opacity:.9;color:#9eb0cf;font-weight:800}
+.token{display:inline-flex;align-items:center;gap:8px;background:#0f1430;border:1px solid #2c345d;border-radius:12px;padding:6px 10px;font-weight:800}
+.token img{width:18px;height:18px;border-radius:4px}
+
+/* swap arrow */
+.swapDot{
+  width:46px;height:46px;border-radius:999px;border:1px solid var(--ring);
+  background:linear-gradient(180deg,#171b34,#12162a);
+  display:flex;align-items:center;justify-content:center; margin:6px auto 6px; box-shadow:0 10px 26px #0008;
+}
+.swapDot svg{width:20px;height:20px;fill:#ffc970}
+
+/* in-card CTA */
+.cta{
+  display:flex;align-items:center;justify-content:center;height:48px;border-radius:14px;border:0;cursor:pointer;
+  color:#0c0f18;font-weight:800;background:linear-gradient(90deg,var(--accent1),var(--accent2) 70%);box-shadow:0 12px 28px var(--glow),inset 0 -2px 0 #0003;
+  margin-top:10px;width:100%;
+}
+
+/* ===================== Selling points ===================== */
+.section{padding:38px 0 24px}
+.grid3{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+.tile{
+  background:linear-gradient(180deg,#14182acc,#10142bcc);
+  border:1px solid var(--ring); border-radius:16px; padding:16px; box-shadow:0 12px 36px #0007;
+}
+.tile h3{margin:0 0 6px}
+.tile p{margin:0;color:var(--muted)}
+@media (max-width:980px){ .grid3{grid-template-columns:1fr} }
+
+/* Final CTA */
+.final{padding:24px 0 40px}
+.final .panel{
+  margin:0 auto; max-width:780px;
+  background:linear-gradient(180deg,#14182acc,#10142bcc);
+  border:1px solid var(--ring); border-radius:18px; padding:20px; text-align:center; box-shadow:0 12px 36px #0008;
+}
+.final h2{margin:0 0 8px}
+.final p{margin:0 0 14px;color:var(--muted)}
+
+/* Footer */
+footer{padding:22px 0 32px;display:flex;justify-content:space-between;color:#8a94a8}
+footer a{color:#a9b5cc;text-decoration:none}
+footer a:hover{color:#fff}
+
+/* ===================== Cosmic background canvases ===================== */
+#stars, #galaxy {position:fixed; inset:0; z-index:-2; display:block;}
+
+/* Subtle star twinkle */
+@keyframes twinkle { 0%,100%{opacity:.85} 50%{opacity:.4} }
+
+/* Minimal extra polish */
+.btn:hover,.cta:hover{filter:saturate(110%) brightness(1.03)}
+.card:hover{transform:translateY(-1px)}
+</style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
-  <canvas id="galaxy"></canvas>
 
-  <div class="wrap">
-    <header class="nav" aria-label="Top navigation">
-      <div class="nav-in">
-        <a class="brand" href="/"><img src="/logo.svg" alt="RupiRamp"><span class="word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></span></a>
-        <nav class="menu"><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="mailto:info@rupiramp.com">Contact</a></nav>
-      </div>
-    </header>
+<!-- background canvases -->
+<canvas id="galaxy"></canvas>
+<canvas id="stars" style="animation:twinkle 6s ease-in-out infinite"></canvas>
 
-    <section class="hero">
-      <div class="hgrid">
-        <div class="left">
-          <h1>Swap crypto with a dark‑matter vibe</h1>
-          <p class="lede">Liquid‑glass UI. Live pricing via 0x. You keep custody—connect your wallet and swap in seconds.</p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <button class="btn" id="connectBtn">Connect wallet</button>
-            <button class="btn-ghost" id="learnBtn">Learn more</button>
-          </div>
-          <div class="info-strap"><span class="badge">Non‑custodial</span><span class="badge">Live quotes</span><span class="badge">Transparent fees</span><span class="badge">Polygon first</span></div>
+<div class="wrap">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-in">
+      <a class="brand" href="/">
+        <img src="/logo.svg" alt="RupiRamp logo" onerror="this.onerror=null;this.src='/logo.png'">
+        <span class="word"><span class="rupi">Rupi</span><span class="ramp">Ramp</span></span>
+      </a>
+      <nav class="menu">
+        <a href="/faq.html">FAQ</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="mailto:info@rupiramp.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hgrid">
+      <div>
+        <h1>Swap crypto with a dark-matter vibe</h1>
+        <p class="lede">Liquid-glass UI. Live pricing via 0x. You keep custody—connect your wallet and swap in seconds.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" id="connectBtn" title="Connect with MetaMask">Connect wallet</button>
+          <button class="btn-ghost" id="learnBtn">Learn more</button>
         </div>
-
-        <div class="card" id="swapCard">
-          <div class="tabs"><button class="tab active" aria-selected="true">Swap</button></div>
-          <div class="row">
-            <div class="cell">
-              <div class="label">You pay</div>
-              <div class="input">
-                <div class="token" id="fromToken"><img id="fromIcon" src="" alt=""><span id="fromSym">USDT</span></div>
-                <input id="fromAmount" inputmode="decimal" placeholder="0.00">
-                <div class="unit" id="fromUnit">USDT</div>
-              </div>
-              <div class="token-list" id="fromList"></div>
-            </div>
-          </div>
-
-          <div class="center"><div class="swap" id="swapBtn" title="Flip"><svg viewBox="0 0 24 24"><path d="M12 4l4 4-4 4V9H4V7h8V4zm0 16l-4-4 4-4v3h8v2h-8v3z"/></svg></div></div>
-
-          <div class="row">
-            <div class="cell">
-              <div class="label">You receive (est.)</div>
-              <div class="input">
-                <div class="token" id="toToken"><img id="toIcon" src="" alt=""><span id="toSym">USDC</span></div>
-                <input id="toAmount" placeholder="0.00" readonly style="opacity:.8">
-                <div class="unit" id="toUnit">USDC</div>
-              </div>
-              <div class="token-list" id="toList"></div>
-            </div>
-          </div>
-
-          <button class="cta" id="quoteBtn">Get live quote</button>
+        <div class="chips" style="margin-top:14px">
+          <span class="chip">Non-custodial</span>
+          <span class="chip">Live quotes</span>
+          <span class="chip">Transparent fees</span>
+          <span class="chip">Polygon first</span>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="learn">
-      <div class="kgrid">
-        <div class="k"><div class="big">Non‑custodial</div><div class="sub">Your wallet stays in your control—always.</div></div>
-        <div class="k"><div class="big">Optimized routing</div><div class="sub">Powered by 0x aggregated liquidity.</div></div>
-        <div class="k"><div class="big">Transparent</div><div class="sub">Quotes show what you’ll get before you accept.</div></div>
+      <!-- Swap card (visual only — hook your 0x code) -->
+      <div class="card" role="region" aria-label="Swap">
+        <div class="tabs">
+          <button class="tab active">Swap</button>
+          <button class="tab" disabled>Buy (soon)</button>
+        </div>
+
+        <div class="row">
+          <div class="cell">
+            <div class="label">You pay</div>
+            <div class="input">
+              <span class="token"><img src="/logo.svg" alt="">USDT</span>
+              <input id="payAmt" placeholder="0.00" inputmode="decimal" aria-label="Pay amount">
+              <div class="unit">USDT</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="swapDot" aria-hidden="true" title="Swap direction">
+          <svg viewBox="0 0 24 24"><path d="M12 5l4 4-1.4 1.4L13 9.8V18h-2V9.8L9.4 10.4 8 9l4-4zm0 14l-4-4 1.4-1.4L11 14.2V6h2v8.2l1.6-1.6L16 15l-4 4z"/></svg>
+        </div>
+
+        <div class="row">
+          <div class="cell">
+            <div class="label">You receive (est.)</div>
+            <div class="input">
+              <span class="token"><img src="/logo.svg" alt="">USDC</span>
+              <input id="recvAmt" placeholder="0.00" inputmode="decimal" aria-label="Receive amount" readonly style="opacity:.75">
+              <div class="unit">USDC</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="cta" id="quoteBtn">Get live quote</button>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div class="cell" style="padding:10px 12px;">
+            <div style="font-weight:800;color:#cfe2ff;font-size:.9rem">Route</div>
+            <div style="font-weight:700;opacity:.9">0x</div>
+          </div>
+          <div class="cell" style="padding:10px 12px;">
+            <div style="font-weight:800;color:#cfe2ff;font-size:.9rem">Slippage</div>
+            <div style="font-weight:700;opacity:.9">1%</div>
+          </div>
+        </div>
+
+        <div class="chips" style="margin-top:10px">
+          <span class="chip">Approval required on first use. We never custody your funds.</span>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="final">
-      <div class="panel"><h2>Ready to swap?</h2><p>Connect your wallet and get a live quote.</p><button class="btn" id="quoteBtn2">Get live quote</button></div>
-    </section>
+  <!-- Selling points -->
+  <section class="section">
+    <div class="grid3">
+      <div class="tile">
+        <h3>Secure & non-custodial</h3>
+        <p>Your wallet stays in your control—always.</p>
+      </div>
+      <div class="tile">
+        <h3>Optimized routing</h3>
+        <p>Powered by 0x aggregated liquidity for competitive prices.</p>
+      </div>
+      <div class="tile">
+        <h3>Transparent</h3>
+        <p>Quotes show what you’ll get before you confirm.</p>
+      </div>
+    </div>
+  </section>
 
-    <footer><small>© 2025 RupiRamp Ltd.</small><small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small></footer>
-  </div>
+  <!-- Final call-to-action -->
+  <section class="final" id="learnTarget">
+    <div class="panel">
+      <h2>Ready to swap?</h2>
+      <p>Connect your wallet and start in seconds.</p>
+      <button class="btn" id="startNowBtn">Start now</button>
+    </div>
+  </section>
 
-  <div id="toast" class="hide"></div>
-  <script src="/script.js"></script>
+  <!-- Footer -->
+  <footer>
+    <small>© 2025 RupiRamp Ltd.</small>
+    <small><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a></small>
+  </footer>
+</div>
+
+<script>
+/* ===================== “Learn more” scroll ===================== */
+document.getElementById('learnBtn')?.addEventListener('click', () => {
+  document.getElementById('learnTarget')?.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* ===================== Connect wallet (MetaMask prompt) ===================== */
+const connectBtn = document.getElementById('connectBtn');
+connectBtn?.addEventListener('click', async () => {
+  if (!window.ethereum){
+    alert('MetaMask not found. Please install the MetaMask extension or mobile app.');
+    window.open('https://metamask.io', '_blank', 'noopener'); return;
+  }
+  try{
+    await window.ethereum.request({ method:'eth_requestAccounts' });
+    connectBtn.textContent = 'Wallet connected';
+  }catch(e){
+    console.warn(e);
+    connectBtn.textContent = 'Connect wallet';
+  }
+});
+
+/* ===================== Cosmetic quote mirroring (no price fetch) ===================== */
+const payAmt = document.getElementById('payAmt');
+const recvAmt = document.getElementById('recvAmt');
+function fmt(n){ return Number(n).toLocaleString('en-US',{maximumFractionDigits:6}); }
+payAmt?.addEventListener('input', () => { 
+  const v = parseFloat((payAmt.value || '').replace(/[^\d.]/g,'')); 
+  recvAmt.value = isNaN(v) ? '' : fmt(v); /* mirror for feel; hook your 0x quote here */
+});
+document.getElementById('quoteBtn')?.addEventListener('click', () => {
+  if (!payAmt.value){ alert('Enter an amount to quote.'); return; }
+  // TODO: integrate your 0x quote fetch here and update recvAmt.value with the estimate.
+  alert('Live quote would appear here once 0x is wired. (UI is ready.)');
+});
+
+/* ===================== Dark-matter background ===================== */
+/* Two layered canvases:
+   1) STARFIELD: tiny white twinkling stars with gentle parallax.
+   2) GALAXY: slow rotating purple spiral made from multiple radial gradients.
+*/
+(() => {
+  const stars = document.getElementById('stars');
+  const gx = document.getElementById('galaxy');
+  const sctx = stars.getContext('2d');
+  const gctx = gx.getContext('2d');
+
+  let W = stars.width = gx.width = window.innerWidth;
+  let H = stars.height = gx.height = window.innerHeight;
+  const DPR = Math.min(2, window.devicePixelRatio || 1);
+  stars.width = gx.width = W * DPR; stars.height = gx.height = H * DPR;
+  sctx.scale(DPR, DPR); gctx.scale(DPR, DPR);
+
+  /* ---- STARFIELD ---- */
+  let STARS = [];
+  const COUNT = Math.min(350, Math.round(W * H / 5500));
+  function resetStars(){
+    STARS = Array.from({length:COUNT}, () => ({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*1.1 + 0.2,
+      tw: Math.random()*0.6 + 0.2,     // twinkle amount
+      spd: Math.random()*0.04 + 0.01,  // drift speed
+      par: Math.random()*0.6 + 0.4     // parallax factor
+    }));
+  }
+  resetStars();
+
+  function drawStars(t){
+    sctx.clearRect(0,0,W,H);
+    for(const s of STARS){
+      // gentle drift
+      s.x += s.spd * s.par; if (s.x > W + 10) s.x = -10;
+      const tw = (Math.sin(t*0.001 + s.x*0.01) + 1)/2; // 0..1
+      sctx.globalAlpha = 0.6 + tw * s.tw;
+      sctx.fillStyle = '#ffffff';
+      sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, Math.PI*2); sctx.fill();
+    }
+    sctx.globalAlpha = 1;
+  }
+
+  /* ---- GALAXY ---- */
+  let rot = 0;
+  function drawGalaxy(){
+    gctx.clearRect(0,0,W,H);
+    gctx.save();
+    gctx.translate(W/2, H*0.48);
+    gctx.rotate(rot);
+
+    const ARMS = 4;                  // spiral arms
+    const LAYERS = 14;               // layered gradients per arm
+    const maxR = Math.max(W,H) * 0.75;
+
+    for(let arm=0; arm<ARMS; arm++){
+      const ang = (arm / ARMS) * Math.PI * 2;
+      gctx.save(); gctx.rotate(ang);
+
+      for(let i=0;i<LAYERS;i++){
+        const r0 = (i / LAYERS) * maxR;
+        const r1 = r0 + maxR / LAYERS;
+        const fade = 1 - i / LAYERS;
+
+        const grad = gctx.createRadialGradient(r0,0,0, r0,0,r1*0.9);
+        grad.addColorStop(0, `hsla(268, 90%, 65%, ${0.09*fade})`);
+        grad.addColorStop(1, 'transparent');
+        gctx.fillStyle = grad;
+        gctx.beginPath();
+        gctx.arc(r0,0,r1,0,Math.PI*2);
+        gctx.fill();
+      }
+
+      gctx.restore();
+    }
+
+    // soft core glow
+    const core = gctx.createRadialGradient(0,0,0, 0,0, 220);
+    core.addColorStop(0, 'rgba(180,140,255,0.25)');
+    core.addColorStop(1, 'transparent');
+    gctx.fillStyle = core;
+    gctx.beginPath(); gctx.arc(0,0,260,0,Math.PI*2); gctx.fill();
+
+    gctx.restore();
+    rot += 0.0005; // slow rotation
+  }
+
+  function tick(t){
+    drawGalaxy();
+    drawStars(t);
+    requestAnimationFrame(tick);
+  }
+  tick(0);
+
+  window.addEventListener('resize', () => {
+    W = stars.width = gx.width = window.innerWidth;
+    H = stars.height = gx.height = window.innerHeight;
+    stars.width = gx.width = W * DPR; stars.height = gx.height = H * DPR;
+    sctx.setTransform(DPR,0,0,DPR,0,0);
+    gctx.setTransform(DPR,0,0,DPR,0,0);
+    resetStars();
+  }, {passive:true});
+})();
+
+/* ===================== Smooth reveal on scroll (subtle) ===================== */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.transition='transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s';
+      e.target.style.transform='translateY(0)';
+      e.target.style.opacity='1';
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold:.12});
+document.querySelectorAll('.tile, .panel, .card').forEach(el=>{
+  el.style.opacity='0'; el.style.transform='translateY(12px)'; observer.observe(el);
+});
+
+/* ===================== Start now → connect ===================== */
+document.getElementById('startNowBtn')?.addEventListener('click', ()=>connectBtn?.click());
+</script>
 </body>
 </html>
