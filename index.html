@@ -1,166 +1,226 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RupiRamp</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RupiRamp — Swap Crypto Seamlessly</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0a0b12">
+<style>
+/* ====== THEME ====== */
+:root{
+  --bg0:#070814; --bg1:#0b0e1f;
+  --glass:#10132acc;            /* card */
+  --glass-strong:#0d1130f2;     /* inputs */
+  --glass-soft:#111634e6;       /* buttons */
+  --ring:#2a2f58;
+  --rim1:#6ee0ff; --rim2:#6c7bff; --rim3:#b26cff; /* neon rim */
+  --btn1:#78dfff; --btn2:#6a7bff; --btn3:#ff78b3; /* gradient button */
+  --text:#eaf1ff; --muted:#aab4cf;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 900px at 50% 120%, #3a1f7a22, transparent 60%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 50% 50%, #0d0221, #090015, #05000c);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
+/* ====== BACKGROUND STARS (subtle, slow) ====== */
+.bg{
+  position:fixed; inset:-2px; z-index:-1;
+  background:
+    radial-gradient(1px 1px at 10% 20%, #d7e6ff66 40%, transparent 41%),
+    radial-gradient(1px 1px at 30% 80%, #ffffff55 40%, transparent 41%),
+    radial-gradient(1px 1px at 70% 30%, #e7f0ff66 40%, transparent 41%),
+    radial-gradient(1px 1px at 85% 70%, #ffffff55 40%, transparent 41%),
+    radial-gradient(1px 1px at 55% 55%, #d8e4ff44 40%, transparent 41%),
+    radial-gradient(1px 1px at 15% 65%, #ffffff55 40%, transparent 41%),
+    linear-gradient(180deg, transparent, transparent);
+  animation: twinkle 26s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.6; transform:translateY(0)}
+  50%{opacity:.9}
+}
 
-    /* NAVBAR */
-    header {
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-    }
-    .brand { font-weight: 800; font-size: 20px; }
-    nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #ddd;
-      font-weight: 600;
-    }
-    nav a:hover { color: #fff; }
+/* ====== LAYOUT ====== */
+.wrap{max-width:1080px; margin:0 auto; padding:22px 18px 56px}
 
-    /* HERO */
-    h1 {
-      margin-top: 70px;
-      font-size: clamp(28px, 6vw, 54px);
-      text-align: center;
-      line-height: 1.2;
-    }
-    .gradient-animate {
-      background: linear-gradient(270deg,#00f0ff,#8a2be2,#ff4ded);
-      background-size: 600% 600%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 8s ease infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+/* ====== NAV (pill) ====== */
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  border:1px solid #ffffff18; border-radius:18px; padding:10px 14px;
+  background:linear-gradient(180deg, #101431bf, #0c1028bf);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:inset 0 0 0 1px #ffffff10, 0 10px 30px #0007;
+}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text); font-weight:900}
+.logo{
+  width:28px; height:28px; border-radius:7px;
+  background:linear-gradient(135deg,#57b7ff,#7a5cff 60%,#8b4cff);
+  display:grid; place-items:center;
+  box-shadow:0 6px 18px #6a77ff66 inset, 0 4px 12px #0008;
+}
+.logo:before{content:"₹"; font-weight:900; color:#001129; font-size:15px}
+.links{display:flex; gap:26px}
+.links a{color:#d6dcf6; text-decoration:none; font-weight:700}
+.links a:hover{color:#fff}
+@media (max-width:760px){ .links{gap:20px} }
 
-    /* SWAP BOX */
-    .card {
-      margin-top: 30px;
-      padding: 28px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 0 30px rgba(120, 0, 255, 0.25);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    }
-    .card h2 { margin: 0 0 20px; font-size: 22px; }
+/* ====== HERO ====== */
+.hero{padding:56px 0 18px; text-align:center}
+h1{margin:6px 0 10px; font-size:clamp(40px,6.2vw,74px); line-height:1.04; font-weight:900; letter-spacing:.2px}
+h1 .line1{display:block; color:#f3f6ff}
+h1 .line2{
+  display:block; font-weight:900;
+  background:linear-gradient(90deg,#7ad9ff 0%, #6c7bff 40%, #b26cff 70%, #ff93c6 100%);
+  background-size:250% auto; color:transparent; -webkit-background-clip:text; background-clip:text;
+  animation: sweep 6s linear infinite;
+}
+@keyframes sweep{
+  0%{background-position:0% 50%}
+  100%{background-position:200% 50%}
+}
 
-    .input {
-      margin: 14px 0;
-      padding: 14px;
-      border-radius: 14px;
-      border: none;
-      width: 100%;
-      font-size: 16px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      outline: none;
-    }
+/* ====== CARD ====== */
+.card{
+  margin:28px auto 0; max-width:760px;
+  background:var(--glass);
+  border:1px solid var(--ring);
+  padding:26px 20px 24px;
+  border-radius:26px;
+  position:relative;
+  box-shadow:
+    0 14px 44px #000a,
+    inset 0 0 0 1px #ffffff10,
+    0 0 0 1px #0000; /* space for neon rim via ::after */
+}
+.card::after{
+  content:""; position:absolute; inset:-2px; border-radius:28px; z-index:-1;
+  background:
+    radial-gradient(120px 70px at 14% 8%, var(--rim1) 0%, transparent 70%),
+    radial-gradient(200px 100px at 86% 92%, var(--rim3) 0%, transparent 70%),
+    radial-gradient(220px 140px at 50% 100%, var(--rim2) 0%, transparent 70%);
+  filter:blur(18px); opacity:.55;
+}
 
-    button {
-      margin-top: 18px;
-      width: 100%;
-      padding: 14px;
-      border-radius: 16px;
-      border: none;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    button:hover { transform: scale(1.02); }
-    .btn-gradient {
-      background: linear-gradient(90deg, #00f0ff, #8a2be2, #ff4ded);
-      background-size: 200% 200%;
-      color: #fff;
-      animation: gradientShift 6s ease infinite;
-    }
-    .btn-glass {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-      color: #fff;
-      margin-top: 14px;
-    }
+/* Headline inside card */
+.card h2{margin:0 0 16px; font-weight:900; font-size:clamp(22px, 3.5vw, 28px); letter-spacing:.2px; text-align:center}
 
-    /* FOOTER */
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #aaa;
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      justify-content: space-between;
-      padding: 14px 20px;
-    }
-    footer a {
-      color: #aaa;
-      text-decoration: none;
-    }
-    footer a:hover { color: #fff; }
+/* Input rows */
+.row{margin:12px 0}
+.label{display:block; margin:0 0 8px; color:#cbd5ef; font-weight:700}
+.input{
+  display:flex; align-items:center; gap:10px;
+  padding:14px 16px; border-radius:16px;
+  background:var(--glass-strong);
+  border:1px solid #2a2f58; box-shadow:inset 0 0 0 1px #ffffff0d;
+}
+.input input{all:unset; flex:1; color:var(--text); font-weight:700}
+.input.placeholder{color:#aeb6d0}
 
-  </style>
+/* CTA buttons */
+.cta{
+  margin-top:18px;
+  height:54px; display:flex; align-items:center; justify-content:center;
+  border-radius:18px; border:1px solid #273066; cursor:pointer;
+  background:linear-gradient(90deg, var(--btn1), var(--btn2) 55%, var(--btn3));
+  box-shadow:0 18px 40px #6a7bff55, inset 0 -2px 0 #0003;
+  font-weight:900; letter-spacing:.3px; color:#0b1020;
+}
+.cta:active{transform:translateY(1px)}
+.secondary{
+  margin-top:14px; height:50px; display:flex; align-items:center; justify-content:center;
+  border-radius:14px; border:1px solid #2a2f58; background:var(--glass-soft); color:#e8eeff; font-weight:800;
+}
+
+/* ====== FOOTER ====== */
+footer{max-width:1080px;margin:40px auto 16px;padding:0 18px;display:flex;justify-content:space-between;color:#9fb0d1}
+footer a{color:#b7c3e6;text-decoration:none}
+footer a:hover{color:#fff}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width:520px){
+  .wrap{padding:18px 14px 40px}
+  .card{padding:22px 16px;border-radius:22px}
+  .card::after{border-radius:24px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">🌌 RupiRamp</div>
-    <nav>
-      <a href="#">FAQ</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Contact</a>
+<div class="bg"></div>
+
+<div class="wrap">
+  <!-- NAV -->
+  <header class="nav" aria-label="Top navigation">
+    <a class="brand" href="/">
+      <div class="logo" aria-hidden="true"></div>
+      <span>RupiRamp</span>
+    </a>
+    <nav class="links">
+      <a href="/faq.html">FAQ</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="mailto:info@rupiramp.com">Contact</a>
     </nav>
   </header>
 
-  <main>
+  <!-- HERO -->
+  <section class="hero">
     <h1>
-      Swap Crypto <br>
-      <span class="gradient-animate">Seamlessly</span>
+      <span class="line1">Swap Crypto</span>
+      <span class="line2">Seamlessly</span>
     </h1>
 
-    <div class="card">
-      <h2>Ready to Swap?</h2>
-      <input type="text" class="input" placeholder="Select token or amount">
-      <input type="text" class="input" placeholder="Select token">
-      <button class="btn-gradient">Swap Now</button>
-      <button class="btn-glass">Connect Wallet</button>
-    </div>
-  </main>
+    <!-- CARD -->
+    <div class="card" role="form" aria-labelledby="ready">
+      <h2 id="ready">Ready to Swap?</h2>
 
-  <footer>
-    <span>© 2025 RupiRamp Ltd.</span>
-    <span><a href="#">Terms</a> — <a href="#">Privacy</a></span>
-  </footer>
+      <div class="row">
+        <label class="label" for="from">From</label>
+        <div class="input">
+          <input id="from" placeholder="Select token or amount" aria-label="From token or amount">
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="label" for="to">To</label>
+        <div class="input">
+          <input id="to" placeholder="Select token" aria-label="To token">
+        </div>
+      </div>
+
+      <button class="cta" id="swapBtn">Swap Now</button>
+      <button class="secondary" id="connectBtn">Connect Wallet</button>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <small>© 2025 RupiRamp Ltd.</small>
+  <small><a href="/terms.html">Terms</a> — <a href="/privacy.html">Privacy</a></small>
+</footer>
+
+<script>
+/* small UX niceties */
+const from = document.getElementById('from');
+const to   = document.getElementById('to');
+const swap = document.getElementById('swapBtn');
+const connect = document.getElementById('connectBtn');
+
+swap.addEventListener('click', ()=> alert('Hook this up to your swap logic (0x, etc.).'));
+connect.addEventListener('click', ()=> alert('Open your wallet connect flow here.'));
+
+[from,to].forEach(i=>{
+  i.addEventListener('focus', e=> e.target.parentElement.style.boxShadow='inset 0 0 0 1px #6c7bff55');
+  i.addEventListener('blur',  e=> e.target.parentElement.style.boxShadow='inset 0 0 0 1px #ffffff0d');
+});
+</script>
 </body>
 </html>
