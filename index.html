@@ -2,237 +2,253 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RupiRamp — Swap Crypto Seamlessly</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#090c18">
+<meta name="theme-color" content="#0a0c18">
 
 <style>
-/* =================== THEME / TOKENS =================== */
+/* =============== THEME (exact colors from mock) =============== */
 :root{
-  /* deep night */
-  --bg0:#060818; --bg1:#0a0f24;
-  /* text */
-  --fg:#F3F6FF; --muted:#C7D2F3;
-  /* glass + borders */
-  --glass:#0f1433cc; --ring:#2a3568; --field:#12183b; --field-br:#2f3b74;
-  /* rims & gradients */
-  --rim1:#73E6FF; --rim2:#6E7DFF; --rim3:#C26BFF;
-  --g1:#7BE1FF; --g2:#7B8BFF; --g3:#FF7DB3;
+  --bg-top:#060918;    /* deep space */
+  --bg-bot:#0b0f26;
+  --text:#F2F7FF;
+  --muted:#C9D3F2;
+
+  --glass:#0F1433CC;   /* inner card glass */
+  --ring:#273368;      /* card ring */
+  --field:#13183B;     /* input fill */
+  --field-br:#2F3A74;  /* input border */
+
+  /* neon rim shades for the card edge glow */
+  --rim-cyan:#73E6FF;
+  --rim-indigo:#6F7EFF;
+  --rim-mag:#C26BFF;
+
+  /* primary CTA gradient (left→right) */
+  --cta-a:#7BE3FF;
+  --cta-b:#6F7CFF;
+  --cta-c:#FF7CB0;
 }
 
+/* ===== base ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  color:var(--fg);
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);
   background:
-    radial-gradient(1200px 900px at 50% 125%, #3a1f7a22, transparent 60%),
-    linear-gradient(180deg,var(--bg0),var(--bg1));
+    radial-gradient(1200px 900px at 50% 120%, #3a1f7a26, transparent 60%),
+    linear-gradient(180deg,var(--bg-top),var(--bg-bot));
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
 }
 
-/* =================== STAR SPECKS (subtle & slow) =================== */
+/* ===== star specks (static to match mock) ===== */
 .bg-stars{
-  position:fixed; inset:-1px; z-index:-1;
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
   background:
-    radial-gradient(1px 1px at 10% 20%, #ffffff95 42%, transparent 43%),
-    radial-gradient(1px 1px at 22% 78%, #eaf2ff8c 42%, transparent 43%),
-    radial-gradient(1px 1px at 74% 28%, #ffffff95 42%, transparent 43%),
-    radial-gradient(1px 1px at 88% 70%, #eaf2ff8c 42%, transparent 43%),
-    radial-gradient(1px 1px at 56% 56%, #ffffff70 42%, transparent 43%),
-    radial-gradient(1px 1px at 16% 62%, #eaf2ff8c 42%, transparent 43%),
-    radial-gradient(1px 1px at 38% 42%, #ffffff80 42%, transparent 43%),
-    linear-gradient(180deg,transparent,transparent);
-  animation: twinkle 22s ease-in-out infinite;
-}
-@keyframes twinkle{
-  0%,100%{opacity:.7; transform:translateY(0)}
-  50%{opacity:.9}
+    radial-gradient(1px 1px at 8% 18%,  #ffffff82 40%, transparent 41%),
+    radial-gradient(1px 1px at 24% 74%, #eaf2ff82 40%, transparent 41%),
+    radial-gradient(1px 1px at 70% 26%, #ffffff82 40%, transparent 41%),
+    radial-gradient(1px 1px at 84% 70%, #eaf2ff82 40%, transparent 41%),
+    radial-gradient(1px 1px at 56% 54%, #ffffff66 40%, transparent 41%),
+    radial-gradient(1px 1px at 16% 62%, #eaf2ff82 40%, transparent 41%),
+    radial-gradient(1px 1px at 44% 36%, #ffffff5e 40%, transparent 41%),
+    radial-gradient(1px 1px at 92% 42%, #ffffff5e 40%, transparent 41%);
 }
 
-/* =================== LAYOUT WRAP =================== */
-.wrap{max-width:980px;margin:0 auto;padding:24px 16px 52px}
+/* ===== layout container (exact) ===== */
+.wrap{width:960px; max-width:calc(100vw - 32px); margin:0 auto; padding:24px 0 40px}
 
-/* =================== NAV PILL =================== */
+/* ================= NAV PILL ================= */
 .nav{
-  display:flex; align-items:center; gap:22px;
-  border:1px solid #ffffff26; border-radius:18px; padding:10px 14px;
-  background:linear-gradient(180deg,#121739bf,#0d1233bf);
-  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-  box-shadow:inset 0 0 0 1px #ffffff14, 0 10px 28px #0007;
+  width:960px; max-width:calc(100vw - 32px);
+  margin:0 auto;
+  display:flex; align-items:center; gap:20px;
+  padding:10px 14px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#111635d9,#0c1130d9);
+  border:1px solid #ffffff24;
+  box-shadow:inset 0 0 0 1px #ffffff12, 0 10px 28px #0007;
 }
-.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--fg)}
-.brand span{font-weight:900; letter-spacing:.3px; font-size:16px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text)}
+.brand span{font-weight:900; font-size:18px; letter-spacing:.25px}
 
-/* replace this <img> with your own logo file if you like */
-.brand .logo{
-  width:28px;height:28px;border-radius:8px; display:grid; place-items:center; overflow:hidden;
-  box-shadow:inset 0 6px 16px #6a77ff66, 0 4px 10px #0008;
+/* logo: prefer your /logo.svg, fallback badge if missing */
+.logo{
+  width:28px; height:28px; border-radius:8px; display:grid; place-items:center; overflow:hidden;
   background:linear-gradient(135deg,#58B8FF 0%,#6A7CFF 60%,#8C4CFF 100%);
+  box-shadow:inset 0 6px 16px #6a77ff66, 0 4px 10px #0008;
 }
+.logo img{display:block; width:100%; height:100%}
+.logo.fallback::before{content:"₹"; color:#06142A; font-weight:900; font-size:14px}
+
 .links{display:flex; gap:28px; margin-left:auto}
-.links a{color:#D7E0FF; text-decoration:none; font-weight:700}
+.links a{
+  color:#D7E0FF; text-decoration:none; font-weight:700; font-size:16px; letter-spacing:.15px;
+}
 .links a:hover{color:#fff}
 
-@media (max-width:740px){ .links{gap:22px} }
-
-/* =================== HERO =================== */
-.hero{padding:56px 0 6px; text-align:left}
-h1{margin:12px 0 10px; line-height:1.02; letter-spacing:.2px}
+/* ================= HERO ================= */
+.hero{padding:56px 0 0}
+h1{margin:12px 0 18px; line-height:1.02}
 h1 .line1{
-  display:block; font-size:clamp(40px,7.8vw,78px); font-weight:900; color:#FBFDFF;
+  display:block; font-weight:900; font-size:78px; color:#FBFDFF; letter-spacing:.2px;
   text-shadow:0 2px 0 #ffffff0a;
 }
 h1 .line2{
-  display:block; font-size:clamp(40px,7.8vw,78px); font-weight:900;
+  display:block; font-weight:900; font-size:78px; letter-spacing:.2px;
   background:linear-gradient(90deg,#7CE5FF 0%, #7CA6FF 45%, #C06BFF 100%);
   background-size:180% 100%;
   -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation: sweep 7s ease-in-out infinite;
+  animation:gradSweep 14s ease-in-out infinite;
 }
-@keyframes sweep{
-  0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+@keyframes gradSweep{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-/* =================== LIQUID GLASS CARD =================== */
+/* ================= CARD ================= */
 .card{
-  width:min(760px,100%); margin:30px 0 0;
-  border-radius:28px; padding:26px 22px 28px;
-  background:var(--glass); border:1px solid var(--ring);
-  box-shadow:
-    0 22px 60px #0009,
-    inset 0 1px 0 #ffffff18,
-    inset 0 0 0 1px #ffffff10;
+  width:760px; max-width:100%;
+  margin:30px auto 0;
+  padding:26px 22px 30px;
+  border-radius:28px;
+  background:var(--glass);
+  border:1px solid var(--ring);
+  box-shadow:0 22px 60px #0009, inset 0 1px 0 #ffffff18, inset 0 0 0 1px #ffffff10;
   position:relative;
 }
-.card:before{
+.card::before{
   content:""; position:absolute; inset:-2px; border-radius:30px; pointer-events:none;
   background:
-    linear-gradient(135deg,var(--rim1),transparent 36%),
-    radial-gradient(120% 100% at 100% 0%, transparent 55%, var(--rim2) 70%, transparent 78%),
-    radial-gradient(120% 100% at 0% 100%, transparent 50%, var(--rim3) 70%, transparent 78%);
-  filter:blur(18px) saturate(1.12); opacity:.9; z-index:-1;
+    linear-gradient(135deg,var(--rim-cyan),transparent 36%),
+    radial-gradient(120% 100% at 100% 0%, transparent 52%, var(--rim-indigo) 70%, transparent 80%),
+    radial-gradient(120% 100% at 0% 100%, transparent 48%, var(--rim-mag) 70%, transparent 80%);
+  filter:blur(18px) saturate(1.06); opacity:.95; z-index:-1;
 }
 .card h2{
-  margin:0 0 18px; text-align:center; font-size:clamp(22px,4.6vw,34px); font-weight:900;
-  letter-spacing:.2px; color:#F5F7FF;
+  margin:0 0 18px; text-align:center; font-size:32px; font-weight:900; letter-spacing:.2px;
 }
 
-/* fields */
-.row{display:flex; flex-direction:column; gap:16px}
-.label{color:#E8EDFF; font-weight:800; margin:8px 2px 6px; letter-spacing:.2px}
+/* form rows */
+.row{margin:14px 0}
+.label{display:block; font-size:18px; font-weight:800; color:#EAF1FF; margin:0 0 8px 4px}
 
-/* field shell (rounded with inner glow) */
+/* fields (pill) */
 .field{
-  border-radius:16px; padding:14px 16px; background:linear-gradient(180deg,#101637,#0e1330);
-  border:1px solid var(--field-br);
-  box-shadow:inset 0 0 0 1px #ffffff0d, 0 10px 22px #0008, inset 0 12px 28px #6f78ff0f;
-  color:#dfe6ff; font-weight:700;
-}
-.field::placeholder{color:#b8c3e9; font-weight:700; opacity:.95}
-
-/* big CTA */
-.btn{
-  height:56px; border-radius:18px; border:0; cursor:pointer; font-weight:900;
-  background:linear-gradient(90deg,var(--g1),var(--g2) 50%,var(--g3));
-  box-shadow:0 14px 34px #7fa0ff44, inset 0 -2px 0 #0003;
-  color:#0b0d16; letter-spacing:.3px; font-size:26px;
-  display:flex; align-items:center; justify-content:center;
-}
-.btn:active{transform:translateY(1px)}
-
-/* connect wallet (glass button) */
-.btn-ghost{
-  height:56px; border-radius:18px; border:1px solid #ffffff24; cursor:pointer; font-weight:900;
-  background:linear-gradient(180deg,#12183b,#0f1433);
-  box-shadow:inset 0 0 0 1px #ffffff18, 0 10px 28px #0007;
-  color:#E9EEFF; letter-spacing:.3px; font-size:26px;
+  height:60px; border-radius:18px; border:1px solid var(--field-br);
+  background:linear-gradient(180deg,#161B3C,#0F1434);
+  box-shadow:
+    inset 0 1px 0 #ffffff0f,
+    0 14px 26px #01030a;
+  display:flex; align-items:center; padding:0 20px; color:#C9D3F2; font-size:20px; font-weight:800;
 }
 
-/* spacing */
-.card .spacer{height:8px}
-.card .actions{display:flex; flex-direction:column; gap:14px; margin-top:8px}
-
-/* =================== FOOTER =================== */
-footer{
-  display:flex; justify-content:space-between; align-items:center;
-  gap:12px; color:#c7d0ee; margin-top:36px; font-weight:700;
+/* CTA: Swap Now (inside card) */
+.cta{
+  height:66px; border-radius:18px; margin-top:14px;
+  background:linear-gradient(90deg,var(--cta-a),var(--cta-b) 55%,var(--cta-c));
+  box-shadow:0 20px 46px #000a, inset 0 1px 0 #ffffff18;
+  border:0; color:#0A0F1E; font-weight:900; font-size:34px; letter-spacing:.2px; cursor:pointer; width:100%;
 }
-footer a{color:#dfe6ff; text-decoration:none}
-footer a:hover{color:#fff}
+.cta:active{transform:translateY(1px)}
 
-/* =================== RESPONSIVE TWEAKS =================== */
-@media (max-width:600px){
-  .wrap{padding-bottom:28px}
-  .card{margin-left:0;margin-right:0}
-  .btn,.btn-ghost{font-size:22px;height:54px}
+/* Connect Wallet (separate button under card) */
+.wallet{
+  width:520px; max-width:90vw; height:66px; border-radius:18px; margin:26px auto 0; display:block;
+  background:linear-gradient(180deg,#87DFFF,#6E82FF 60%);
+  color:#0A0F1E; font-weight:900; font-size:32px; letter-spacing:.2px; border:0; cursor:pointer;
+  box-shadow:0 22px 50px #000a, inset 0 1px 0 #ffffff18;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  width:960px; max-width:calc(100vw - 32px);
+  margin:36px auto 0; padding:8px 2px 28px; font-size:18px; color:#cfd7f8;
+  display:flex; justify-content:space-between; align-items:center; letter-spacing:.2px;
+}
+.footer a{color:#dbe3ff; text-decoration:none}
+.footer a:hover{color:#fff}
+
+/* ================= MOBILE TWEAKS =================
+   Scales down while preserving the same visual proportions. */
+@media (max-width:768px){
+  .nav{border-radius:16px; gap:16px}
+  .brand span{font-size:16px}
+  .links{gap:22px}
+  .links a{font-size:15px}
+
+  .hero{padding:40px 0 0}
+  h1 .line1, h1 .line2{font-size:54px}
+
+  .card{width:92vw; border-radius:26px}
+  .card::before{border-radius:28px; filter:blur(16px)}
+  .card h2{font-size:26px}
+
+  .field{height:56px; font-size:18px}
+  .cta{height:60px; font-size:28px}
+  .wallet{height:60px; font-size:26px; width:82vw}
+  .footer{font-size:16px}
 }
 </style>
 </head>
 <body>
+
 <div class="bg-stars"></div>
 
-<div class="wrap">
-  <!-- NAV -->
-  <div class="nav">
-    <a class="brand" href="/">
-      <!-- swap this for your /logo.svg if you prefer -->
-      <div class="logo"></div>
-      <span>RupiRamp</span>
-    </a>
-    <div class="links">
-      <a href="/faq.html">FAQ</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
-      <a href="/contact.html">Contact</a>
-    </div>
+<!-- NAV -->
+<div class="nav">
+  <a class="brand" href="#">
+    <span class="logo"><img src="/logo.svg" alt="" onerror="this.remove(); this.parentElement.classList.add('fallback');"></span>
+    <span>RupiRamp</span>
+  </a>
+  <div class="links">
+    <a href="#">FAQ</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
   </div>
+</div>
 
-  <!-- HERO TITLE -->
-  <section class="hero">
+<div class="wrap">
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
     <h1>
       <span class="line1">Swap Crypto</span>
       <span class="line2" aria-label="Seamlessly">Seamlessly</span>
     </h1>
 
     <!-- CARD -->
-    <div class="card" role="region" aria-label="Swap card">
-      <h2>Ready to Swap?</h2>
+    <div class="card" role="region" aria-labelledby="ready">
+      <h2 id="ready">Ready to Swap?</h2>
 
       <div class="row">
-        <div class="label">From</div>
-        <input class="field" placeholder="Select token or amount" aria-label="From token or amount">
-        <div class="label">To</div>
-        <input class="field" placeholder="Select token" aria-label="To token">
+        <label class="label">From</label>
+        <div class="field">Select token or amount</div>
       </div>
 
-      <div class="actions">
-        <button class="btn" type="button">Swap Now</button>
-        <button class="btn-ghost" type="button">Connect Wallet</button>
+      <div class="row">
+        <label class="label">To</label>
+        <div class="field">Select token</div>
       </div>
+
+      <button class="cta" type="button">Swap Now</button>
     </div>
 
-    <!-- footer like the mock -->
-    <footer>
-      <small>© 2025 RupiRamp Ltd.</small>
-      <small><a href="/terms.html">Terms</a> — <a href="/privacy.html">Privacy</a></small>
-    </footer>
+    <button class="wallet" type="button">Connect Wallet</button>
   </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>© 2025 RupiRamp Ltd.</div>
+    <div><a href="#">Terms</a> — <a href="#">Privacy</a></div>
+  </footer>
 </div>
 
-<script>
-/* Keep JS tiny: only slow the gradient sweep on prefers-reduced-motion false
-   (already smooth and light). No heavy canvases to ensure silky scrolling. */
-(function(){
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(prefersReduced){
-    const el = document.querySelector('.line2');
-    el && (el.style.animation = 'none');
-  }
-})();
-</script>
 </body>
 </html>
