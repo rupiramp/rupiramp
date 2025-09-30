@@ -6,184 +6,169 @@
 <title>RupiRamp — Swap Crypto Seamlessly</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
-<meta name="theme-color" content="#0a0c18">
+<meta name="theme-color" content="#090c18">
 
 <style>
-/* ---------- THEME ---------- */
+/* =================== THEME / TOKENS =================== */
 :root{
-  --bg0:#060817; --bg1:#0b0f25;           /* deep navy */
-  --text:#F2F6FF; --muted:#C8D2F2;
-  --ring:#263066; --rim1:#71E8FF; --rim2:#6E7CFF; --rim3:#C06BFF;  /* neon rim */
-  --btn1:#78DFFF; --btn2:#6B79FF; --btn3:#FF7CB0;                  /* CTA gradient */
-  --field-bg:#121735; --field-br:#2C356B;                           /* inputs */
-  --card-bg:#0F1431CC;                                              /* glass card */
+  /* deep night */
+  --bg0:#060818; --bg1:#0a0f24;
+  /* text */
+  --fg:#F3F6FF; --muted:#C7D2F3;
+  /* glass + borders */
+  --glass:#0f1433cc; --ring:#2a3568; --field:#12183b; --field-br:#2f3b74;
+  /* rims & gradients */
+  --rim1:#73E6FF; --rim2:#6E7DFF; --rim3:#C26BFF;
+  --g1:#7BE1FF; --g2:#7B8BFF; --g3:#FF7DB3;
 }
 
-/* ---------- RESET ---------- */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  color:var(--text);
+  color:var(--fg);
   background:
-    radial-gradient(1200px 900px at 50% 120%, #3a1f7a22, transparent 60%),
+    radial-gradient(1200px 900px at 50% 125%, #3a1f7a22, transparent 60%),
     linear-gradient(180deg,var(--bg0),var(--bg1));
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
 }
 
-/* ---------- STARFIELD (subtle) ---------- */
+/* =================== STAR SPECKS (subtle & slow) =================== */
 .bg-stars{
   position:fixed; inset:-1px; z-index:-1;
   background:
-    radial-gradient(1px 1px at 12% 22%, #ffffff66 40%, transparent 41%),
-    radial-gradient(1px 1px at 32% 78%, #e6f1ff55 40%, transparent 41%),
-    radial-gradient(1px 1px at 70% 28%, #ffffff66 40%, transparent 41%),
-    radial-gradient(1px 1px at 86% 72%, #e6f1ff55 40%, transparent 41%),
-    radial-gradient(1px 1px at 55% 55%, #ffffff44 40%, transparent 41%),
-    radial-gradient(1px 1px at 18% 64%, #e6f1ff55 40%, transparent 41%),
+    radial-gradient(1px 1px at 10% 20%, #ffffff95 42%, transparent 43%),
+    radial-gradient(1px 1px at 22% 78%, #eaf2ff8c 42%, transparent 43%),
+    radial-gradient(1px 1px at 74% 28%, #ffffff95 42%, transparent 43%),
+    radial-gradient(1px 1px at 88% 70%, #eaf2ff8c 42%, transparent 43%),
+    radial-gradient(1px 1px at 56% 56%, #ffffff70 42%, transparent 43%),
+    radial-gradient(1px 1px at 16% 62%, #eaf2ff8c 42%, transparent 43%),
+    radial-gradient(1px 1px at 38% 42%, #ffffff80 42%, transparent 43%),
     linear-gradient(180deg,transparent,transparent);
-  animation: twinkle 16s linear infinite;
+  animation: twinkle 22s ease-in-out infinite;
 }
 @keyframes twinkle{
-  0%,100%{opacity:.75} 50%{opacity:.95}
+  0%,100%{opacity:.7; transform:translateY(0)}
+  50%{opacity:.9}
 }
 
-/* ---------- LAYOUT ---------- */
-.wrap{max-width:960px; margin:0 auto; padding:24px 16px 40px}
+/* =================== LAYOUT WRAP =================== */
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 52px}
 
-/* ---------- NAV (pill) ---------- */
+/* =================== NAV PILL =================== */
 .nav{
-  display:flex; align-items:center; justify-content:space-between;
-  border:1px solid #ffffff24; border-radius:18px; padding:10px 14px;
-  background:linear-gradient(180deg,#111633BF,#0C1130BF);
+  display:flex; align-items:center; gap:22px;
+  border:1px solid #ffffff26; border-radius:18px; padding:10px 14px;
+  background:linear-gradient(180deg,#121739bf,#0d1233bf);
   backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
   box-shadow:inset 0 0 0 1px #ffffff14, 0 10px 28px #0007;
 }
-.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text)}
-.brand span{font-weight:900; letter-spacing:.3px}
-.logo{
-  width:28px;height:28px;border-radius:8px; display:grid; place-items:center;
-  background:linear-gradient(135deg,#58B8FF 0%,#6A7CFF 60%,#8C4CFF 100%);
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--fg)}
+.brand span{font-weight:900; letter-spacing:.3px; font-size:16px}
+
+/* replace this <img> with your own logo file if you like */
+.brand .logo{
+  width:28px;height:28px;border-radius:8px; display:grid; place-items:center; overflow:hidden;
   box-shadow:inset 0 6px 16px #6a77ff66, 0 4px 10px #0008;
+  background:linear-gradient(135deg,#58B8FF 0%,#6A7CFF 60%,#8C4CFF 100%);
 }
-.logo:before{content:"₹"; font-weight:900; color:#041327; font-size:14px}
-.links{display:flex; gap:28px}
+.links{display:flex; gap:28px; margin-left:auto}
 .links a{color:#D7E0FF; text-decoration:none; font-weight:700}
 .links a:hover{color:#fff}
 
-@media (max-width:740px){
-  .links{gap:22px}
-}
+@media (max-width:740px){ .links{gap:22px} }
 
-/* ---------- HERO ---------- */
-.hero{padding:56px 0 0; text-align:left}
-h1{margin:12px 0 12px; line-height:1.02; letter-spacing:.2px}
+/* =================== HERO =================== */
+.hero{padding:56px 0 6px; text-align:left}
+h1{margin:12px 0 10px; line-height:1.02; letter-spacing:.2px}
 h1 .line1{
-  display:block; font-size:clamp(38px,7.6vw,72px); font-weight:900; color:#FAFCFF;
-  text-shadow:0 2px 0 #ffffff08;
+  display:block; font-size:clamp(40px,7.8vw,78px); font-weight:900; color:#FBFDFF;
+  text-shadow:0 2px 0 #ffffff0a;
 }
 h1 .line2{
-  display:block; font-size:clamp(38px,7.6vw,72px); font-weight:900;
-  background:linear-gradient(90deg,#7CE5FF,#6F80FF,#C06BFF);
+  display:block; font-size:clamp(40px,7.8vw,78px); font-weight:900;
+  background:linear-gradient(90deg,#7CE5FF 0%, #7CA6FF 45%, #C06BFF 100%);
   background-size:180% 100%;
   -webkit-background-clip:text; background-clip:text; color:transparent;
   animation: sweep 7s ease-in-out infinite;
-  filter:drop-shadow(0 2px 0 #0000);
 }
 @keyframes sweep{
   0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
 }
 
-/* ---------- CARD (liquid glass) ---------- */
+/* =================== LIQUID GLASS CARD =================== */
 .card{
-  margin:30px auto 0; width:min(760px, 100%);
-  border-radius:28px; padding:24px 22px 26px;
-  background:var(--card-bg);
-  border:1px solid var(--ring);
+  width:min(760px,100%); margin:30px 0 0;
+  border-radius:28px; padding:26px 22px 28px;
+  background:var(--glass); border:1px solid var(--ring);
   box-shadow:
     0 22px 60px #0009,
-    inset 0 1px 0 #FFFFFF18,
-    inset 0 0 0 1px #FFFFFF10;
+    inset 0 1px 0 #ffffff18,
+    inset 0 0 0 1px #ffffff10;
   position:relative;
 }
 .card:before{
-  /* neon rim */
   content:""; position:absolute; inset:-2px; border-radius:30px; pointer-events:none;
   background:
     linear-gradient(135deg,var(--rim1),transparent 36%),
     radial-gradient(120% 100% at 100% 0%, transparent 55%, var(--rim2) 70%, transparent 78%),
     radial-gradient(120% 100% at 0% 100%, transparent 50%, var(--rim3) 70%, transparent 78%);
-  filter:blur(18px) saturate(1.2); opacity:.9;
-  z-index:-1;
+  filter:blur(18px) saturate(1.12); opacity:.9; z-index:-1;
 }
-
-/* title in card */
 .card h2{
-  margin:0 0 18px; text-align:center; font-size:clamp(22px,4.8vw,34px); font-weight:900;
-  text-shadow:0 1px 0 #000, 0 8px 28px #0006;
+  margin:0 0 18px; text-align:center; font-size:clamp(22px,4.6vw,34px); font-weight:900;
+  letter-spacing:.2px; color:#F5F7FF;
 }
 
-/* labels */
-.label{display:block; color:#dfe6ff; font-weight:800; margin:16px 10px 6px}
+/* fields */
+.row{display:flex; flex-direction:column; gap:16px}
+.label{color:#E8EDFF; font-weight:800; margin:8px 2px 6px; letter-spacing:.2px}
 
-/* field (glass bevel) */
+/* field shell (rounded with inner glow) */
 .field{
-  display:flex; align-items:center; height:54px; border-radius:16px; padding:0 16px;
-  background:linear-gradient(180deg,#1a1f48 0%, #121735 100%);
+  border-radius:16px; padding:14px 16px; background:linear-gradient(180deg,#101637,#0e1330);
   border:1px solid var(--field-br);
-  box-shadow:
-    inset 0 2px 6px #000C,
-    inset 0 1px 0 #ffffff0f,
-    0 10px 24px #0008;
+  box-shadow:inset 0 0 0 1px #ffffff0d, 0 10px 22px #0008, inset 0 12px 28px #6f78ff0f;
+  color:#dfe6ff; font-weight:700;
 }
-.field input{
-  all:unset; color:#EAF1FF; font-size:18px; letter-spacing:.2px; width:100%;
+.field::placeholder{color:#b8c3e9; font-weight:700; opacity:.95}
+
+/* big CTA */
+.btn{
+  height:56px; border-radius:18px; border:0; cursor:pointer; font-weight:900;
+  background:linear-gradient(90deg,var(--g1),var(--g2) 50%,var(--g3));
+  box-shadow:0 14px 34px #7fa0ff44, inset 0 -2px 0 #0003;
+  color:#0b0d16; letter-spacing:.3px; font-size:26px;
+  display:flex; align-items:center; justify-content:center;
 }
-.field::after{
-  /* faint cyan inner glow */
-  content:""; position:absolute; inset:1px; border-radius:15px; pointer-events:none;
-  box-shadow:0 0 28px 8px #7CE6FF1F inset;
+.btn:active{transform:translateY(1px)}
+
+/* connect wallet (glass button) */
+.btn-ghost{
+  height:56px; border-radius:18px; border:1px solid #ffffff24; cursor:pointer; font-weight:900;
+  background:linear-gradient(180deg,#12183b,#0f1433);
+  box-shadow:inset 0 0 0 1px #ffffff18, 0 10px 28px #0007;
+  color:#E9EEFF; letter-spacing:.3px; font-size:26px;
 }
 
-/* CTA: Swap Now (bold glass) */
-.cta{
-  display:flex; align-items:center; justify-content:center; height:58px;
-  border-radius:18px; border:0; cursor:pointer; margin:18px 0 8px;
-  color:#0B0F18; font-weight:900; font-size:22px; letter-spacing:.2px;
-  background:linear-gradient(90deg,var(--btn1),var(--btn2),var(--btn3));
-  box-shadow:0 16px 40px #6f7dff55, inset 0 -2px 0 #0003;
-}
-.cta:hover{filter:saturate(1.05) brightness(1.02)}
-.cta:active{transform:translateY(1px)}
+/* spacing */
+.card .spacer{height:8px}
+.card .actions{display:flex; flex-direction:column; gap:14px; margin-top:8px}
 
-/* Connect Wallet (separate glass pill) */
-.wallet{
-  display:flex; align-items:center; justify-content:center; height:56px;
-  border-radius:16px; margin-top:14px;
-  background:linear-gradient(180deg,#1b214d,#121736);
-  border:1px solid #313a79;
-  color:#EAF1FF; font-weight:900; font-size:22px; letter-spacing:.2px;
-  box-shadow:inset 0 1px 0 #ffffff14, inset 0 0 0 1px #ffffff0f, 0 12px 28px #0008;
-}
-.wallet:hover{filter:brightness(1.03)}
-.wallet:active{transform:translateY(1px)}
-
-/* footer */
+/* =================== FOOTER =================== */
 footer{
-  display:flex; justify-content:space-between; gap:16px;
-  color:#C8D2F2; margin:28px 6px 0;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; color:#c7d0ee; margin-top:36px; font-weight:700;
 }
-footer a{color:#DDE5FF; text-decoration:none}
+footer a{color:#dfe6ff; text-decoration:none}
 footer a:hover{color:#fff}
 
-/* spacing of rows inside card */
-.row{position:relative}
-.row + .row{margin-top:12px}
-
-/* ---------- RESPONSIVE TWEAKS ---------- */
-@media (min-width:860px){
-  .hero{padding-top:64px}
+/* =================== RESPONSIVE TWEAKS =================== */
+@media (max-width:600px){
+  .wrap{padding-bottom:28px}
+  .card{margin-left:0;margin-right:0}
+  .btn,.btn-ghost{font-size:22px;height:54px}
 }
 </style>
 </head>
@@ -192,45 +177,45 @@ footer a:hover{color:#fff}
 
 <div class="wrap">
   <!-- NAV -->
-  <header class="nav" aria-label="Top navigation">
+  <div class="nav">
     <a class="brand" href="/">
-      <!-- Replace src with your own logo path -->
-      <span class="logo" aria-hidden="true"></span>
+      <!-- swap this for your /logo.svg if you prefer -->
+      <div class="logo"></div>
       <span>RupiRamp</span>
     </a>
-    <nav class="links">
+    <div class="links">
       <a href="/faq.html">FAQ</a>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
-      <a href="mailto:info@rupiramp.com">Contact</a>
-    </nav>
-  </header>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </div>
 
-  <!-- HERO -->
+  <!-- HERO TITLE -->
   <section class="hero">
     <h1>
       <span class="line1">Swap Crypto</span>
-      <span class="line2">Seamlessly</span>
+      <span class="line2" aria-label="Seamlessly">Seamlessly</span>
     </h1>
 
     <!-- CARD -->
-    <div class="card" role="region" aria-labelledby="ready">
-      <h2 id="ready">Ready to Swap?</h2>
+    <div class="card" role="region" aria-label="Swap card">
+      <h2>Ready to Swap?</h2>
 
       <div class="row">
-        <label class="label" for="from">From</label>
-        <div class="field"><input id="from" placeholder="Select token or amount" inputmode="decimal"></div>
+        <div class="label">From</div>
+        <input class="field" placeholder="Select token or amount" aria-label="From token or amount">
+        <div class="label">To</div>
+        <input class="field" placeholder="Select token" aria-label="To token">
       </div>
 
-      <div class="row">
-        <label class="label" for="to">To</label>
-        <div class="field"><input id="to" placeholder="Select token"></div>
+      <div class="actions">
+        <button class="btn" type="button">Swap Now</button>
+        <button class="btn-ghost" type="button">Connect Wallet</button>
       </div>
-
-      <button class="cta" id="swap">Swap Now</button>
-      <div class="wallet" id="connect">Connect Wallet</div>
     </div>
 
+    <!-- footer like the mock -->
     <footer>
       <small>© 2025 RupiRamp Ltd.</small>
       <small><a href="/terms.html">Terms</a> — <a href="/privacy.html">Privacy</a></small>
@@ -239,19 +224,15 @@ footer a:hover{color:#fff}
 </div>
 
 <script>
-/* Optional: very light “enter” animation so it feels premium but not busy */
-(() => {
-  const el = document.querySelector('.card');
-  el.style.opacity = 0; el.style.transform = 'translateY(8px)';
-  requestAnimationFrame(() => {
-    el.style.transition = 'opacity .5s ease, transform .5s ease';
-    el.style.opacity = 1; el.style.transform = 'none';
-  });
+/* Keep JS tiny: only slow the gradient sweep on prefers-reduced-motion false
+   (already smooth and light). No heavy canvases to ensure silky scrolling. */
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    const el = document.querySelector('.line2');
+    el && (el.style.animation = 'none');
+  }
 })();
-
-/* Demo hooks (no wallet/0x wired here to keep this file focused on the exact look) */
-document.getElementById('swap').addEventListener('click', ()=> alert('Swap action would go here.'));
-document.getElementById('connect').addEventListener('click', ()=> alert('Connect wallet would open here.'));
 </script>
 </body>
 </html>
